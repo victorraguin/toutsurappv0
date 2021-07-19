@@ -12,7 +12,7 @@ const Categorie = () => (
       <Image src="https://react.semantic-ui.com/images/avatar/large/matthew.png" wrapped ui={false} />
     <Card.Content>
       <Card.Header>
-        <Checkbox position="left"/>
+        <Checkbox/>
         Matthew
       </Card.Header>
       
