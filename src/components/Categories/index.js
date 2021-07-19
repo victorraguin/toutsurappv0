@@ -13,10 +13,16 @@ const Categories = () => (
     <h1 className="title">
       #Accueil
     </h1>
-    <Button>
+    <Button className="button">
       Voir la catégorie sélectionnée 
     </Button>
-    <Card.Group itemsPerRow={2}>
+    <Card.Group className= "card-group" itemsPerRow={5}>
+      <Categorie />
+      <Categorie />
+      <Categorie />
+      <Categorie />
+      <Categorie />
+      <Categorie />
       <Categorie />
       <Categorie />
       <Categorie />
