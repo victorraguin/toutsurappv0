@@ -11,7 +11,7 @@ import './styles.scss';
 const ToutSurApp = () => (
   <div className="toutSurApp">
     <Header/>
-    <Categories/>
+    <Categories/> 
   </div>
 );
 
