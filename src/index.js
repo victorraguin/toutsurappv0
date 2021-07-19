@@ -1,6 +1,7 @@
 // == Import : npm
 import React from 'react';
 import { render } from 'react-dom';
+import 'semantic-ui-react semantic-ui-css'
 
 // == Import : local
 // Composants
