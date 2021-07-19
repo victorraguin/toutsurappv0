@@ -1,0 +1,11 @@
+{
+  "name": "project-toutsurapp",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:O-clock-Sinbad/project-toutsurapp.git",
+  "author": "Valentin L <leclerc.valentin94@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "pg": "^8.6.0"
+  }
+}
