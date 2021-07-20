@@ -13,7 +13,7 @@ const Categories = ({ list }) => (
     <h1 className="title">
       #Accueil
     </h1>
-    <Button className="button">
+    <Button className="select-button">
       Voir la catégorie sélectionnée 
     </Button>
     <Card.Group className= "card-group" itemsPerRow={5}>

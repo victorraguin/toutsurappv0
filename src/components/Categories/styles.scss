@@ -1,12 +1,21 @@
+.categories{
+  outline: solid 1px red;
+}
+
 .title{
   text-align: left;
 }
 
-.ui.button{
+.select-button{
   margin: 2em;
+  width: 20%;
 }
 
 .ui.checkbox{
 float: left;
 }
 
+.card-group{
+  display: flex;
+  margin: 2em;
+}

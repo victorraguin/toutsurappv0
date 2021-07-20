@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Header from 'src/components/Header';
 import Categories from 'src/components/Categories';
+import SignUp from 'src/components/SignUp';
 import axios from 'axios';
 
 
@@ -56,7 +57,8 @@ useEffect(async () => {
   return(
     <div className="toutSurApp">
       <Header/>
-      <Categories list={cards}/> 
+      {/* <Categories list={cards}/> */}
+      <SignUp/>
     </div>
   )
 };

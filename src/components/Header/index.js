@@ -1,6 +1,6 @@
 // == Import npm
 import React from 'react';
-import { Button, Menu, Grid, Container } from 'semantic-ui-react';
+import { Button, Menu } from 'semantic-ui-react';
 
 
 // == Import
