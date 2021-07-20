@@ -1,0 +1,8 @@
+### Get all articles
+
+GET http://localhost:3000/articles
+
+### Get one article
+
+GET http://localhost:3000/articles/1
+

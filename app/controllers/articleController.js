@@ -10,7 +10,7 @@ const articleController = {
         const id = parseInt(req.params.id, 10);
         const article = await Article.findOne(id);
         if (article) {
-            response.json(article);
+            res.json(article);
         } else {
             // Penser à insérer ici un middle pour gérer les 404
             next();

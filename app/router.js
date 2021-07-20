@@ -7,5 +7,6 @@ const router = Router();
 router.get('/', (req, res) => res.send("salut, ça farte ?"));
 
 router.get('/articles', articleController.findAll);
+router.get('/articles/:id', articleController.findOne);
 
 module.exports = router;
