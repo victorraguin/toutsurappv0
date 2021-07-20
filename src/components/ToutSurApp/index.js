@@ -1,7 +1,8 @@
 // == Import npm
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from 'src/components/Header';
 import Categories from 'src/components/Categories';
+import axios from 'axios';
 
 
 // == Import
@@ -33,10 +34,24 @@ const data = [
 ]
 
 
-
 // == Composant
 const ToutSurApp = () => {
-  const [cards, setCards] = useState(data);
+  const [cards, setCards] = useState([]);
+  // == useEffect
+
+useEffect(async () => {
+  try {
+    const dataFetched = await axios({
+      method: 'get',
+      url: 'http://localhost:3000/categories'
+    });
+    console.log(dataFetched);
+    setCards(dataFetched.data);
+  }
+  catch (error) {
+    console.log(error.message);
+  }
+}, []);
 
   return(
     <div className="toutSurApp">

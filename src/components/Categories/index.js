@@ -8,9 +8,8 @@ import Categorie from 'src/components/Categories/Categorie';
 import './styles.scss';
 
 // == Composant
-const Categories = ({list}) => (
+const Categories = ({ list }) => (
   <div className="categories">
-    {console.log(list)}
     <h1 className="title">
       #Accueil
     </h1>
@@ -22,7 +21,7 @@ const Categories = ({list}) => (
         list.map((card) => (
           <Categorie categorie={card}/>
         ))
-      } 
+      }
     </Card.Group>
   </div>
 );
