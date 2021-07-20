@@ -8,8 +8,9 @@ import Categorie from 'src/components/Categories/Categorie';
 import './styles.scss';
 
 // == Composant
-const Categories = () => (
+const Categories = ({list}) => (
   <div className="categories">
+    {console.log(list)}
     <h1 className="title">
       #Accueil
     </h1>
@@ -17,16 +18,11 @@ const Categories = () => (
       Voir la catégorie sélectionnée 
     </Button>
     <Card.Group className= "card-group" itemsPerRow={5}>
-      <Categorie />
-      <Categorie />
-      <Categorie />
-      <Categorie />
-      <Categorie />
-      <Categorie />
-      <Categorie />
-      <Categorie />
-      <Categorie />
-      <Categorie />
+      {
+        list.map((card) => (
+          <Categorie categorie={card}/>
+        ))
+      } 
     </Card.Group>
   </div>
 );

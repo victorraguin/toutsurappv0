@@ -7,17 +7,15 @@ import { Card, Checkbox, Image } from 'semantic-ui-react';
 import './styles.scss';
 
 // == Composant
-const Categorie = () => (
-    <Card>
-      <Image src="https://react.semantic-ui.com/images/avatar/large/matthew.png" wrapped ui={false} />
-    <Card.Content>
-      <Card.Header>
-        <Checkbox/>
-        Matthew
-      </Card.Header>
-      
-    </Card.Content>
-  </Card>
+const Categorie = ({categorie}) => (
+  <div>
+    <Card
+      image='https://react.semantic-ui.com/images/avatar/large/elliot.jpg'
+      header={categorie.title}
+      extra={<Checkbox/>}
+    >
+    </Card>
+  </div>
 );
 
 // == Export
