@@ -6,3 +6,6 @@ GET http://localhost:3000/articles
 
 GET http://localhost:3000/articles/1
 
+###GET all articles from Le Monde
+
+GET http://localhost:3000/API/articles
