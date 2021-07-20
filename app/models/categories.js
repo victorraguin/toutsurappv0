@@ -1,6 +1,6 @@
 const client = require('../database');
 
-class Article {
+class Category {
     constructor(obj={}) {
         for (const propName in obj) {
             this[propName] = obj[propName];
@@ -9,8 +9,8 @@ class Article {
 
     static async findAll() {
         try {
-            const {rows} = await client.query('SELECT * FROM articles');
-            return rows.map(row => new Article(row));
+            const {rows} = await client.query('SELECT * FROM categories');
+            return rows.map(row => new Category(row));
 
         } catch (error) {
             console.log(error);
@@ -21,12 +21,12 @@ class Article {
     static async findOne(id) {
         try {
             const preparedQuery = {
-                text: 'SELECT * FROM articles WHERE id=$1',
+                text: 'SELECT * FROM categories WHERE id=$1',
                 values: [id]
             }
             const {rows} = await client.query(preparedQuery);
             if (rows[0]) {
-                return new Article(rows[0]);
+                return new Category(rows[0]);
             }
         } catch(error) {
             console.log(error);
@@ -35,4 +35,4 @@ class Article {
     }
 }
 
-module.exports = Article;
+module.exports = Category;

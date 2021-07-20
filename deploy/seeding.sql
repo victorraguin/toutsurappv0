@@ -16,6 +16,9 @@ INSERT INTO "comments" ("user_name", "description") VALUES
 
 INSERT INTO "categories" ("name", "color") VALUES
 ('Musique', 'blue'),
-('Jeux vidéos', 'green');
+('Jeux vidéos', 'red'),
+('Sport', 'green'),
+('Science', 'white'),
+('Art', 'pink');
 
 COMMIT;
