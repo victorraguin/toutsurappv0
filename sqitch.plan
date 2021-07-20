@@ -1,0 +1,5 @@
+%syntax-version=1.0.0
+%project=toutsur
+
+demarrage 2021-07-19T08:43:16Z Valentin_Leclerc <leclerc.valentin94@gmail.com> # tables de base
+seeding 2021-07-19T10:11:08Z Valentin_Leclerc <leclerc.valentin94@gmail.com> # ajout du seeding

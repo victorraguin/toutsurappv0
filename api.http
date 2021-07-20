@@ -1,0 +1,19 @@
+### Get all articles
+
+GET http://localhost:3000/articles
+
+### Get one article
+
+GET http://localhost:3000/articles/1
+
+###GET all articles from Le Monde
+
+GET http://localhost:3000/API/articles
+
+### Get all categories
+
+GET http://localhost:3000/categories
+
+### Get one category
+
+GET http://localhost:3000/categories/1
