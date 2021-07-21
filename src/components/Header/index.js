@@ -1,7 +1,7 @@
 // == Import npm
 import React from 'react';
 
-import { Menu, Header } from 'semantic-ui-react';
+import { Menu, Header, Container } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
 
 // == Import
@@ -10,6 +10,7 @@ import './styles.scss';
 // == Composant
 
 const MenuComponent = () => (
+  <Container className="container">
   <Menu className="header-menu">
     <Header as="h2" href="/">toutSur.app</Header>
     <Menu.Menu position="right">
@@ -44,6 +45,7 @@ const MenuComponent = () => (
       </NavLink>
     </Menu.Menu>
   </Menu>
+  </Container>
 );
 
 // == Export
