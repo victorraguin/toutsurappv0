@@ -57,8 +57,8 @@ useEffect(async () => {
   return(
     <div className="toutSurApp">
       <Header/>
-      {/* <Categories list={cards}/> */}
-      <SignUp/>
+      <Categories list={cards}/>
+      {/* <SignUp/> */}
     </div>
   )
 };
