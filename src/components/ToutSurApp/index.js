@@ -63,16 +63,16 @@ const ToutSurApp = () => {
   const handleInputSubmit = (evt) => {
     evt.preventDefault();
     console.log('click submit', userSignUp);
-    //je veux que password et confirm password soit equivalent
+    //je veux que password et confirm password soit equivalent !!!????
     //je recupere les mots de passes du state
-   /*  const {password, confirmPassword} = userSignUp;
+    const {password, confirmPassword} = userSignUp;
     if (password !== confirmPassword) {
       <Label basic color='red' pointing='left'>
         Your passwords don't match
       </Label>;
     } else {
       //make API call
-    } */
+    }
     //quand je reset le form le state disparait?
     setUserSignUp({
       name:'',
