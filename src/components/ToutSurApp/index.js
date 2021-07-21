@@ -10,7 +10,7 @@ import './styles.scss';
 import Header from 'src/components/Header';
 import Categories from 'src/components/Categories';
 import Articles from 'src/components/Articles';
-import SignUp from 'src/components/SignUp';
+import SignUpForm from '../SignUpForm';
 
 // Faux Data
 const data = [
@@ -40,12 +40,28 @@ const data = [
   },
 ];
 
+// == Data par default
+  const initialFormUserData = ({
+    email: '',
+    password: '',
+  });
+
+
+
 // == Composant
 const ToutSurApp = () => {
+
 // == State de l'application
   const [cards, setCards] = useState(data);
+  const [userLog, setUserLog] = useState(initialFormUserData);
 
   // == Fonctions de l'application
+  const onInputLogUserChange = (name, value) => {
+    setUserLog({
+      ...userLog,
+      [name]: value,
+    });
+  };
 
   // == useEffect
   // == Appel à une API BACK
@@ -76,7 +92,7 @@ const ToutSurApp = () => {
           <Articles />
         </Route>
         <Route path="/inscription" exact>
-          <SignUp />
+          <SignUpForm  onInputChange={onInputLogUserChange}/>
         </Route>
         <Route>
           <Link
