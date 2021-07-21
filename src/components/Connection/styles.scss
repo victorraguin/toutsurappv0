@@ -1,4 +1,4 @@
-.signup-div{
+.connection-container{
   width: 45%;
   border: solid 1px black;
   border-radius: 0.5em;
@@ -9,3 +9,17 @@
 .input-text {
   text-align: left;
 }
+
+
+@media (max-width: 768px) {
+  
+  .connection-container{
+    width: 80%;
+    border: solid 1px black;
+    border-radius: 0.5em;
+    padding: 1em;
+    margin: 100px auto 0px auto;
+  }
+  
+}
+

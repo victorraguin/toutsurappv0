@@ -18,7 +18,7 @@ const Connection = ({ onInputLogUserChange, handleSubmitLogin, userLog }) => {
   };
 
   return (
-    <div className="signup-div">
+    <div className="connection-container">
       <Segment color="grey">
         <Form>
           <h2>
