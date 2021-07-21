@@ -1,7 +1,9 @@
 // == Import npm
 import React, { useState, useEffect } from 'react';
+
 import { Segment } from 'semantic-ui-react';
 import { Route, Switch } from 'react-router-dom';
+
 import axios from 'axios';
 // == Import
 import './styles.scss';

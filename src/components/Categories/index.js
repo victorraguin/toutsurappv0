@@ -9,6 +9,7 @@ import './styles.scss';
 // == Composant
 const Categories = ({ list }) => (
   <div className="categories">
+
     <Segment vertical>
       <h1 className="title">
         #Accueil

@@ -1,12 +1,15 @@
 // == Import npm
 import React from 'react';
+
 import { Menu, Header } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
+
 
 // == Import
 import './styles.scss';
 
 // == Composant
+
 const MenuComponent = () => (
   <Menu className="header-menu" raised>
     <Header as="h2" href="/">toutSur.app</Header>
