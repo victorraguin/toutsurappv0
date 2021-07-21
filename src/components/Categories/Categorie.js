@@ -1,8 +1,7 @@
 // == Import npm
 import React from 'react';
-import {
-  Card, Button, Icon, Popup,
-} from 'semantic-ui-react';
+import { Card } from 'semantic-ui-react';
+import { NavLink } from 'react-router-dom';
 
 // == Import
 import './styles.scss';
@@ -10,7 +9,10 @@ import './styles.scss';
 // == Composant
 const Categorie = ({ categorie }) => (
   <div>
-    <a href="#">
+    <NavLink
+      to="/articles"
+      exact
+    >
       <Card
         className="card-categorie"
         image={categorie.image}
@@ -18,7 +20,7 @@ const Categorie = ({ categorie }) => (
         color={categorie.color}
         textalign="center"
       />
-    </a>
+    </NavLink>
   </div>
 );
 
