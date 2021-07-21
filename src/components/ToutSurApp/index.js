@@ -1,66 +1,89 @@
 // == Import npm
 import React, { useState, useEffect } from 'react';
-import Header from 'src/components/Header';
-import Categories from 'src/components/Categories';
-import SignUp from 'src/components/SignUp';
+
+import { Segment } from 'semantic-ui-react';
+import { Route, Switch } from 'react-router-dom';
+
 import axios from 'axios';
-
-
 // == Import
 import './styles.scss';
+import Header from 'src/components/Header';
+import Categories from 'src/components/Categories';
 
-//Faux Data
+// Faux Data
 const data = [
   {
     id: 1,
     title: 'Serendipity',
-    image: 'https://react.semantic-ui.com/images/avatar/large/matthew.png',
-    categorie: 'musique',
+    image: 'https://cdn.pixabay.com/photo/2016/04/30/14/58/music-1363069_960_720.jpg',
+    categorie: 'Musique',
+    color: 'orange',
 
   },
   {
     id: 2,
     title: 'TitleBidon',
-    image: 'https://https://stackoverflow.com/questions/45946592/responsive-semantic-ui-react-grid-columns-rows',
-    categorie: 'voyages',
+    image: 'https://cdn.pixabay.com/photo/2016/08/20/08/46/hiker-1607078_960_720.jpg',
+    categorie: 'Voyages',
+    color: 'olive',
 
   },
   {
     id: 3,
     title: 'DeuxiemeTitreBidon',
-    image: 'https://react.semantic-ui.com/images/avatar/large/matthew.png',
-    categorie: 'sport',
+    image: 'https://cdn.pixabay.com/photo/2014/11/17/13/17/crossfit-534615_960_720.jpg',
+    categorie: 'Sport',
+    color: 'brown',
 
   },
-]
-
+];
 
 // == Composant
 const ToutSurApp = () => {
-  const [cards, setCards] = useState([]);
+// == State de l'application
+  const [cards, setCards] = useState(data);
+
+  // == Fonctions de l'application
+
   // == useEffect
+  /*  == Appel à une API BACK
+  useEffect(async () => {
+    try {
+      const dataFetched = await axios({
+        method: 'get',
+        url: 'http://localhost:3000/categories',
+      });
+      console.log(dataFetched);
+      setCards(dataFetched.data);
+    }
+    catch (error) {
+      console.log(error.message);
+    }
+  }, []);
+  */
 
-useEffect(async () => {
-  try {
-    const dataFetched = await axios({
-      method: 'get',
-      url: 'http://localhost:3000/categories'
-    });
-    console.log(dataFetched);
-    setCards(dataFetched.data);
-  }
-  catch (error) {
-    console.log(error.message);
-  }
-}, []);
-
-  return(
+  // == Rendu de l'application
+  return (
     <div className="toutSurApp">
-      <Header/>
-      <Categories list={cards}/>
-      {/* <SignUp/> */}
+      <Header />
+      <Switch>
+        <Route path="/" exact>
+          <Categories list={cards} />
+        </Route>
+        <Route path="/articles" exact />
+        <Route>
+          <a href="/">
+            <Segment vertical>
+              <h2>
+                #Retour sur l'Accueil
+              </h2>
+            </Segment>
+          </a>
+          <iframe src="https://giphy.com/embed/TLIj98vlSKpNXnkrBK" width="480" height="480" frameBorder="0" className="giphy-embed" allowFullScreen />
+        </Route>
+      </Switch>
     </div>
-  )
+  );
 };
 
 // == Export

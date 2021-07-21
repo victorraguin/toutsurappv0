@@ -1,27 +1,24 @@
 // == Import npm
 import React from 'react';
-import { Card, Checkbox, Image } from 'semantic-ui-react';
-
+import {
+  Card, Button, Icon, Popup,
+} from 'semantic-ui-react';
 
 // == Import
 import './styles.scss';
 
-const extra = (
-  <p>
-    <Checkbox/>
-  </p>
-)
-
 // == Composant
-const Categorie = ({categorie}) => (
-
+const Categorie = ({ categorie }) => (
   <div>
-    <Card
-      image='https://react.semantic-ui.com/images/avatar/large/elliot.jpg'
-      header={categorie.name}
-      extra={<Checkbox/>}
-    >
-    </Card>
+    <a href="#">
+      <Card
+        className="card-categorie"
+        image={categorie.image}
+        header={`#${categorie.categorie}`}
+        color={categorie.color}
+        textalign="center"
+      />
+    </a>
   </div>
 );
 

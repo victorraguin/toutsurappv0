@@ -1,4 +1,5 @@
-.container {
+
+.header-menu {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -7,15 +8,12 @@
   /* outline: solid 1px red; */
 }
 
-.ui{
-  /* outline: solid 1px red; */
+
+.menu-button{
+padding: 1em;
+font-size: large;
 }
 
-.logo{
-  display: flex;
-}
-
-.button-container{
-  display: flex;
-  /* outline: solid 1px red; */
+.menu-link--active {
+  background: #3282b841;
 }

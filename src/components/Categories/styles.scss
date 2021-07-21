@@ -1,21 +1,44 @@
-.categories{
-  outline: solid 1px red;
-}
 
-.title{
+.title {
   text-align: left;
+  padding-left: 2em;
 }
 
-.select-button{
-  margin: 2em;
-  width: 20%;
-}
 
-.ui.checkbox{
-float: left;
-}
-
-.card-group{
+.card-group {
   display: flex;
-  margin: 2em;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-around;
+  align-content: space-around;
+}
+
+.ui.card:last-child {
+  min-width: 400px;
+  margin: 3em;
+}
+
+
+.ui.card>.image:not(.ui) {
+  min-width: 400px;
+  min-height: 300px;
+}
+
+
+//== Animation au hover de la carte
+.card {
+  will-change: transform;
+  transition: transform 0.4s;
+}
+.card:hover {
+  transition: transform 0.1s;
+  transform: translateY(-7px);
+}
+
+
+//== Si des personnes ont activées la préférence de réduction des animations : 
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none;
+  }
 }
