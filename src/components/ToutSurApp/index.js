@@ -1,6 +1,6 @@
 // == Import npm
 import React, { useState, useEffect } from 'react';
-import { Segment } from 'semantic-ui-react';
+import { Label, Segment } from 'semantic-ui-react';
 import { Route, Switch, Link } from 'react-router-dom';
 
 import axios from 'axios';
@@ -12,33 +12,6 @@ import Categories from 'src/components/Categories';
 import Articles from 'src/components/Articles';
 import SignUpForm from '../SignUpForm';
 
-// Faux Data
-const data = [
-  {
-    id: 1,
-    title: 'Serendipity',
-    image: 'https://cdn.pixabay.com/photo/2016/04/30/14/58/music-1363069_960_720.jpg',
-    categorie: 'Musique',
-    color: 'orange',
-
-  },
-  {
-    id: 2,
-    title: 'TitleBidon',
-    image: 'https://cdn.pixabay.com/photo/2016/08/20/08/46/hiker-1607078_960_720.jpg',
-    categorie: 'Voyages',
-    color: 'olive',
-
-  },
-  {
-    id: 3,
-    title: 'DeuxiemeTitreBidon',
-    image: 'https://cdn.pixabay.com/photo/2014/11/17/13/17/crossfit-534615_960_720.jpg',
-    categorie: 'Sport',
-    color: 'brown',
-
-  },
-];
 
 // == Data par default
   const initialFormUserData = ({
@@ -46,20 +19,66 @@ const data = [
     password: '',
   });
 
+  const initialFormSignUpData = ({
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword:''
+  })
+
 
 
 // == Composant
 const ToutSurApp = () => {
 
 // == State de l'application
-  const [cards, setCards] = useState(data);
+  const [cards, setCards] = useState([]);
   const [userLog, setUserLog] = useState(initialFormUserData);
+  const [userSignUp, setUserSignUp] = useState(initialFormSignUpData);
 
   // == Fonctions de l'application
   const onInputLogUserChange = (name, value) => {
     setUserLog({
       ...userLog,
       [name]: value,
+    });
+  };
+
+  const onFormSignUp = (name, value) => {
+    setUserSignUp({
+      ...userSignUp,
+      [name]: value,
+    });
+  };
+
+  const handleInputChange = (evt) => {
+    // Je récupère le nom de l'input qui a changé
+    // et sa value (son contenu)
+    const { name, value } = evt.target;
+    console.log(name, value);
+    setUserSignUp(name, value);
+    onFormSignUp(name, value);
+  };
+
+  const handleInputSubmit = (evt) => {
+    evt.preventDefault();
+    console.log('click submit', userSignUp);
+    //je veux que password et confirm password soit equivalent
+    //je recupere les mots de passes du state
+   /*  const {password, confirmPassword} = userSignUp;
+    if (password !== confirmPassword) {
+      <Label basic color='red' pointing='left'>
+        Your passwords don't match
+      </Label>;
+    } else {
+      //make API call
+    } */
+    //quand je reset le form le state disparait?
+    setUserSignUp({
+      name:'',
+      email:'',
+      password:'',
+      confirmPassword:''
     });
   };
 
@@ -92,7 +111,11 @@ const ToutSurApp = () => {
           <Articles />
         </Route>
         <Route path="/inscription" exact>
-          <SignUpForm  onInputChange={onInputLogUserChange}/>
+          <SignUpForm
+          userSignUp={userSignUp}
+          handleInputChange={handleInputChange}
+          handleInputSubmit={handleInputSubmit}
+          />
         </Route>
         <Route>
           <Link

@@ -7,15 +7,8 @@ import { Form, Divider, Button } from 'semantic-ui-react';
 import './styles.scss';
 
 // == Composant
-const SignUpForm = ({form}) => {
-  // == Fonction
-
-  const handleInputChange = (evt) => {
-    // Je récupère le nom de l'input qui a changé
-    // et sa value (son contenu)
-    const { name, value } = evt.target;
-    console.log(name, value);
-  };
+const SignUpForm = ({userSignUp, handleInputSubmit, handleInputChange}) => {
+  // == Fonctions
 
   return(
   <div className='signup-div'>
@@ -23,6 +16,7 @@ const SignUpForm = ({form}) => {
     onSubmit={(e) => {
       //J'empeche le rechargement au submit
       e.preventDefault();
+      handleInputSubmit(e);
     }}>
       <h2>
         Veuillez vous inscrire pour poursuivre:
@@ -33,6 +27,7 @@ const SignUpForm = ({form}) => {
         placeholder='Nom'
         required
         name='name'
+        value={userSignUp.name}
         onChange= {handleInputChange}
         />
       </Form.Field>
@@ -42,7 +37,9 @@ const SignUpForm = ({form}) => {
         <input 
         type='text' 
         placeholder='Email'
+        required
         name='email'
+        value={userSignUp.email}
         onChange= {handleInputChange}
         />
       </Form.Field>
@@ -52,7 +49,9 @@ const SignUpForm = ({form}) => {
         <input 
         type='text'
         placeholder='Mot de passe'
+        required
         name='password'
+        value={userSignUp.password}
         onChange= {handleInputChange}
         />
       </Form.Field>
@@ -62,7 +61,9 @@ const SignUpForm = ({form}) => {
         <input 
         type='text'
         placeholder='Confirmez votre mot de passe'
-        name='confirm password'
+        required
+        name='confirmPassword'
+        value={userSignUp.confirmPassword}
         onChange= {handleInputChange}
         />
       </Form.Field>
