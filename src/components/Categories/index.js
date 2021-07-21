@@ -18,7 +18,7 @@ const Categories = ({ list }) => (
       <Card.Group className="card-group">
         {
         list.map((card) => (
-          <Categorie categorie={card} />
+          <Categorie key={card.id} categorie={card} />
         ))
       }
       </Card.Group>
