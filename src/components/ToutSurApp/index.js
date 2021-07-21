@@ -2,7 +2,10 @@
 import React, { useState, useEffect } from 'react';
 import Header from 'src/components/Header';
 import Categories from 'src/components/Categories';
+import Articles from 'src/components/Articles';
 import axios from 'axios';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+
 
 
 // == Import
@@ -55,8 +58,14 @@ useEffect(async () => {
 
   return(
     <div className="toutSurApp">
+      
+      
+      
       <Header/>
       <Categories list={cards}/> 
+      <Router>
+      <Route path="/Articles" exact component={Articles}/>
+      </Router>
     </div>
   )
 };
