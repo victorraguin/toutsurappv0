@@ -1,7 +1,8 @@
 // == Import npm
 import React, { useState, useEffect } from 'react';
 import { Segment } from 'semantic-ui-react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Link } from 'react-router-dom';
+
 import axios from 'axios';
 
 // == Import components & styles
@@ -47,12 +48,12 @@ const ToutSurApp = () => {
   // == Fonctions de l'application
 
   // == useEffect
-  /*  == Appel à une API BACK
+  // == Appel à une API BACK
   useEffect(async () => {
     try {
       const dataFetched = await axios({
         method: 'get',
-        url: 'http://localhost:3000/categories',
+        url: 'https://toutsur-app-gachimaster.herokuapp.com/categories',
       });
       console.log(dataFetched);
       setCards(dataFetched.data);
@@ -61,7 +62,6 @@ const ToutSurApp = () => {
       console.log(error.message);
     }
   }, []);
-  */
 
   // == Rendu de l'application
   return (
@@ -79,13 +79,16 @@ const ToutSurApp = () => {
           <SignUp />
         </Route>
         <Route>
-          <a href="/">
+          <Link
+            to="/"
+            exact
+          >
             <Segment vertical>
               <h2>
                 #Retour sur l'Accueil
               </h2>
             </Segment>
-          </a>
+          </Link>
           <iframe src="https://giphy.com/embed/TLIj98vlSKpNXnkrBK" width="480" height="480" frameBorder="0" className="giphy-embed" allowFullScreen />
         </Route>
       </Switch>

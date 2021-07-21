@@ -10,7 +10,7 @@ import './styles.scss';
 // == Composant
 
 const MenuComponent = () => (
-  <Menu className="header-menu" raised>
+  <Menu className="header-menu">
     <Header as="h2" href="/">toutSur.app</Header>
     <Menu.Menu position="right">
       <NavLink
