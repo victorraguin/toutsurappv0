@@ -9,29 +9,50 @@ import { Link } from 'react-router-dom';
 import './styles.scss';
 
 // == Composant
-const Connection = () => (
-  <div className="signup-div">
-    <Segment color="grey">
-      <Form>
-        <h2>
-          Veuillez vous connecter pour poursuivre:
-        </h2>
-        <Form.Field>
-          <p className="input-text">Email :</p>
-          <input type="text" placeholder="Veuillez entrer votre email..." />
-        </Form.Field>
-        <Divider />
+const Connection = ({ onInputLogUserChange, handleSubmitLogin, userLog }) => {
+  const handleInputChange = (evt) => {
+    // Je récupère le nom de l'input qui a changé
+    // et sa value (son contenu)
+    const { name, value } = evt.target;
+    onInputLogUserChange(name, value);
+  };
 
-        <Form.Field>
-          <p className="input-text">Mot de passe :</p>
-          <input type="password" placeholder="Veuillez entrer votre mot de passe..." />
-        </Form.Field>
-        <Divider />
-        <Button primary>Valider</Button>
-      </Form>
-    </Segment>
-  </div>
-);
+  return (
+    <div className="signup-div">
+      <Segment color="grey">
+        <Form>
+          <h2>
+            Veuillez vous connecter pour poursuivre:
+          </h2>
+          <Form.Field>
+            <p className="input-text">Email :</p>
+            <input
+              name="email"
+              type="email"
+              value={userLog.email}
+              placeholder="Veuillez entrer votre email..."
+              onChange={handleInputChange}
+            />
+          </Form.Field>
+          <Divider />
+
+          <Form.Field>
+            <p className="input-text">Mot de passe :</p>
+            <input
+              name="password"
+              type="password"
+              value={userLog.password}
+              placeholder="Veuillez entrer votre mot de passe..."
+              onChange={handleInputChange}
+            />
+          </Form.Field>
+          <Divider />
+          <Button primary onClick={handleSubmitLogin}>Valider</Button>
+        </Form>
+      </Segment>
+    </div>
+  );
+};
 
 // == Export
 export default Connection;

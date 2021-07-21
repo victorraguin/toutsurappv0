@@ -11,13 +11,12 @@ const Categorie = ({ categorie }) => (
   <div>
     <Link
       to="/articles"
-      exact
     >
       <Card
         className="card-categorie"
         image={categorie.image}
         header={`#${categorie.name}`}
-        color={categorie.color}
+        color="blue"
         textalign="center"
       />
     </Link>

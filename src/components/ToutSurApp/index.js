@@ -13,40 +13,49 @@ import Categories from 'src/components/Categories';
 import Articles from 'src/components/Articles';
 import SignUp from 'src/components/SignUp';
 
-// Faux Data
-const data = [
-  {
-    id: 1,
-    title: 'Serendipity',
-    image: 'https://cdn.pixabay.com/photo/2016/04/30/14/58/music-1363069_960_720.jpg',
-    categorie: 'Musique',
-    color: 'orange',
 
-  },
-  {
-    id: 2,
-    title: 'TitleBidon',
-    image: 'https://cdn.pixabay.com/photo/2016/08/20/08/46/hiker-1607078_960_720.jpg',
-    categorie: 'Voyages',
-    color: 'olive',
 
-  },
-  {
-    id: 3,
-    title: 'DeuxiemeTitreBidon',
-    image: 'https://cdn.pixabay.com/photo/2014/11/17/13/17/crossfit-534615_960_720.jpg',
-    categorie: 'Sport',
-    color: 'brown',
 
-  },
-];
 
-// == Composant
+// == Application toutSur.App == //
+
 const ToutSurApp = () => {
-// == State de l'application
-  const [cards, setCards] = useState(data);
+
+// == Data par défault
+  const initialFormUserData = ({
+    email: '',
+    password: '',
+  });
+
+
+
+  // == State de l'application
+  const [cards, setCards] = useState([]);
+  const [userLog, setUserLog] = useState(initialFormUserData);
+
+
 
   // == Fonctions de l'application
+    // == Fonction qui permet d'enregistrer les informations
+    // == de connexion que tape mon utilisateur, dans le state approprié
+  const onInputLogUserChange = (name, value) => {
+    setUserLog({
+      ...userLog,
+      [name]: value,
+    });
+  };
+
+    // == Fonction qui permet d'envoyer la requête de connection à l'API
+  const handleSubmitLogin = (e) => {
+    e.preventDefault();
+    console.log('Coucou je voudrais faire une requête à lapi avec en params', userLog);
+    setUserLog({
+      email: '',
+      password: '',
+    });
+  };
+
+
 
   // == useEffect
   // == Appel à une API BACK
@@ -64,28 +73,46 @@ const ToutSurApp = () => {
     }
   }, []);
 
+
+
   // == Rendu de l'application
   return (
     <div className="toutSurApp">
-
+      {/* Composant Header qui représente le menu sur toutes les pages */}
       <Header />
+
+      {/* Début des routes */}
+      {/* Composant Switch & Route qui permet de définir les routes pour nos composants */}
       <Switch>
+
+        {/* Page d'accueil non connecté (liste les catégories) */}
         <Route path="/" exact>
           <Categories list={cards} />
         </Route>
+
+        {/* Page de connection */}
         <Route path="/connection" exact>
-          <Connection />
+          <Connection
+            onInputLogUserChange={onInputLogUserChange}
+            handleSubmitLogin={handleSubmitLogin}
+            userLog={userLog}
+          />
         </Route>
+
+        {/* Page des articles pour un utilisateur non connecté */}
         <Route path="/articles" exact>
           <Articles />
         </Route>
+
+        {/* Page d'inscription */}
         <Route path="/inscription" exact>
           <SignUp />
         </Route>
+
+        {/* Enfin, dernière route représententant la page 404 (erreur) */}
         <Route>
           <Link
             to="/"
-            exact
           >
             <Segment vertical>
               <h2>
@@ -95,6 +122,8 @@ const ToutSurApp = () => {
           </Link>
           <iframe src="https://giphy.com/embed/TLIj98vlSKpNXnkrBK" width="480" height="480" frameBorder="0" className="giphy-embed" allowFullScreen />
         </Route>
+
+        {/* Fin de routes */}
       </Switch>
     </div>
   );
