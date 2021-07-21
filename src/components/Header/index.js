@@ -1,25 +1,49 @@
 // == Import npm
 import React from 'react';
-import { Button, Menu, } from 'semantic-ui-react';
+
+import { Menu, Header } from 'semantic-ui-react';
+import { NavLink } from 'react-router-dom';
 
 
 // == Import
 import './styles.scss';
 
 // == Composant
-const Header = () => (
-    <Menu className="header" >
-      <h1 className="logo">
-        toutSur.App
-      </h1>
-        <Menu.Item position="right">
-          <Button primary>Se connecter</Button>
-        </Menu.Item>
-        <Menu.Item >
-          <Button primary>Inscription</Button>
-        </Menu.Item> 
-    </Menu>
+
+const MenuComponent = () => (
+  <Menu className="header-menu" raised>
+    <Header as="h2" href="/">toutSur.app</Header>
+    <NavLink
+      className="menu-link"
+      to="/connexion"
+      exact
+      activeClassName="menu-link--active"
+    >
+      <Menu.Item
+        className="menu-button"
+        position="right"
+        name="Connexion"
+        href="/connexion"
+      >Connexion
+      </Menu.Item>
+    </NavLink>
+    <NavLink
+      className="menu-link"
+      to="/inscription"
+      exact
+      activeClassName="menu-link--active"
+    >
+      <Menu.Item
+        className="menu-button"
+        position="right"
+        name="Inscription"
+        href="/inscription"
+        color="blue"
+      >Inscription
+      </Menu.Item>
+    </NavLink>
+  </Menu>
 );
 
 // == Export
-export default Header;
+export default MenuComponent;

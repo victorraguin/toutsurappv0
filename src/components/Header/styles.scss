@@ -1,10 +1,19 @@
-.header {
+
+.header-menu {
   display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
+  justify-content: center;
   width: 100%;
+  /* outline: solid 1px red; */
 }
 
 
+.menu-button{
+padding: 1em;
+font-size: large;
+}
 
-
-
+.menu-link--active {
+  background: #3282b841;
+}
