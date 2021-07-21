@@ -1,15 +1,15 @@
 // == Import npm
 import React, { useState, useEffect } from 'react';
-
-
 import { Segment } from 'semantic-ui-react';
 import { Route, Switch } from 'react-router-dom';
-
 import axios from 'axios';
-// == Import
+
+// == Import components & styles
 import './styles.scss';
 import Header from 'src/components/Header';
 import Categories from 'src/components/Categories';
+import Articles from 'src/components/Articles';
+import SignUp from 'src/components/SignUp';
 
 // Faux Data
 const data = [
@@ -72,7 +72,12 @@ const ToutSurApp = () => {
         <Route path="/" exact>
           <Categories list={cards} />
         </Route>
-        <Route path="/articles" exact />
+        <Route path="/articles" exact>
+          <Articles />
+        </Route>
+        <Route path="/inscription" exact>
+          <SignUp />
+        </Route>
         <Route>
           <a href="/">
             <Segment vertical>

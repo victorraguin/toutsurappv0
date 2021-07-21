@@ -9,13 +9,11 @@ import './styles.scss';
 // == Composant
 const Categories = ({ list }) => (
   <div className="categories">
-
     <Segment vertical>
       <h1 className="title">
         #Accueil
       </h1>
     </Segment>
-
     <Segment color="grey">
       <Card.Group className="card-group">
         {
