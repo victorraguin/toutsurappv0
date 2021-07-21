@@ -8,6 +8,7 @@ import axios from 'axios';
 // == Import components & styles
 import './styles.scss';
 import Header from 'src/components/Header';
+import Connection from 'src/components/Connection';
 import Categories from 'src/components/Categories';
 import Articles from 'src/components/Articles';
 import SignUp from 'src/components/SignUp';
@@ -71,6 +72,9 @@ const ToutSurApp = () => {
       <Switch>
         <Route path="/" exact>
           <Categories list={cards} />
+        </Route>
+        <Route path="/connection" exact>
+          <Connection />
         </Route>
         <Route path="/articles" exact>
           <Articles />

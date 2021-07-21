@@ -15,15 +15,15 @@ const MenuComponent = () => (
     <Menu.Menu position="right">
       <NavLink
         className="menu-link"
-        to="/connexion"
+        to="/connection"
         exact
         activeClassName="menu-link--active"
       >
         <Menu.Item
           className="menu-button"
           position="right"
-          name="Connexion"
-          href="/connexion"
+          name="Connection"
+          href="/connection"
         >Connexion
         </Menu.Item>
       </NavLink>
