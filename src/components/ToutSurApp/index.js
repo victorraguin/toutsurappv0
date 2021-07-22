@@ -73,6 +73,7 @@ const ToutSurApp = () => {
     }
   }
 
+
   const onInputLogUserChange = (name, value) => {
     setUserLog({
       ...userLog,
@@ -142,6 +143,17 @@ const ToutSurApp = () => {
       password: '',
     });
   };
+    // == Fonction qui permet d'envoyer la requête de connection à l'API
+  const handleSubmitLogin = (e) => {
+    e.preventDefault();
+    console.log('Coucou je voudrais faire une requête à lapi avec en params', userLog);
+    setUserLog({
+      email: '',
+      password: '',
+    });
+  };
+
+
 
 
 

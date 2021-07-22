@@ -104,6 +104,7 @@ const SignUpForm = ({userSignUp, handleInputSubmit, handleInputChange}) => {
           </Form.Field>
           <Divider />
 
+
           <Form.Field>
           <p>Confirmer votre mot de passe:</p>
             <Form.Input
@@ -132,6 +133,7 @@ const SignUpForm = ({userSignUp, handleInputSubmit, handleInputChange}) => {
       </div>
     </Segment>
   </Container>
+
   )
 };
 
