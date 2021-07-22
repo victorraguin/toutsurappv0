@@ -61,13 +61,17 @@ const SignUpForm = ({userSignUp, handleInputSubmit, handleInputChange}) => {
             value={userSignUp.email}
             onChange= {handleInputChange}
             maxLength={32}
+            error={{
+              content: 'Please enter a valid email address',
+              pointing: 'below',
+            }}
             />
           </Form.Field>
           <Divider />
 
           <Form.Field>
             <input 
-            type='text'
+            type='password'
             placeholder='Mot de passe'
             required
             name='password'
@@ -80,7 +84,7 @@ const SignUpForm = ({userSignUp, handleInputSubmit, handleInputChange}) => {
 
           <Form.Field>
             <input 
-            type='text'
+            type='password'
             placeholder='Confirmez votre mot de passe'
             required
             name='confirmPassword'

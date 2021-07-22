@@ -78,7 +78,18 @@ const ToutSurApp = () => {
       confirmPassword:'',
     });
 
-    let error = false;
+    checkForm();
+    
+  };
+
+  const checkForm = () => {
+    //je veux verifier que password === confirmPassword
+    if(userSignUp.password !== userSignUp.confirmPassword){
+      //alert a changer
+      console.log("Passwords did not match");
+    } else {
+      console.log("Passwords created successfully");
+    }
 
     //un nom pas vide
     if (userSignUp.name === '') {
@@ -89,7 +100,7 @@ const ToutSurApp = () => {
     }
     //un nom de plus de 4 caracteres
     /* if (userSignUp.name) */
-  };
+  }
 
     // == Fonction qui permet d'envoyer la requête de connection à l'API
   const handleSubmitLogin = (e) => {
