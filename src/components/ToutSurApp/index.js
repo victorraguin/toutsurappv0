@@ -41,6 +41,8 @@ const ToutSurApp = () => {
       [name]: value,
     });
   };
+
+
   const onClickCategoriePage = async () => {
     try {
       const dataFetched = await axios({
@@ -59,6 +61,7 @@ const ToutSurApp = () => {
 
   const onCategorieSelected = (event) => {
     const clicked = event.target.closest('a');
+    console.log('Je voudrais afficher la catégorie', clicked.name);
     onClickCategoriePage(clicked);
   };
 
