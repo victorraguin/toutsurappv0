@@ -13,9 +13,9 @@ const Categorie = ({ categorie }) => (
   >
     <Card
       className="card-categorie"
-      image={categorie.image}
+      image="https://cdn.pixabay.com/photo/2017/08/29/21/17/notebook-2694903_960_720.jpg"
       header={`#${categorie.name}`}
-      color="blue"
+      color="teal"
       text
       align="center"
     />

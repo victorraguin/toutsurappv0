@@ -2,8 +2,12 @@
 .title {
   text-align: left;
   padding-left: 2em;
+  padding-top: 0.5em;
 }
 
+.categories {
+  padding-top: 2em;
+}
 
 .card-group {
   display: flex;
@@ -19,7 +23,7 @@
 
 
 .ui.card>.image:not(.ui) {
-  min-height: 300px;
+  min-height: 200px;
 }
 
 

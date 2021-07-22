@@ -9,13 +9,13 @@ import './styles.scss';
 // == Composant
 const Categories = ({ list }) => (
   <Container>
-    <Segment vertical className="categories">
+    <Segment vertical>
       <h1 className="title">
         #Accueil
       </h1>
     </Segment>
 
-    <Segment color="grey">
+    <Segment vertical color="teal">
       <Card.Group className="card-group">
         {
         list.map((card) => (

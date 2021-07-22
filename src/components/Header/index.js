@@ -11,8 +11,13 @@ import './styles.scss';
 
 const MenuComponent = () => (
   <Container className="container">
-    <Menu className="header-menu">
-      <Header as="h2" path="/">toutSur.app</Header>
+    <Menu secondary className="header-menu">
+      <NavLink
+      to="/"
+      className="menu-title"
+      >
+      <Header as="h2">toutSur.app</Header>
+      </NavLink>
       <Menu.Menu position="right">
         <NavLink
           className="menu-link"

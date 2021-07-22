@@ -1,7 +1,7 @@
 // == Import npm
 import React from 'react';
 import {
-  Form, Divider, Button, Segment,
+  Form, Divider, Button, Segment, Container,
 } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
@@ -18,39 +18,46 @@ const Connection = ({ onInputLogUserChange, handleSubmitLogin, userLog }) => {
   };
 
   return (
-    <div className="connection-container">
-      <Segment color="grey">
-        <Form>
-          <h2>
-            Veuillez vous connecter pour poursuivre:
-          </h2>
-          <Form.Field>
-            <p className="input-text">Email :</p>
-            <input
-              name="email"
-              type="email"
-              value={userLog.email}
-              placeholder="Veuillez entrer votre email..."
-              onChange={handleInputChange}
-            />
-          </Form.Field>
-          <Divider />
-
-          <Form.Field>
-            <p className="input-text">Mot de passe :</p>
-            <input
-              name="password"
-              type="password"
-              value={userLog.password}
-              placeholder="Veuillez entrer votre mot de passe..."
-              onChange={handleInputChange}
-            />
-          </Form.Field>
-          <Divider />
-          <Button primary onClick={handleSubmitLogin}>Valider</Button>
-        </Form>
+    <Container>
+      <Segment vertical>
+        <h1 className="title">
+          #Connexion
+        </h1>
       </Segment>
-    </div>
+      <Segment vertical color="teal">
+        <div className="connection-container">
+          <Form>
+            <h2>
+              Veuillez vous connecter pour poursuivre:
+            </h2>
+            <Form.Field>
+              <p className="input-text">Email :</p>
+              <input
+                name="email"
+                type="email"
+                value={userLog.email}
+                placeholder="Veuillez entrer votre email..."
+                onChange={handleInputChange}
+              />
+            </Form.Field>
+            <Divider />
+
+            <Form.Field>
+              <p className="input-text">Mot de passe :</p>
+              <input
+                name="password"
+                type="password"
+                value={userLog.password}
+                placeholder="Veuillez entrer votre mot de passe..."
+                onChange={handleInputChange}
+              />
+            </Form.Field>
+            <Divider />
+            <Button primary onClick={handleSubmitLogin}>Valider</Button>
+          </Form>
+        </div>
+      </Segment>
+    </Container>
   );
 };
 
