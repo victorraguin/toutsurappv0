@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import { Label, Segment } from 'semantic-ui-react';
 import { Route, Switch, Link } from 'react-router-dom';
-
 import axios from 'axios';
 
 // == Import components & styles
@@ -14,9 +13,13 @@ import Articles from 'src/components/Articles';
 import SignUpForm from '../SignUpForm';
 
 // == Data par default
-const initialFormUserData = ({
+const initialFormLoginData = ({
   email: '',
   password: '',
+  error: false,
+  subscribed: false,
+  databaseError: false,
+  logged: false,
 });
 
 const initialFormSignUpData = ({
@@ -24,13 +27,16 @@ const initialFormSignUpData = ({
   email: '',
   password: '',
   confirmPassword: '',
+  error: false,
+  subscribed: false,
+  databaseError: false,
 });
 
 // == Composant
 const ToutSurApp = () => {
 // == State de l'application
   const [cards, setCards] = useState([]);
-  const [userLog, setUserLog] = useState(initialFormUserData);
+  const [userLog, setUserLog] = useState(initialFormLoginData);
   const [userSignUp, setUserSignUp] = useState(initialFormSignUpData);
   const [categorieSelected, setCategorieSelected] = useState([]);
 
@@ -43,19 +49,67 @@ const ToutSurApp = () => {
   };
 
 
+
   const onClickCategoriePage = async () => {
     try {
       const dataFetched = await axios({
         method: 'get',
         url: 'https://toutsur-app-gachimaster.herokuapp.com/articles',
       });
-      console.log(dataFetched.data);
       if (dataFetched) {
         setCategorieSelected(dataFetched.data);
       }
     }
     catch (error) {
       console.log(error.message);
+    }
+  };
+
+  const postLoginUser = async () => {
+    try {
+      const userLogged = await axios({
+        method: 'post',
+        url: 'https://toutsur-app-gachimaster.herokuapp.com/login',
+        data: {
+          email: userLog.email,
+          password: userLog.password,
+        },
+      });
+      setUserLog({
+        ...userLog,
+        email: '',
+        password: '',
+        error: false,
+        logged: true,
+      });
+    }
+    catch (error) {
+      setUserLog({
+        ...userLog,
+        databaseError: true,
+      });
+    }
+  };
+  const validateLoginForm = () => {
+    if (!userLog.email.includes('@')) {
+      setUserLog({
+        ...userLog,
+        password: '',
+        error: true,
+      });
+      console.log("erreur de mail")
+    }
+    // un minimum de huit caracters pour le mdp
+    else if ((userLog.password.length < 8)) {
+      setUserLog({
+        ...userLog,
+        password: '',
+        error: true,
+      });
+      console.log("erreur de longueur")
+    }
+    else {
+      postLoginUser();
     }
   };
 
@@ -76,41 +130,14 @@ const ToutSurApp = () => {
     // Je récupère le nom de l'input qui a changé
     // et sa value (son contenu)
     const { name, value } = evt.target;
-    console.log(name, value);
     setUserSignUp(name, value);
     onFormSignUp(name, value);
   };
 
-  const handleInputSubmit = (evt) => {
-    evt.preventDefault();
-    console.log('click submit', userSignUp);
-    // je veux que password et confirm password soit equivalent !!!????
-    // je recupere les mots de passes du state
-    const { password, confirmPassword } = userSignUp;
-    if (password !== confirmPassword) {
-      <Label basic color="red" pointing="left">
-        Your passwords don't match
-      </Label>;
-    }
-    else {
-      // make API call
-    }
-    // quand je reset le form le state disparait?
-    setUserSignUp({
-      name: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-    });
-  };
-    // == Fonction qui permet d'envoyer la requête de connection à l'API
+  // == Fonction qui permet d'envoyer la requête de connection à l'API
   const handleSubmitLogin = (e) => {
     e.preventDefault();
-    console.log('Coucou je voudrais faire une requête à lapi avec en params', userLog);
-    setUserLog({
-      email: '',
-      password: '',
-    });
+    validateLoginForm();
   };
 
   // == useEffect
@@ -163,7 +190,6 @@ const ToutSurApp = () => {
           <SignUpForm
             userSignUp={userSignUp}
             handleInputChange={handleInputChange}
-            handleInputSubmit={handleInputSubmit}
           />
         </Route>
 
