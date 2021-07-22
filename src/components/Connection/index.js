@@ -1,7 +1,7 @@
 // == Import npm
 import React from 'react';
 import {
-  Form, Divider, Button, Segment, Container, Message
+  Form, Divider, Button, Segment, Container, Message,
 } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
@@ -27,7 +27,9 @@ const Connection = ({ onInputLogUserChange, handleSubmitLogin, userLog }) => {
       <Segment vertical color="teal">
         <div className="connection-container">
 
-          <Form>
+          <Form
+            error={userLog.error}
+          >
             <h2>
               Veuillez vous connecter pour poursuivre:
             </h2>

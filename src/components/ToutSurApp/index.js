@@ -17,7 +17,6 @@ const initialFormLoginData = ({
   email: '',
   password: '',
   error: false,
-  subscribed: false,
   databaseError: false,
   logged: false,
 });
@@ -81,12 +80,14 @@ const ToutSurApp = () => {
         password: '',
         error: false,
         logged: true,
+        databaseError: false,
       });
     }
     catch (error) {
       setUserLog({
         ...userLog,
         databaseError: true,
+        error: false,
       });
     }
   };
