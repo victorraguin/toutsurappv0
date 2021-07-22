@@ -26,7 +26,8 @@ import SignUpForm from '../SignUpForm';
     password: '',
     confirmPassword:'',
     error: false,
-    subscribed : false
+    subscribed : false,
+    databaseError : false
   })
 
 
@@ -65,7 +66,10 @@ const ToutSurApp = () => {
       });
     }
     catch(error) {
-      console.log(error);
+      setUserSignUp({
+        ...userSignUp,
+        databaseError : true
+      });
     }
   }
 
@@ -126,7 +130,6 @@ const ToutSurApp = () => {
       });
     } else {
       postSubscribeUser();
-      console.log('superieur a 8');
     }
     
   }

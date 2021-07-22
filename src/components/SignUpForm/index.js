@@ -50,6 +50,16 @@ const SignUpForm = ({userSignUp, handleInputSubmit, handleInputChange}) => {
           :
           null
           }
+          { userSignUp.databaseError
+          ? 
+            <Message
+            color='pink'
+            header='Erreur à la base de données...'
+            content='Réessayez ou contactez un administrateur'
+            />
+          :
+          null
+          }
           
           <Form.Field>
             <p>Nom:</p>
@@ -85,7 +95,7 @@ const SignUpForm = ({userSignUp, handleInputSubmit, handleInputChange}) => {
             fluid
             type='password'
             name='password'
-            placeholder='Mot de passe'
+            placeholder='Mot de passe (8 caractères minimum)'
             value={userSignUp.password}
             onChange= {handleInputChange}
             maxLength={128}
@@ -98,7 +108,7 @@ const SignUpForm = ({userSignUp, handleInputSubmit, handleInputChange}) => {
           <p>Confirmer votre mot de passe:</p>
             <Form.Input
             type='password'
-            placeholder='Confirmez votre mot de passe'
+            placeholder='Confirmez votre mot de passe (8 caractères minimum)'
             required
             name='confirmPassword'
             value={userSignUp.confirmPassword}
