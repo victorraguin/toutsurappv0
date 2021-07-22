@@ -13,21 +13,26 @@ import Categories from 'src/components/Categories';
 import Articles from 'src/components/Articles';
 import SignUpForm from '../SignUpForm';
 
-
 // == Data par default
-  const initialFormUserData = ({
-    email: '',
-    password: '',
-  });
+const initialFormUserData = ({
+  email: '',
+  password: '',
+});
 
-  const initialFormSignUpData = ({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword:''
-  })
+const initialFormSignUpData = ({
+  name: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
+});
 
-
+// == Composant
+const ToutSurApp = () => {
+// == State de l'application
+  const [cards, setCards] = useState([]);
+  const [userLog, setUserLog] = useState(initialFormUserData);
+  const [userSignUp, setUserSignUp] = useState(initialFormSignUpData);
+  const [categorieSelected, setCategorieSelected] = useState();
 
 // == Composant
 const ToutSurApp = () => {
@@ -38,12 +43,16 @@ const ToutSurApp = () => {
   const [userSignUp, setUserSignUp] = useState(initialFormSignUpData);
 
   // == Fonctions de l'application
-
   const onInputLogUserChange = (name, value) => {
     setUserLog({
       ...userLog,
       [name]: value,
     });
+  };
+
+  const onCategorieSelected = (event) => {
+    const clicked = event.target.closest('a');
+    setCategorieSelected(clicked);
   };
 
   const onFormSignUp = (name, value) => {
@@ -65,22 +74,23 @@ const ToutSurApp = () => {
   const handleInputSubmit = (evt) => {
     evt.preventDefault();
     console.log('click submit', userSignUp);
-    //je veux que password et confirm password soit equivalent !!!????
-    //je recupere les mots de passes du state
-    const {password, confirmPassword} = userSignUp;
+    // je veux que password et confirm password soit equivalent !!!????
+    // je recupere les mots de passes du state
+    const { password, confirmPassword } = userSignUp;
     if (password !== confirmPassword) {
-      <Label basic color='red' pointing='left'>
+      <Label basic color="red" pointing="left">
         Your passwords don't match
       </Label>;
-    } else {
-      //make API call
     }
-    //quand je reset le form le state disparait?
+    else {
+      // make API call
+    }
+    // quand je reset le form le state disparait?
     setUserSignUp({
-      name:'',
-      email:'',
-      password:'',
-      confirmPassword:''
+      name: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
     });
   };
     // == Fonction qui permet d'envoyer la requête de connection à l'API
@@ -92,8 +102,6 @@ const ToutSurApp = () => {
       password: '',
     });
   };
-
-
 
   // == useEffect
   // == Appel à une API BACK
@@ -111,7 +119,19 @@ const ToutSurApp = () => {
     }
   }, []);
 
-
+  // == Appel à l'API Back pour récupérer une catégorie
+  useEffect(async () => {
+    try {
+      const dataFetched = await axios({
+        method: 'get',
+        url: 'https://toutsur-app-gachimaster.herokuapp.com/articles',
+      });
+      console.log(dataFetched);
+    }
+    catch (error) {
+      console.log(error.message);
+    }
+  }, [categorieSelected]);
 
   // == Rendu de l'application
   return (
@@ -125,7 +145,7 @@ const ToutSurApp = () => {
 
         {/* Page d'accueil non connecté (liste les catégories) */}
         <Route path="/" exact>
-          <Categories list={cards} />
+          <Categories list={cards} onCategorieSelected={onCategorieSelected} />
         </Route>
 
         {/* Page de connection */}
@@ -145,9 +165,9 @@ const ToutSurApp = () => {
         {/* Page d'inscription */}
         <Route path="/inscription" exact>
           <SignUpForm
-          userSignUp={userSignUp}
-          handleInputChange={handleInputChange}
-          handleInputSubmit={handleInputSubmit}
+            userSignUp={userSignUp}
+            handleInputChange={handleInputChange}
+            handleInputSubmit={handleInputSubmit}
           />
         </Route>
 

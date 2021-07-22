@@ -24,8 +24,8 @@ const Connection = ({ onInputLogUserChange, handleSubmitLogin, userLog }) => {
           #Connexion
         </h1>
       </Segment>
-      <Segment vertical color="teal">
-        <div className="connection-container">
+        <Segment vertical color="teal">
+          <div className="connection-container">
           <Form>
             <h2>
               Veuillez vous connecter pour poursuivre:
@@ -56,7 +56,7 @@ const Connection = ({ onInputLogUserChange, handleSubmitLogin, userLog }) => {
             <Button primary onClick={handleSubmitLogin}>Valider</Button>
           </Form>
         </div>
-      </Segment>
+        </Segment>
     </Container>
   );
 };
