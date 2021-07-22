@@ -51,6 +51,7 @@ const SignUpForm = ({userSignUp, handleInputSubmit, handleInputChange}) => {
           }
           
           <Form.Field>
+            <p>Nom:</p>
             <input
             type='text' 
             placeholder='Nom'
@@ -64,6 +65,7 @@ const SignUpForm = ({userSignUp, handleInputSubmit, handleInputChange}) => {
           <Divider />
 
           <Form.Field>
+            <p>Email:</p>
             <input 
             type='email' 
             placeholder='Email'
@@ -77,6 +79,7 @@ const SignUpForm = ({userSignUp, handleInputSubmit, handleInputChange}) => {
           <Divider />
 
           <Form.Field>
+          <p>Mot de passe:</p>
           <Form.Input
             fluid
             type='password'
@@ -91,6 +94,7 @@ const SignUpForm = ({userSignUp, handleInputSubmit, handleInputChange}) => {
           <Divider />
 
           <Form.Field>
+          <p>Confirmer votre mot de passe:</p>
             <Form.Input
             type='password'
             placeholder='Confirmez votre mot de passe'
