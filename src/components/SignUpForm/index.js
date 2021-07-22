@@ -1,6 +1,6 @@
 // == Import npm
 import React from 'react';
-import { Container, Segment, Form, Divider, Button } from 'semantic-ui-react';
+import { Container, Segment, Form, Divider, Button, Label } from 'semantic-ui-react';
 
 
 // == Import
@@ -9,15 +9,6 @@ import './styles.scss';
 // == Composant
 const SignUpForm = ({userSignUp, handleInputSubmit, handleInputChange}) => {
   // == Fonctions
-  //fonction pour valider les inputs du form d'inscription
-  const valdiate = () => {
-  
-
-    //
-    if(userSignUp.name === ''){
-
-    }
-  };
 
   return(
   <Container>
@@ -45,26 +36,22 @@ const SignUpForm = ({userSignUp, handleInputSubmit, handleInputChange}) => {
             name='name'
             value={userSignUp.name}
             onChange= {handleInputChange}
-            maxLength={12}
+            maxLength={32}
             //
-            error={userSignUp.nameError}
+            error='Please enter your last name'
             />
           </Form.Field>
           <Divider />
 
           <Form.Field>
             <input 
-            type='text' 
+            type='email' 
             placeholder='Email'
             required
             name='email'
             value={userSignUp.email}
             onChange= {handleInputChange}
-            maxLength={32}
-            error={{
-              content: 'Please enter a valid email address',
-              pointing: 'below',
-            }}
+            maxLength={128}
             />
           </Form.Field>
           <Divider />
@@ -77,7 +64,7 @@ const SignUpForm = ({userSignUp, handleInputSubmit, handleInputChange}) => {
             name='password'
             value={userSignUp.password}
             onChange= {handleInputChange}
-            maxLength={32}
+            maxLength={128}
             />
           </Form.Field>
           <Divider />
@@ -90,7 +77,7 @@ const SignUpForm = ({userSignUp, handleInputSubmit, handleInputChange}) => {
             name='confirmPassword'
             value={userSignUp.confirmPassword}
             onChange= {handleInputChange}
-            maxLength={32}
+            maxLength={128}
             />
           </Form.Field>
           <Form.Button 

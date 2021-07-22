@@ -70,6 +70,9 @@ const ToutSurApp = () => {
   const handleInputSubmit = (evt) => {
     evt.preventDefault();
     console.log('click submit', userSignUp);
+    //je check le form au submit
+    validateForm();
+
     //je reset le form a zero apres click du bouton
     setUserSignUp({
       name:'',
@@ -78,17 +81,21 @@ const ToutSurApp = () => {
       confirmPassword:'',
     });
 
-    checkForm();
+    
     
   };
 
-  const checkForm = () => {
+  const validateForm = () => {
     //je veux verifier que password === confirmPassword
     if(userSignUp.password !== userSignUp.confirmPassword){
-      //alert a changer
       console.log("Passwords did not match");
     } else {
       console.log("Passwords created successfully");
+    }
+
+    //email to be email shape, regex to be looked at !!!!
+    if(!userSignUp.email.includes("@")) {
+      console.log("email is not a valid form, must contain a '@' symbol")
     }
 
     //un nom pas vide
@@ -98,8 +105,7 @@ const ToutSurApp = () => {
     } else {
       setUserSignUp({nameError: false});
     }
-    //un nom de plus de 4 caracteres
-    /* if (userSignUp.name) */
+    
   }
 
     // == Fonction qui permet d'envoyer la requête de connection à l'API
