@@ -2,8 +2,12 @@
 .title {
   text-align: left;
   padding-left: 2em;
+  padding-top: 0.5em;
 }
 
+.categories {
+  padding-top: 2em;
+}
 
 .card-group {
   display: flex;
@@ -14,14 +18,12 @@
 }
 
 .ui.card:last-child {
-  min-width: 400px;
-  margin: 3em;
+  margin: 2em 0px 2em 0px;
 }
 
 
 .ui.card>.image:not(.ui) {
-  min-width: 400px;
-  min-height: 300px;
+  min-height: 200px;
 }
 
 
