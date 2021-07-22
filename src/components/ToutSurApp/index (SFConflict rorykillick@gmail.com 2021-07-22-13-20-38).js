@@ -8,6 +8,7 @@ import axios from 'axios';
 // == Import components & styles
 import './styles.scss';
 import Header from 'src/components/Header';
+import Connection from 'src/components/Connection';
 import Categories from 'src/components/Categories';
 import Articles from 'src/components/Articles';
 import SignUpForm from '../SignUpForm';
@@ -23,7 +24,12 @@ import SignUpForm from '../SignUpForm';
     name: '',
     email: '',
     password: '',
-    confirmPassword:''
+    confirmPassword:'',
+    nameError: false,
+    emailError: false,
+    passwordError: false,
+    confirmPasswordError: false,
+    passwordMatchError: false
   })
 
 
@@ -37,6 +43,7 @@ const ToutSurApp = () => {
   const [userSignUp, setUserSignUp] = useState(initialFormSignUpData);
 
   // == Fonctions de l'application
+
   const onInputLogUserChange = (name, value) => {
     setUserLog({
       ...userLog,
@@ -63,24 +70,38 @@ const ToutSurApp = () => {
   const handleInputSubmit = (evt) => {
     evt.preventDefault();
     console.log('click submit', userSignUp);
-    //je veux que password et confirm password soit equivalent !!!????
-    //je recupere les mots de passes du state
-    const {password, confirmPassword} = userSignUp;
-    if (password !== confirmPassword) {
-      <Label basic color='red' pointing='left'>
-        Your passwords don't match
-      </Label>;
-    } else {
-      //make API call
-    }
-    //quand je reset le form le state disparait?
+    //je reset le form a zero apres click du bouton
     setUserSignUp({
       name:'',
       email:'',
       password:'',
-      confirmPassword:''
+      confirmPassword:'',
+    });
+
+    let error = false;
+
+    //un nom pas vide
+    if (userSignUp.name === '') {
+      setUserSignUp({nameError: true});
+      error = true;
+    } else {
+      setUserSignUp({nameError: false});
+    }
+    //un nom de plus de 4 caracteres
+    /* if (userSignUp.name) */
+  };
+
+    // == Fonction qui permet d'envoyer la requête de connection à l'API
+  const handleSubmitLogin = (e) => {
+    e.preventDefault();
+    console.log('Coucou je voudrais faire une requête à lapi avec en params', userLog);
+    setUserLog({
+      email: '',
+      password: '',
     });
   };
+
+
 
   // == useEffect
   // == Appel à une API BACK
@@ -98,18 +119,38 @@ const ToutSurApp = () => {
     }
   }, []);
 
+
+
   // == Rendu de l'application
   return (
     <div className="toutSurApp">
-
+      {/* Composant Header qui représente le menu sur toutes les pages */}
       <Header />
+
+      {/* Début des routes */}
+      {/* Composant Switch & Route qui permet de définir les routes pour nos composants */}
       <Switch>
+
+        {/* Page d'accueil non connecté (liste les catégories) */}
         <Route path="/" exact>
           <Categories list={cards} />
         </Route>
+
+        {/* Page de connection */}
+        <Route path="/connection" exact>
+          <Connection
+            onInputLogUserChange={onInputLogUserChange}
+            handleSubmitLogin={handleSubmitLogin}
+            userLog={userLog}
+          />
+        </Route>
+
+        {/* Page des articles pour un utilisateur non connecté */}
         <Route path="/articles" exact>
           <Articles />
         </Route>
+
+        {/* Page d'inscription */}
         <Route path="/inscription" exact>
           <SignUpForm
           userSignUp={userSignUp}
@@ -117,10 +158,11 @@ const ToutSurApp = () => {
           handleInputSubmit={handleInputSubmit}
           />
         </Route>
+
+        {/* Enfin, dernière route représententant la page 404 (erreur) */}
         <Route>
           <Link
             to="/"
-            exact
           >
             <Segment vertical>
               <h2>
@@ -130,6 +172,8 @@ const ToutSurApp = () => {
           </Link>
           <iframe src="https://giphy.com/embed/TLIj98vlSKpNXnkrBK" width="480" height="480" frameBorder="0" className="giphy-embed" allowFullScreen />
         </Route>
+
+        {/* Fin de routes */}
       </Switch>
     </div>
   );
