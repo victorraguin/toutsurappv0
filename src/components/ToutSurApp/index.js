@@ -32,15 +32,7 @@ const ToutSurApp = () => {
   const [cards, setCards] = useState([]);
   const [userLog, setUserLog] = useState(initialFormUserData);
   const [userSignUp, setUserSignUp] = useState(initialFormSignUpData);
-  const [categorieSelected, setCategorieSelected] = useState();
-
-// == Composant
-const ToutSurApp = () => {
-
-// == State de l'application
-  const [cards, setCards] = useState([]);
-  const [userLog, setUserLog] = useState(initialFormUserData);
-  const [userSignUp, setUserSignUp] = useState(initialFormSignUpData);
+  const [categorieSelected, setCategorieSelected] = useState([]);
 
   // == Fonctions de l'application
   const onInputLogUserChange = (name, value) => {
@@ -49,10 +41,25 @@ const ToutSurApp = () => {
       [name]: value,
     });
   };
+  const onClickCategoriePage = async () => {
+    try {
+      const dataFetched = await axios({
+        method: 'get',
+        url: 'https://toutsur-app-gachimaster.herokuapp.com/articles',
+      });
+      console.log(dataFetched.data);
+      if (dataFetched) {
+        setCategorieSelected(dataFetched.data);
+      }
+    }
+    catch (error) {
+      console.log(error.message);
+    }
+  };
 
   const onCategorieSelected = (event) => {
     const clicked = event.target.closest('a');
-    setCategorieSelected(clicked);
+    onClickCategoriePage(clicked);
   };
 
   const onFormSignUp = (name, value) => {
@@ -119,20 +126,6 @@ const ToutSurApp = () => {
     }
   }, []);
 
-  // == Appel à l'API Back pour récupérer une catégorie
-  useEffect(async () => {
-    try {
-      const dataFetched = await axios({
-        method: 'get',
-        url: 'https://toutsur-app-gachimaster.herokuapp.com/articles',
-      });
-      console.log(dataFetched);
-    }
-    catch (error) {
-      console.log(error.message);
-    }
-  }, [categorieSelected]);
-
   // == Rendu de l'application
   return (
     <div className="toutSurApp">
@@ -159,7 +152,7 @@ const ToutSurApp = () => {
 
         {/* Page des articles pour un utilisateur non connecté */}
         <Route path="/articles" exact>
-          <Articles />
+          <Articles categorieSelected={categorieSelected} />
         </Route>
 
         {/* Page d'inscription */}

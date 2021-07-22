@@ -7,7 +7,7 @@ import Article from 'src/components/Articles/Article';
 import './styles.scss';
 
 // == Composant
-const Articles = ({ ArticlesList }) => (
+const Articles = ({ categorieSelected }) => (
   <Container>
     <Segment vertical>
       <h1 className="title">
@@ -18,7 +18,7 @@ const Articles = ({ ArticlesList }) => (
     <Segment vertical color="teal">
       <Card.Group className="card-group">
         {
-        ArticlesList.map((card) => (
+        categorieSelected.map((card) => (
           <Article key={card.id} article={card} />
         ))
           }
