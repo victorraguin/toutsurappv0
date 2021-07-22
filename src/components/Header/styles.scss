@@ -1,11 +1,21 @@
+.ui.container {
+  width: 100%;
+}
 
 .header-menu {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: center;
-  width: 100%;
+  align-content: center;
+  align-items: center;
   /* outline: solid 1px red; */
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Redressed&display=swap');
+.ui.header:first-child {
+margin: auto 0px auto 2em;
+font-size: xx-large;
+font-family: 'Redressed', cursive;
 }
 
 
