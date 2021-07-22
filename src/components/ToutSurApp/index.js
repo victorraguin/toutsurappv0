@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { Label, Segment } from 'semantic-ui-react';
 import { Route, Switch, Link } from 'react-router-dom';
-
 import axios from 'axios';
+
 
 // == Import components & styles
 import './styles.scss';
@@ -42,6 +42,33 @@ const ToutSurApp = () => {
 
   // == Fonctions de l'application
 
+  const  postSubscribeUser = async() => {
+    try{
+      const userSubscribed =  await axios({
+        method: 'post',
+        url: 'https://toutsur-app-gachimaster.herokuapp.com/signup',
+        data: {
+          name: userSignUp.name,
+          email: userSignUp.email,
+          password: userSignUp.password,
+          passwordConfirm: userSignUp.confirmPassword,
+        }
+      })
+      setUserSignUp({
+        ...userSignUp,
+          name: '',
+          email: '',
+          password:'',
+          confirmPassword:'',
+          error: false,
+          subscribed : true
+      });
+    }
+    catch(error) {
+      console.log(error);
+    }
+  }
+
   const onInputLogUserChange = (name, value) => {
     setUserLog({
       ...userLog,
@@ -69,6 +96,7 @@ const ToutSurApp = () => {
     validateForm();
   };
 
+  //Fonction pour valider le form
   const validateForm = () => {
     //je veux verifier que password === confirmPassword
     if(userSignUp.password != userSignUp.confirmPassword){
@@ -96,16 +124,8 @@ const ToutSurApp = () => {
           confirmPassword:'',
           error: true
       });
-    } else{
-      setUserSignUp({
-        ...userSignUp,
-          name: '',
-          email: '',
-          password:'',
-          confirmPassword:'',
-          error: false,
-          subscribed : true
-      });
+    } else {
+      postSubscribeUser();
       console.log('superieur a 8');
     }
     

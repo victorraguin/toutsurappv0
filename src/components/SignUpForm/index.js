@@ -43,6 +43,7 @@ const SignUpForm = ({userSignUp, handleInputSubmit, handleInputChange}) => {
           { userSignUp.subscribed
           ? 
             <Message
+            color='olive'
             header='Bienvenue sur toutSur.app !'
             content='Vous pouvez maintenant vous connecter.'
             />
