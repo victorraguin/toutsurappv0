@@ -69,7 +69,7 @@ const SignUpForm = ({userSignUp, handleInputSubmit, handleInputChange}) => {
       </Form.Field>
       <Button 
       primary 
-      type='submit' 
+      onClick={handleInputSubmit}
       >
         S'inscrire
         </Button>
