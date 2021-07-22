@@ -25,11 +25,8 @@ import SignUpForm from '../SignUpForm';
     email: '',
     password: '',
     confirmPassword:'',
-    nameError: false,
-    emailError: false,
-    passwordError: false,
-    confirmPasswordError: false,
-    passwordMatchError: false
+    error: false,
+    subscribed : false
   })
 
 
@@ -40,6 +37,7 @@ const ToutSurApp = () => {
 // == State de l'application
   const [cards, setCards] = useState([]);
   const [userLog, setUserLog] = useState(initialFormUserData);
+
   const [userSignUp, setUserSignUp] = useState(initialFormSignUpData);
 
   // == Fonctions de l'application
@@ -62,52 +60,56 @@ const ToutSurApp = () => {
     // Je récupère le nom de l'input qui a changé
     // et sa value (son contenu)
     const { name, value } = evt.target;
-    console.log(name, value);
-    setUserSignUp(name, value);
     onFormSignUp(name, value);
   };
 
   const handleInputSubmit = (evt) => {
     evt.preventDefault();
-    console.log('click submit', userSignUp);
     //je check le form au submit
     validateForm();
-
-    //je reset le form a zero apres click du bouton
-    setUserSignUp({
-      name:'',
-      email:'',
-      password:'',
-      confirmPassword:'',
-    });
-
-    
-    
   };
 
   const validateForm = () => {
     //je veux verifier que password === confirmPassword
-    if(userSignUp.password !== userSignUp.confirmPassword){
-      console.log("Passwords did not match");
-    } else {
-      console.log("Passwords created successfully");
+    if(userSignUp.password != userSignUp.confirmPassword){
+      setUserSignUp({
+        ...userSignUp,
+          password:'',
+          confirmPassword:'',
+          error: true
+      });
     }
-
     //email to be email shape, regex to be looked at !!!!
-    if(!userSignUp.email.includes("@")) {
-      console.log("email is not a valid form, must contain a '@' symbol")
+    else if(!userSignUp.email.includes("@")) {
+      setUserSignUp({
+        ...userSignUp,
+          password:'',
+          confirmPassword:'',
+          error: true
+      });
     }
-
-    //un nom pas vide
-    if (userSignUp.name === '') {
-      setUserSignUp({nameError: true});
-      error = true;
-    } else {
-      setUserSignUp({nameError: false});
+    //un minimum de huit caracters pour le mdp
+    else if ((userSignUp.password.length < 8) || (userSignUp.confirmPassword.length < 8) && (userSignUp.password != userSignUp.confirmPassword)) {
+      setUserSignUp({
+        ...userSignUp,
+          password:'',
+          confirmPassword:'',
+          error: true
+      });
+    } else{
+      setUserSignUp({
+        ...userSignUp,
+          name: '',
+          email: '',
+          password:'',
+          confirmPassword:'',
+          error: false,
+          subscribed : true
+      });
+      console.log('superieur a 8');
     }
     
   }
-
     // == Fonction qui permet d'envoyer la requête de connection à l'API
   const handleSubmitLogin = (e) => {
     e.preventDefault();

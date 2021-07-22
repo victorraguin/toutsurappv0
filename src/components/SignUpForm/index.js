@@ -1,6 +1,6 @@
 // == Import npm
 import React from 'react';
-import { Container, Segment, Form, Divider, Button, Label } from 'semantic-ui-react';
+import { Container, Segment, Form, Divider, Message } from 'semantic-ui-react';
 
 
 // == Import
@@ -24,10 +24,32 @@ const SignUpForm = ({userSignUp, handleInputSubmit, handleInputChange}) => {
           //J'empeche le rechargement au submit
           e.preventDefault();
           handleInputSubmit(e);
-        }}>
+        }}
+        error={userSignUp.error}
+        >
           <h2>
             Veuillez vous inscrire pour poursuivre:
           </h2>
+          { userSignUp.error
+          ? 
+            <Message
+            error
+            header='Erreur dans vos données :'
+            content='Veuillez vérifier vos informations...'
+            />
+          :
+          null
+          }
+          { userSignUp.subscribed
+          ? 
+            <Message
+            header='Bienvenue sur toutSur.app !'
+            content='Vous pouvez maintenant vous connecter.'
+            />
+          :
+          null
+          }
+          
           <Form.Field>
             <input
             type='text' 
@@ -37,8 +59,6 @@ const SignUpForm = ({userSignUp, handleInputSubmit, handleInputChange}) => {
             value={userSignUp.name}
             onChange= {handleInputChange}
             maxLength={32}
-            //
-            error='Please enter your last name'
             />
           </Form.Field>
           <Divider />
@@ -57,20 +77,21 @@ const SignUpForm = ({userSignUp, handleInputSubmit, handleInputChange}) => {
           <Divider />
 
           <Form.Field>
-            <input 
+          <Form.Input
+            fluid
             type='password'
-            placeholder='Mot de passe'
-            required
             name='password'
+            placeholder='Mot de passe'
             value={userSignUp.password}
             onChange= {handleInputChange}
             maxLength={128}
-            />
+            required
+          />
           </Form.Field>
           <Divider />
 
           <Form.Field>
-            <input 
+            <Form.Input
             type='password'
             placeholder='Confirmez votre mot de passe'
             required
