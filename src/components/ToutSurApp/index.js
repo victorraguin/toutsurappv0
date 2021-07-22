@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { Label, Segment } from 'semantic-ui-react';
 import { Route, Switch, Link } from 'react-router-dom';
-
 import axios from 'axios';
+
 
 // == Import components & styles
 import './styles.scss';
@@ -24,7 +24,10 @@ import SignUpForm from '../SignUpForm';
     name: '',
     email: '',
     password: '',
-    confirmPassword:''
+    confirmPassword:'',
+    error: false,
+    subscribed : false,
+    databaseError : false
   })
 
 
@@ -35,9 +38,41 @@ const ToutSurApp = () => {
 // == State de l'application
   const [cards, setCards] = useState([]);
   const [userLog, setUserLog] = useState(initialFormUserData);
+
   const [userSignUp, setUserSignUp] = useState(initialFormSignUpData);
 
   // == Fonctions de l'application
+
+  const  postSubscribeUser = async() => {
+    try{
+      const userSubscribed =  await axios({
+        method: 'post',
+        url: 'https://toutsur-app-gachimaster.herokuapp.com/signup',
+        data: {
+          name: userSignUp.name,
+          email: userSignUp.email,
+          password: userSignUp.password,
+          passwordConfirm: userSignUp.confirmPassword,
+        }
+      })
+      setUserSignUp({
+        ...userSignUp,
+          name: '',
+          email: '',
+          password:'',
+          confirmPassword:'',
+          error: false,
+          subscribed : true
+      });
+    }
+    catch(error) {
+      setUserSignUp({
+        ...userSignUp,
+        databaseError : true
+      });
+    }
+  }
+
 
   const onInputLogUserChange = (name, value) => {
     setUserLog({
@@ -57,30 +92,55 @@ const ToutSurApp = () => {
     // Je récupère le nom de l'input qui a changé
     // et sa value (son contenu)
     const { name, value } = evt.target;
-    console.log(name, value);
-    setUserSignUp(name, value);
     onFormSignUp(name, value);
   };
 
   const handleInputSubmit = (evt) => {
     evt.preventDefault();
-    console.log('click submit', userSignUp);
-    //je veux que password et confirm password soit equivalent !!!????
-    //je recupere les mots de passes du state
-    const {password, confirmPassword} = userSignUp;
-    if (password !== confirmPassword) {
-      <Label basic color='red' pointing='left'>
-        Your passwords don't match
-      </Label>;
-    } else {
-      //make API call
+    //je check le form au submit
+    validateForm();
+  };
+
+  //Fonction pour valider le form
+  const validateForm = () => {
+    //je veux verifier que password === confirmPassword
+    if(userSignUp.password != userSignUp.confirmPassword){
+      setUserSignUp({
+        ...userSignUp,
+          password:'',
+          confirmPassword:'',
+          error: true
+      });
     }
-    //quand je reset le form le state disparait?
-    setUserSignUp({
-      name:'',
-      email:'',
-      password:'',
-      confirmPassword:''
+    //email to be email shape, regex to be looked at !!!!
+    else if(!userSignUp.email.includes("@")) {
+      setUserSignUp({
+        ...userSignUp,
+          password:'',
+          confirmPassword:'',
+          error: true
+      });
+    }
+    //un minimum de huit caracters pour le mdp
+    else if ((userSignUp.password.length < 8) || (userSignUp.confirmPassword.length < 8) && (userSignUp.password != userSignUp.confirmPassword)) {
+      setUserSignUp({
+        ...userSignUp,
+          password:'',
+          confirmPassword:'',
+          error: true
+      });
+    } else {
+      postSubscribeUser();
+    }
+    
+  }
+    // == Fonction qui permet d'envoyer la requête de connection à l'API
+  const handleSubmitLogin = (e) => {
+    e.preventDefault();
+    console.log('Coucou je voudrais faire une requête à lapi avec en params', userLog);
+    setUserLog({
+      email: '',
+      password: '',
     });
   };
     // == Fonction qui permet d'envoyer la requête de connection à l'API
@@ -92,6 +152,8 @@ const ToutSurApp = () => {
       password: '',
     });
   };
+
+
 
 
 
