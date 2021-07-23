@@ -4,7 +4,6 @@ import { Segment } from 'semantic-ui-react';
 import { Route, Switch, Link } from 'react-router-dom';
 import axios from 'axios';
 
-
 // == Import components & styles
 import './styles.scss';
 import Header from 'src/components/Header';
@@ -37,14 +36,16 @@ const ToutSurApp = () => {
 // == State de l'application
   const [cards, setCards] = useState([]);
   const [userLog, setUserLog] = useState(initialFormLoginData);
-  
+
   const [userSignUp, setUserSignUp] = useState(initialFormSignUpData);
   const [categorieSelected, setCategorieSelected] = useState([]);
 
   // == Fonctions de l'application
-  const  postSubscribeUser = async() => {
-    try{
-      const userSubscribed =  await axios({
+
+  // == Fonction pour inscrire un utilisateur
+  const postSubscribeUser = async () => {
+    try {
+      const userSubscribed = await axios({
         method: 'post',
         url: 'https://toutsur-app-gachimaster.herokuapp.com/signup',
         data: {
@@ -52,26 +53,26 @@ const ToutSurApp = () => {
           email: userSignUp.email,
           password: userSignUp.password,
           passwordConfirm: userSignUp.confirmPassword,
-        }
-      })
+        },
+      });
       setUserSignUp({
         ...userSignUp,
-          name: '',
-          email: '',
-          password:'',
-          confirmPassword:'',
-          error: false,
-          subscribed : true
+        name: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+        error: false,
+        subscribed: true,
       });
     }
-    catch(error) {
+    catch (error) {
       setUserSignUp({
         ...userSignUp,
-        databaseError : true
+        databaseError: true,
       });
     }
-  }
-  
+  };
+
   const onInputLogUserChange = (name, value) => {
     setUserLog({
       ...userLog,
@@ -79,8 +80,7 @@ const ToutSurApp = () => {
     });
   };
 
-
-
+  // == Fonction pour récupérer les articles sur l'API RSS
   const onClickCategoriePage = async () => {
     try {
       const dataFetched = await axios({
@@ -107,7 +107,7 @@ const ToutSurApp = () => {
           password: userLog.password,
         },
       });
-  // == Si tout est ok :
+      // == Si tout est ok :
       setUserLog({
         ...userLog,
         email: '',
@@ -117,7 +117,7 @@ const ToutSurApp = () => {
         databaseError: false,
       });
     }
-// == Si il y a une erreur : 
+    // == Si il y a une erreur :
     catch (error) {
       setUserLog({
         ...userLog,
@@ -126,7 +126,7 @@ const ToutSurApp = () => {
       });
     }
   };
-  
+
   // == Fonction qui permet de vérifier les inputs de connexion
   const validateLoginForm = () => {
     if (!userLog.email.includes('@')) {
@@ -136,7 +136,6 @@ const ToutSurApp = () => {
         error: true,
       });
     }
-    // un minimum de huit caracters pour le mdp
     else if ((userLog.password.length < 8)) {
       setUserLog({
         ...userLog,
@@ -172,45 +171,47 @@ const ToutSurApp = () => {
 
   const handleInputSubmit = (evt) => {
     evt.preventDefault();
-    //je check le form au submit
+    // je check le form au submit
     validateForm();
   };
 
-  //Fonction pour valider le form
+  // Fonction pour valider le form
   const validateForm = () => {
-    //je veux verifier que password === confirmPassword
-    if(userSignUp.password != userSignUp.confirmPassword){
+    // je veux verifier que password === confirmPassword
+    if (userSignUp.password != userSignUp.confirmPassword) {
       setUserSignUp({
         ...userSignUp,
-          password:'',
-          confirmPassword:'',
-          error: true
+        password: '',
+        confirmPassword: '',
+        error: true,
       });
     }
-    //email to be email shape, regex to be looked at !!!!
-    else if(!userSignUp.email.includes("@")) {
+    // email to be email shape, regex to be looked at !!!!
+    else if (!userSignUp.email.includes('@')) {
       setUserSignUp({
         ...userSignUp,
-          password:'',
-          confirmPassword:'',
-          error: true
+        password: '',
+        confirmPassword: '',
+        error: true,
       });
     }
-    //un minimum de huit caracters pour le mdp
-    else if ((userSignUp.password.length < 8) || (userSignUp.confirmPassword.length < 8) && (userSignUp.password != userSignUp.confirmPassword)) {
+    // un minimum de huit caracters pour le mdp
+    else if ((userSignUp.password.length < 8) || (userSignUp.confirmPassword.length < 8) 
+    && (userSignUp.password != userSignUp.confirmPassword)) {
       setUserSignUp({
         ...userSignUp,
-          password:'',
-          confirmPassword:'',
-          error: true
+        password: '',
+        confirmPassword: '',
+        error: true,
       });
-    } else {
+    }
+    else {
       postSubscribeUser();
     }
-    
-  }
-  
-  // == Fonction qui permet de vérifier les inputs de mon utilisateur et si tout est bon, d'envoyer une requête à l'API.
+  };
+
+  // == Fonction qui permet de vérifier les inputs de mon utilisateur et si tout est bon, 
+  // == d'envoyer une requête à l'API.
   const handleSubmitLogin = (e) => {
     e.preventDefault();
     validateLoginForm();
@@ -266,6 +267,7 @@ const ToutSurApp = () => {
           <SignUpForm
             userSignUp={userSignUp}
             handleInputChange={handleInputChange}
+            handleInputSubmit={handleInputSubmit}
           />
         </Route>
 
