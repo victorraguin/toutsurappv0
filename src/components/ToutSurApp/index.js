@@ -4,6 +4,7 @@ import { Segment } from 'semantic-ui-react';
 import { Route, Switch, Link } from 'react-router-dom';
 import axios from 'axios';
 
+
 // == Import components & styles
 import './styles.scss';
 import Header from 'src/components/Header';
@@ -36,10 +37,41 @@ const ToutSurApp = () => {
 // == State de l'application
   const [cards, setCards] = useState([]);
   const [userLog, setUserLog] = useState(initialFormLoginData);
+  
   const [userSignUp, setUserSignUp] = useState(initialFormSignUpData);
   const [categorieSelected, setCategorieSelected] = useState([]);
 
   // == Fonctions de l'application
+  const  postSubscribeUser = async() => {
+    try{
+      const userSubscribed =  await axios({
+        method: 'post',
+        url: 'https://toutsur-app-gachimaster.herokuapp.com/signup',
+        data: {
+          name: userSignUp.name,
+          email: userSignUp.email,
+          password: userSignUp.password,
+          passwordConfirm: userSignUp.confirmPassword,
+        }
+      })
+      setUserSignUp({
+        ...userSignUp,
+          name: '',
+          email: '',
+          password:'',
+          confirmPassword:'',
+          error: false,
+          subscribed : true
+      });
+    }
+    catch(error) {
+      setUserSignUp({
+        ...userSignUp,
+        databaseError : true
+      });
+    }
+  }
+  
   const onInputLogUserChange = (name, value) => {
     setUserLog({
       ...userLog,
@@ -64,6 +96,7 @@ const ToutSurApp = () => {
     }
   };
 
+  // == Envoi d'une requête à l'API BACK pour la connexion de notre utilisateur
   const postLoginUser = async () => {
     try {
       const userLogged = await axios({
@@ -74,6 +107,7 @@ const ToutSurApp = () => {
           password: userLog.password,
         },
       });
+  // == Si tout est ok :
       setUserLog({
         ...userLog,
         email: '',
@@ -83,6 +117,7 @@ const ToutSurApp = () => {
         databaseError: false,
       });
     }
+// == Si il y a une erreur : 
     catch (error) {
       setUserLog({
         ...userLog,
@@ -91,6 +126,8 @@ const ToutSurApp = () => {
       });
     }
   };
+  
+  // == Fonction qui permet de vérifier les inputs de connexion
   const validateLoginForm = () => {
     if (!userLog.email.includes('@')) {
       setUserLog({
@@ -133,14 +170,54 @@ const ToutSurApp = () => {
     onFormSignUp(name, value);
   };
 
-  // == Fonction qui permet d'envoyer la requête de connection à l'API
+  const handleInputSubmit = (evt) => {
+    evt.preventDefault();
+    //je check le form au submit
+    validateForm();
+  };
+
+  //Fonction pour valider le form
+  const validateForm = () => {
+    //je veux verifier que password === confirmPassword
+    if(userSignUp.password != userSignUp.confirmPassword){
+      setUserSignUp({
+        ...userSignUp,
+          password:'',
+          confirmPassword:'',
+          error: true
+      });
+    }
+    //email to be email shape, regex to be looked at !!!!
+    else if(!userSignUp.email.includes("@")) {
+      setUserSignUp({
+        ...userSignUp,
+          password:'',
+          confirmPassword:'',
+          error: true
+      });
+    }
+    //un minimum de huit caracters pour le mdp
+    else if ((userSignUp.password.length < 8) || (userSignUp.confirmPassword.length < 8) && (userSignUp.password != userSignUp.confirmPassword)) {
+      setUserSignUp({
+        ...userSignUp,
+          password:'',
+          confirmPassword:'',
+          error: true
+      });
+    } else {
+      postSubscribeUser();
+    }
+    
+  }
+  
+  // == Fonction qui permet de vérifier les inputs de mon utilisateur et si tout est bon, d'envoyer une requête à l'API.
   const handleSubmitLogin = (e) => {
     e.preventDefault();
     validateLoginForm();
   };
 
   // == useEffect
-  // == Appel à une API BACK
+  // == Appel à la BDD
   useEffect(async () => {
     try {
       const dataFetched = await axios({
