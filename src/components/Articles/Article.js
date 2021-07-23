@@ -8,17 +8,18 @@ import './styles.scss';
 
 // == Composant
 const Article = ({ article }) => (
-  <Link
-    to={article.url}
+  <a
+    href={article.link}
+    target="_blank"
   >
     <Card
       className="card-article"
-      image='https://cdn.pixabay.com/photo/2016/09/09/23/27/the-ostrich-1658267_960_720.jpg'
-      header={`#${article.title}`}
-      color="teal"
+      image={article.media.content.[0].url}
+      header={`${article.title}`}
+      color={article.color}
       align="center"
     />
-  </Link>
+  </a>
 );
 
 // == Export

@@ -47,7 +47,7 @@ const Connection = ({ onInputLogUserChange, handleSubmitLogin, userLog }) => {
                 <Message
                   color="olive"
                   header="Bienvenue sur toutSur.app !"
-                  content="Vous pouvez maintenant vous connecter."
+                  content="Vous êtes maintenant connecté !"
                 />
               )
               : null}

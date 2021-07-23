@@ -53,10 +53,11 @@ const ToutSurApp = () => {
     try {
       const dataFetched = await axios({
         method: 'get',
-        url: 'https://toutsur-app-gachimaster.herokuapp.com/articles',
+        url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles',
       });
       if (dataFetched) {
-        setCategorieSelected(dataFetched.data);
+        setCategorieSelected(dataFetched.data.items);
+        console.log(dataFetched.data.items)
       }
     }
     catch (error) {
@@ -161,7 +162,7 @@ const ToutSurApp = () => {
   return (
     <div className="toutSurApp">
       {/* Composant Header qui représente le menu sur toutes les pages */}
-      <Header />
+      <Header userLog={userLog} />
 
       {/* Début des routes */}
       {/* Composant Switch & Route qui permet de définir les routes pour nos composants */}
