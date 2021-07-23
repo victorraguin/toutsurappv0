@@ -1,7 +1,7 @@
 // == Import npm
 import React from 'react';
 import {
-  Form, Divider, Button, Segment, Container,
+  Form, Divider, Button, Segment, Container, Message,
 } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
@@ -26,10 +26,40 @@ const Connection = ({ onInputLogUserChange, handleSubmitLogin, userLog }) => {
       </Segment>
       <Segment vertical color="teal">
         <div className="connection-container">
-          <Form>
+
+          <Form
+            error={userLog.error}
+          >
             <h2>
               Veuillez vous connecter pour poursuivre:
             </h2>
+            { userLog.error
+              ? (
+                <Message
+                  error
+                  header="Erreur dans vos données"
+                  content="Veuillez vérifier vos informations..."
+                />
+              )
+              : null}
+            { userLog.logged
+              ? (
+                <Message
+                  color="olive"
+                  header="Bienvenue sur toutSur.app !"
+                  content="Vous êtes maintenant connecté !"
+                />
+              )
+              : null}
+            { userLog.databaseError
+              ? (
+                <Message
+                  color="pink"
+                  header="Erreur à la base de données..."
+                  content="Réessayez ou contactez un administrateur"
+                />
+              )
+              : null}
             <Form.Field>
               <p className="input-text">Email :</p>
               <input

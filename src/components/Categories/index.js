@@ -7,7 +7,7 @@ import Categorie from 'src/components/Categories/Categorie';
 import './styles.scss';
 
 // == Composant
-const Categories = ({ list }) => (
+const Categories = ({ list, onCategorieSelected }) => (
   <Container>
     <Segment vertical>
       <h1 className="title">
@@ -19,7 +19,7 @@ const Categories = ({ list }) => (
       <Card.Group className="card-group">
         {
         list.map((card) => (
-          <Categorie key={card.id} categorie={card} />
+          <Categorie key={card.id} categorie={card} onCategorieSelected={onCategorieSelected} />
         ))
           }
       </Card.Group>

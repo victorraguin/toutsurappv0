@@ -1,6 +1,6 @@
 // == Import npm
 import React, { useState, useEffect } from 'react';
-import { Label, Segment } from 'semantic-ui-react';
+import { Segment } from 'semantic-ui-react';
 import { Route, Switch, Link } from 'react-router-dom';
 import axios from 'axios';
 
@@ -13,36 +13,35 @@ import Categories from 'src/components/Categories';
 import Articles from 'src/components/Articles';
 import SignUpForm from '../SignUpForm';
 
-
 // == Data par default
-  const initialFormUserData = ({
-    email: '',
-    password: '',
-  });
+const initialFormLoginData = ({
+  email: '',
+  password: '',
+  error: false,
+  databaseError: false,
+  logged: false,
+});
 
-  const initialFormSignUpData = ({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword:'',
-    error: false,
-    subscribed : false,
-    databaseError : false
-  })
-
-
+const initialFormSignUpData = ({
+  name: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
+  error: false,
+  subscribed: false,
+  databaseError: false,
+});
 
 // == Composant
 const ToutSurApp = () => {
-
 // == State de l'application
   const [cards, setCards] = useState([]);
-  const [userLog, setUserLog] = useState(initialFormUserData);
-
+  const [userLog, setUserLog] = useState(initialFormLoginData);
+  
   const [userSignUp, setUserSignUp] = useState(initialFormSignUpData);
+  const [categorieSelected, setCategorieSelected] = useState([]);
 
   // == Fonctions de l'application
-
   const  postSubscribeUser = async() => {
     try{
       const userSubscribed =  await axios({
@@ -72,13 +71,88 @@ const ToutSurApp = () => {
       });
     }
   }
-
-
+  
   const onInputLogUserChange = (name, value) => {
     setUserLog({
       ...userLog,
       [name]: value,
     });
+  };
+
+
+
+  const onClickCategoriePage = async () => {
+    try {
+      const dataFetched = await axios({
+        method: 'get',
+        url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles',
+      });
+      if (dataFetched) {
+        setCategorieSelected(dataFetched.data.items);
+      }
+    }
+    catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  // == Envoi d'une requête à l'API BACK pour la connexion de notre utilisateur
+  const postLoginUser = async () => {
+    try {
+      const userLogged = await axios({
+        method: 'post',
+        url: 'https://toutsur-app-gachimaster.herokuapp.com/login',
+        data: {
+          email: userLog.email,
+          password: userLog.password,
+        },
+      });
+  // == Si tout est ok :
+      setUserLog({
+        ...userLog,
+        email: '',
+        password: '',
+        error: false,
+        logged: true,
+        databaseError: false,
+      });
+    }
+// == Si il y a une erreur : 
+    catch (error) {
+      setUserLog({
+        ...userLog,
+        databaseError: true,
+        error: false,
+      });
+    }
+  };
+  
+  // == Fonction qui permet de vérifier les inputs de connexion
+  const validateLoginForm = () => {
+    if (!userLog.email.includes('@')) {
+      setUserLog({
+        ...userLog,
+        password: '',
+        error: true,
+      });
+    }
+    // un minimum de huit caracters pour le mdp
+    else if ((userLog.password.length < 8)) {
+      setUserLog({
+        ...userLog,
+        password: '',
+        error: true,
+      });
+    }
+    else {
+      postLoginUser();
+    }
+  };
+
+  const onCategorieSelected = (event) => {
+    const clicked = event.target.closest('a');
+    console.log('Je voudrais afficher la catégorie', clicked.name);
+    onClickCategoriePage(clicked);
   };
 
   const onFormSignUp = (name, value) => {
@@ -92,6 +166,7 @@ const ToutSurApp = () => {
     // Je récupère le nom de l'input qui a changé
     // et sa value (son contenu)
     const { name, value } = evt.target;
+    setUserSignUp(name, value);
     onFormSignUp(name, value);
   };
 
@@ -134,31 +209,15 @@ const ToutSurApp = () => {
     }
     
   }
-    // == Fonction qui permet d'envoyer la requête de connection à l'API
+  
+  // == Fonction qui permet de vérifier les inputs de mon utilisateur et si tout est bon, d'envoyer une requête à l'API.
   const handleSubmitLogin = (e) => {
     e.preventDefault();
-    console.log('Coucou je voudrais faire une requête à lapi avec en params', userLog);
-    setUserLog({
-      email: '',
-      password: '',
-    });
+    validateLoginForm();
   };
-    // == Fonction qui permet d'envoyer la requête de connection à l'API
-  const handleSubmitLogin = (e) => {
-    e.preventDefault();
-    console.log('Coucou je voudrais faire une requête à lapi avec en params', userLog);
-    setUserLog({
-      email: '',
-      password: '',
-    });
-  };
-
-
-
-
 
   // == useEffect
-  // == Appel à une API BACK
+  // == Appel à la BDD
   useEffect(async () => {
     try {
       const dataFetched = await axios({
@@ -173,13 +232,11 @@ const ToutSurApp = () => {
     }
   }, []);
 
-
-
   // == Rendu de l'application
   return (
     <div className="toutSurApp">
       {/* Composant Header qui représente le menu sur toutes les pages */}
-      <Header />
+      <Header userLog={userLog} />
 
       {/* Début des routes */}
       {/* Composant Switch & Route qui permet de définir les routes pour nos composants */}
@@ -187,7 +244,7 @@ const ToutSurApp = () => {
 
         {/* Page d'accueil non connecté (liste les catégories) */}
         <Route path="/" exact>
-          <Categories list={cards} />
+          <Categories list={cards} onCategorieSelected={onCategorieSelected} />
         </Route>
 
         {/* Page de connection */}
@@ -201,15 +258,14 @@ const ToutSurApp = () => {
 
         {/* Page des articles pour un utilisateur non connecté */}
         <Route path="/articles" exact>
-          <Articles />
+          <Articles categorieSelected={categorieSelected} />
         </Route>
 
         {/* Page d'inscription */}
         <Route path="/inscription" exact>
           <SignUpForm
-          userSignUp={userSignUp}
-          handleInputChange={handleInputChange}
-          handleInputSubmit={handleInputSubmit}
+            userSignUp={userSignUp}
+            handleInputChange={handleInputChange}
           />
         </Route>
 
