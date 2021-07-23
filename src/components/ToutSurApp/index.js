@@ -1,6 +1,6 @@
 // == Import npm
 import React, { useState, useEffect } from 'react';
-import { Label, Segment } from 'semantic-ui-react';
+import { Segment } from 'semantic-ui-react';
 import { Route, Switch, Link } from 'react-router-dom';
 import axios from 'axios';
 
@@ -57,7 +57,6 @@ const ToutSurApp = () => {
       });
       if (dataFetched) {
         setCategorieSelected(dataFetched.data.items);
-        console.log(dataFetched.data.items)
       }
     }
     catch (error) {
@@ -99,7 +98,6 @@ const ToutSurApp = () => {
         password: '',
         error: true,
       });
-      console.log("erreur de mail")
     }
     // un minimum de huit caracters pour le mdp
     else if ((userLog.password.length < 8)) {
@@ -108,7 +106,6 @@ const ToutSurApp = () => {
         password: '',
         error: true,
       });
-      console.log("erreur de longueur")
     }
     else {
       postLoginUser();

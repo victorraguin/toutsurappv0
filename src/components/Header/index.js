@@ -18,8 +18,8 @@ const MenuComponent = ({ userLog }) => (
       >
         <Header as="h2">toutSur.app</Header>
       </NavLink>
-      { userLog.logged
-        ? (
+      
+      { userLog.logged ? (
           <Menu.Menu position="right">
             <NavLink
               className="menu-link"
