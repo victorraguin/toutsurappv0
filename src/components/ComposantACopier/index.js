@@ -1,25 +1,25 @@
 // == Import npm
 import React from 'react';
 import { Card, Segment, Container } from 'semantic-ui-react';
-import Article from 'src/components/Articles/Article';
+import Card from './ComposantACopier';
 
 // == Import
 import './styles.scss';
 
 // == Composant
-const Articles = ({ categorieSelected }) => (
+const ComposantACopier = ({ props }) => (
   <Container>
     <Segment vertical>
       <h1 className="title">
-        #Articles
+        #Titre de la page
       </h1>
     </Segment>
 
     <Segment vertical color="teal">
       <Card.Group className="card-group">
         {
-        categorieSelected.map((card) => (
-          <Article key={card.id} article={card} />
+        props.map((card) => (
+          <Cards key={card.id} categorie={card} />
         ))
           }
       </Card.Group>
@@ -28,4 +28,4 @@ const Articles = ({ categorieSelected }) => (
 );
 
 // == Export
-export default Articles;
+export default ComposantACopier;
