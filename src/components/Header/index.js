@@ -39,6 +39,20 @@ const MenuComponent = ({ userLog, logOutUser }) => (
           </NavLink>
           <NavLink
             className="menu-link"
+            to="/categories"
+            exact
+            activeClassName="menu-link--active"
+          >
+            <Menu.Item
+              className="menu-button"
+              position="right"
+              name="categories"
+              href="/categories"
+            >Catégories
+            </Menu.Item>
+          </NavLink>
+          <NavLink
+            className="menu-link"
             to="/favoris"
             exact
             activeClassName="menu-link--active"

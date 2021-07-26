@@ -1,7 +1,9 @@
 // == Import npm
 import React, { useState, useEffect } from 'react';
 import { Segment } from 'semantic-ui-react';
-import { Route, Switch, Link } from 'react-router-dom';
+import {
+  Route, Switch, Link, withRouter,
+} from 'react-router-dom';
 import axios from 'axios';
 
 // == Import components & styles
@@ -93,7 +95,7 @@ const ToutSurApp = () => {
         url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles',
       });
       if (dataFetched) {
-        console.log(dataFetched)
+        console.log(dataFetched);
         const tableauOriginal = dataFetched.data.items;
         const tableauFormate = tableauOriginal.map((obj) => {
           const url = new URL(obj.url);
@@ -109,12 +111,12 @@ const ToutSurApp = () => {
             return newObj;
           }
           if (newObj.media) {
-            newObj.media = obj.media.content[0].['url']
+            newObj.media = obj.media.content[0].url;
             return newObj;
           }
           return newObj;
         });
-        console.log(tableauFormate)
+        console.log(tableauFormate);
         setCategorieSelected(tableauFormate);
       }
     }
@@ -134,6 +136,7 @@ const ToutSurApp = () => {
           password: userLog.password,
         },
       });
+      window.location.replace('/');
       // == Si tout est ok :
       // == On récupère le token JWT envoyé par l'API, on le stock dans le header de axios,
       // == Puis on le stock dans le localStorage en cas de rechargement de la page.
@@ -331,6 +334,10 @@ const ToutSurApp = () => {
           />
         </Route>
 
+        <Route path="/categories" exact>
+          <Categories list={cards} onCategorieSelected={onCategorieSelected} />
+        </Route>
+
         {/* Enfin, dernière route représententant la page 404 (erreur) */}
         <Route>
           <Link
@@ -342,7 +349,7 @@ const ToutSurApp = () => {
               </h2>
             </Segment>
           </Link>
-          <iframe src="https://giphy.com/embed/TLIj98vlSKpNXnkrBK" width="480" height="480" frameBorder="0" className="giphy-embed" allowFullScreen />
+          <iframe src="https://giphy.com/embed/TLIj98vlSKpNXnkrBK" width="480" height="480" frameBorder="0" allowFullScreen />
         </Route>
 
         {/* Fin de routes */}
@@ -352,4 +359,4 @@ const ToutSurApp = () => {
 };
 
 // == Export
-export default ToutSurApp;
+export default withRouter(ToutSurApp);

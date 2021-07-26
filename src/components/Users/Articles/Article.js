@@ -19,7 +19,7 @@ const Article = ({ article }) => (
       header={`${article.title}`}
       description={article.site}
       color="blue"
-      align="center"
+      align="left"
     />
   </a>
 );
