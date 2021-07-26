@@ -93,14 +93,17 @@ const ToutSurApp = () => {
         url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles',
       });
       if (dataFetched) {
-        console.log(dataFetched.data);
+        console.log(dataFetched)
         const tableauOriginal = dataFetched.data.items;
         const tableauFormate = tableauOriginal.map((obj) => {
+          const url = new URL(obj.url);
+          const splitUrl = url.hostname;
           const newObj = {
             ...obj,
           };
           newObj.title = obj.title;
           newObj.link = obj.url;
+          newObj.site = splitUrl;
           if (newObj.enclosures) {
             newObj.media = obj.enclosures[0].url;
             return newObj;
@@ -111,7 +114,7 @@ const ToutSurApp = () => {
           }
           return newObj;
         });
-        console.log(tableauFormate);
+        console.log(tableauFormate)
         setCategorieSelected(tableauFormate);
       }
     }

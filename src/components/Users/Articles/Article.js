@@ -17,6 +17,7 @@ const Article = ({ article }) => (
       className="card-article"
       image={article.media}
       header={`${article.title}`}
+      description={article.site}
       color="blue"
       align="center"
     />
