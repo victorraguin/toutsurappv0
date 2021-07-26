@@ -7,10 +7,15 @@ import axios from 'axios';
 // == Import components & styles
 import './styles.scss';
 import Header from 'src/components/Header';
-import Connection from 'src/components/Connection';
-import Categories from 'src/components/Categories';
-import Articles from 'src/components/Articles';
-import SignUpForm from '../SignUpForm';
+
+// == Import users components
+import Connection from 'src/components/Users/Connection';
+import Categories from 'src/components/Users/Categories';
+import Articles from 'src/components/Users/Articles';
+import ArticlesMember from 'src/components/Members/Articles';
+import SignUpForm from '../Users/SignUpForm';
+
+// == Import members components
 
 // == Data par default
 const initialFormLoginData = ({
@@ -196,7 +201,7 @@ const ToutSurApp = () => {
       });
     }
     // un minimum de huit caracters pour le mdp
-    else if ((userSignUp.password.length < 8) || (userSignUp.confirmPassword.length < 8) 
+    else if ((userSignUp.password.length < 8) || (userSignUp.confirmPassword.length < 8)
     && (userSignUp.password != userSignUp.confirmPassword)) {
       setUserSignUp({
         ...userSignUp,
@@ -210,7 +215,7 @@ const ToutSurApp = () => {
     }
   };
 
-  // == Fonction qui permet de vérifier les inputs de mon utilisateur et si tout est bon, 
+  // == Fonction qui permet de vérifier les inputs de mon utilisateur et si tout est bon,
   // == d'envoyer une requête à l'API.
   const handleSubmitLogin = (e) => {
     e.preventDefault();
@@ -245,7 +250,9 @@ const ToutSurApp = () => {
 
         {/* Page d'accueil non connecté (liste les catégories) */}
         <Route path="/" exact>
-          <Categories list={cards} onCategorieSelected={onCategorieSelected} />
+          { userLog.logged
+            ? <ArticlesMember list={cards} />
+            : <Categories list={cards} onCategorieSelected={onCategorieSelected} />}
         </Route>
 
         {/* Page de connection */}

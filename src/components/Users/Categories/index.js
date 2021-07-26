@@ -1,7 +1,7 @@
 // == Import npm
 import React from 'react';
 import { Card, Segment, Container } from 'semantic-ui-react';
-import Categorie from 'src/components/Categories/Categorie';
+import Categorie from './Categorie';
 
 // == Import
 import './styles.scss';
