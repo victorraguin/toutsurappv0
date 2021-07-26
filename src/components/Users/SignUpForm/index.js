@@ -60,7 +60,7 @@ const SignUpForm = ({ userSignUp, handleInputSubmit, handleInputChange }) =>
               : null}
 
             <Form.Field>
-              <p>Nom:</p>
+              <p className="input-text">Nom:</p>
               <input
                 type="text"
                 placeholder="Nom"
@@ -74,7 +74,7 @@ const SignUpForm = ({ userSignUp, handleInputSubmit, handleInputChange }) =>
             <Divider />
 
             <Form.Field>
-              <p>Email:</p>
+              <p className="input-text">Email:</p>
               <input
                 type="email"
                 placeholder="Email"
@@ -88,7 +88,7 @@ const SignUpForm = ({ userSignUp, handleInputSubmit, handleInputChange }) =>
             <Divider />
 
             <Form.Field>
-              <p>Mot de passe:</p>
+              <p className="input-text">Mot de passe:</p>
               <Form.Input
                 fluid
                 type="password"
@@ -103,7 +103,7 @@ const SignUpForm = ({ userSignUp, handleInputSubmit, handleInputChange }) =>
             <Divider />
 
             <Form.Field>
-              <p>Confirmer votre mot de passe:</p>
+              <p className="input-text">Confirmer votre mot de passe:</p>
               <Form.Input
                 type="password"
                 placeholder="Confirmez votre mot de passe (8 caractères minimum)"
@@ -116,7 +116,6 @@ const SignUpForm = ({ userSignUp, handleInputSubmit, handleInputChange }) =>
             </Form.Field>
             <Form.Button
               primary
-          // j'empeche la possibilité de clicker sur le bouton tant que tous les champs ne sont pas completé
               disabled={!userSignUp.name
           || !userSignUp.email
           || !userSignUp.password

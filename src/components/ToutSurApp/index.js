@@ -93,7 +93,26 @@ const ToutSurApp = () => {
         url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles',
       });
       if (dataFetched) {
-        setCategorieSelected(dataFetched.data.items);
+        console.log(dataFetched.data);
+        const tableauOriginal = dataFetched.data.items;
+        const tableauFormate = tableauOriginal.map((obj) => {
+          const newObj = {
+            ...obj,
+          };
+          newObj.title = obj.title;
+          newObj.link = obj.url;
+          if (newObj.enclosures) {
+            newObj.media = obj.enclosures[0].url;
+            return newObj;
+          }
+          if (newObj.media) {
+            newObj.media = obj.media.content[0].['url']
+            return newObj;
+          }
+          return newObj;
+        });
+        console.log(tableauFormate);
+        setCategorieSelected(tableauFormate);
       }
     }
     catch (error) {
@@ -168,12 +187,12 @@ const ToutSurApp = () => {
       error: false,
       logged: false,
       databaseError: false,
-  });
-};
+    });
+  };
 
   const onCategorieSelected = (event) => {
     const clicked = event.target.closest('a');
-    onClickCategoriePage(clicked);
+    onClickCategoriePage(clicked.name);
   };
 
   const onFormSignUp = (name, value) => {
@@ -243,7 +262,6 @@ const ToutSurApp = () => {
   // == Appel à la BDD
   useEffect(async () => {
     const tokeninLocalStorage = localStorage.getItem('token');
-    console.log(tokeninLocalStorage);
     if (tokeninLocalStorage) {
       axios.defaults.baseURL = 'https://toutsur-app-gachimaster.herokuapp.com';
       axios.defaults.headers.common.Authorization = ` bearer ${tokeninLocalStorage} `;
@@ -262,7 +280,6 @@ const ToutSurApp = () => {
           method: 'get',
           url: 'https://toutsur-app-gachimaster.herokuapp.com/categories',
         });
-        console.log(dataFetched);
         setCards(dataFetched.data);
       }
       catch (error) {

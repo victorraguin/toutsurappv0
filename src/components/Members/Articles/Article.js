@@ -34,7 +34,7 @@ const Article = () => (
 
     <Image src="https://cdn.pixabay.com/photo/2021/07/13/20/00/lion-6464429_960_720.jpg" wrapped ui={false} />
     <Card.Content>
-      <Card.Header>Le lion c'est un gros chat</Card.Header>
+      <Card.Header>Valentin c'est un gros chat</Card.Header>
     </Card.Content>
     <Card.Content extra className="card-article-container">
       <a className="card-article-header">

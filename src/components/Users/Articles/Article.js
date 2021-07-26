@@ -11,12 +11,13 @@ const Article = ({ article }) => (
   <a
     href={article.link}
     target="_blank"
+    rel="noreferrer"
   >
     <Card
       className="card-article"
-      image={article.media.content.[0].url}
+      image={article.media}
       header={`${article.title}`}
-      color={article.color}
+      color="blue"
       align="center"
     />
   </a>

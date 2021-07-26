@@ -1,6 +1,9 @@
 // == Import npm
 import React from 'react';
-import { Card, Segment, Container } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
+import {
+  Card, Segment, Container, Icon,
+} from 'semantic-ui-react';
 import Article from './Article';
 
 // == Import
@@ -14,8 +17,10 @@ const Articles = ({ categorieSelected }) => (
         #Articles
       </h1>
     </Segment>
-
     <Segment vertical color="teal">
+      <Segment vertical>
+        Pour enregistrer vos articles en favoris, pensez à<Link to="/inscription"> vous inscrire !</Link>
+      </Segment>
       <Card.Group className="card-group">
         {
         categorieSelected.map((card) => (
