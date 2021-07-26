@@ -113,6 +113,11 @@ const ToutSurApp = () => {
         },
       });
       // == Si tout est ok :
+      // == On récupère le token JWT envoyé par l'API, on le stock dans le header de axios,
+      // == Puis on le stock dans le localStorage en cas de rechargement de la page.
+      axios.defaults.baseURL = 'https://toutsur-app-gachimaster.herokuapp.com';
+      axios.defaults.headers.common.Authorization = ` bearer ${userLogged.data.token} `;
+      localStorage.setItem('token', userLogged.data.token);
       setUserLog({
         ...userLog,
         email: '',
@@ -153,9 +158,21 @@ const ToutSurApp = () => {
     }
   };
 
+  // == Fonction de logOut
+  const logOutUser = () => {
+    localStorage.clear();
+    setUserLog({
+      ...userLog,
+      email: '',
+      password: '',
+      error: false,
+      logged: false,
+      databaseError: false,
+  });
+};
+
   const onCategorieSelected = (event) => {
     const clicked = event.target.closest('a');
-    console.log('Je voudrais afficher la catégorie', clicked.name);
     onClickCategoriePage(clicked);
   };
 
@@ -225,16 +242,32 @@ const ToutSurApp = () => {
   // == useEffect
   // == Appel à la BDD
   useEffect(async () => {
-    try {
-      const dataFetched = await axios({
-        method: 'get',
-        url: 'https://toutsur-app-gachimaster.herokuapp.com/categories',
+    const tokeninLocalStorage = localStorage.getItem('token');
+    console.log(tokeninLocalStorage);
+    if (tokeninLocalStorage) {
+      axios.defaults.baseURL = 'https://toutsur-app-gachimaster.herokuapp.com';
+      axios.defaults.headers.common.Authorization = ` bearer ${tokeninLocalStorage} `;
+      setUserLog({
+        ...userLog,
+        email: '',
+        password: '',
+        error: false,
+        logged: true,
+        databaseError: false,
       });
-      console.log(dataFetched);
-      setCards(dataFetched.data);
     }
-    catch (error) {
-      console.log(error.message);
+    else {
+      try {
+        const dataFetched = await axios({
+          method: 'get',
+          url: 'https://toutsur-app-gachimaster.herokuapp.com/categories',
+        });
+        console.log(dataFetched);
+        setCards(dataFetched.data);
+      }
+      catch (error) {
+        console.log(error.message);
+      }
     }
   }, []);
 
@@ -242,7 +275,7 @@ const ToutSurApp = () => {
   return (
     <div className="toutSurApp">
       {/* Composant Header qui représente le menu sur toutes les pages */}
-      <Header userLog={userLog} />
+      <Header userLog={userLog} logOutUser={logOutUser} />
 
       {/* Début des routes */}
       {/* Composant Switch & Route qui permet de définir les routes pour nos composants */}
