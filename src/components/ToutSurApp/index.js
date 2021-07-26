@@ -14,6 +14,7 @@ import Categories from 'src/components/Users/Categories';
 import Articles from 'src/components/Users/Articles';
 import ArticlesMember from 'src/components/Members/Articles';
 import SignUpForm from '../Users/SignUpForm';
+import Favoris from 'src/components/Members/Favoris';
 
 // == Import members components
 
@@ -276,6 +277,11 @@ const ToutSurApp = () => {
             handleInputChange={handleInputChange}
             handleInputSubmit={handleInputSubmit}
           />
+        </Route>
+
+          {/* Page des favoris pour un utilisateur  connecté */}
+        <Route path="/favoris" exact>
+          <Favoris />
         </Route>
 
         {/* Enfin, dernière route représententant la page 404 (erreur) */}
