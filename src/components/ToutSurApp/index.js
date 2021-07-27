@@ -13,6 +13,7 @@ import Header from 'src/components/Header';
 // == Import users components
 import Connection from 'src/components/Users/Connection';
 import Categories from 'src/components/Users/Categories';
+import CategoriesMember from 'src/components/Members/CategoriesMember';
 import Articles from 'src/components/Users/Articles';
 import ArticlesMember from 'src/components/Members/Articles';
 import ArticlesByCategories from 'src/components/Members/ArticlesByCategories';
@@ -341,7 +342,9 @@ const ToutSurApp = () => {
         {/* Route pour utilisateur connecté pour accéder aux catégories du site */}
 
         <Route path="/categories" exact>
-          <Categories list={cards} onCategorieSelected={onCategorieSelected} />
+          { userLog.logged
+            ? <CategoriesMember list={cards} onCategorieSelected={onCategorieSelected} />
+            : <Categories list={cards} onCategorieSelected={onCategorieSelected} />}
         </Route>
 
         {/* Enfin, dernière route représententant la page 404 (erreur) */}

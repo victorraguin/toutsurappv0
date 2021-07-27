@@ -34,7 +34,7 @@ const Article = ({ article }) => (
       </a>
     </Card.Content>
     <Card
-      image={article.media}
+      image={ article.media ? article.media : 'https://cdn.pixabay.com/photo/2019/04/10/11/56/watercolour-4116932_960_720.png'}
       link='true'
       href={article.url}
       target="_blank"
@@ -44,7 +44,7 @@ const Article = ({ article }) => (
     textAlign="left"
       image={article.media}
       header={article.title}
-      description={article.site}
+      description={ article.media ? article.site : `${article.site} : Impossible de charger l'image.`}
     />
     <Card.Content extra className="card-article-container">
       <a className="card-article-header">

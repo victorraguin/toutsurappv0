@@ -18,13 +18,10 @@ const ArticlesMember = ({ props }) => (
 
     <Segment vertical color="teal">
     <Segment vertical>
-        Ci-dessous, une liste de vos articles favoris. Mais n'oubliez pas, vous pouvez <Link to="/favoris"> gérer vos catégories préférées !</Link>
+        Bonjour !
       </Segment>
-      <Card.Group className="card-group">
-        <Article />
-        <Article />
-        <Article />
-        <Article />
+      <Card.Group className="card-group" centered>
+        <h4>Vous n'avez pas encore de catégories favorites...</h4>
       </Card.Group>
     </Segment>
   </Container>
