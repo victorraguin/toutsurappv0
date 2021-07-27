@@ -15,6 +15,7 @@ import Connection from 'src/components/Users/Connection';
 import Categories from 'src/components/Users/Categories';
 import Articles from 'src/components/Users/Articles';
 import ArticlesMember from 'src/components/Members/Articles';
+import ArticlesByCategories from 'src/components/Members/ArticlesByCategories';
 import Favoris from 'src/components/Members/Favoris';
 import SignUpForm from '../Users/SignUpForm';
 import Blog from '../Members/Blog';
@@ -92,33 +93,32 @@ const ToutSurApp = () => {
   // == Fonction pour récupérer les articles sur l'API RSS
   const onClickCategoriePage = async (categorie) => {
     try {
-      const dataFetched = await axios({
-        method: 'get',
-        url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/music',
-      });
-      if (dataFetched) {
-        console.log(dataFetched);
-        const tableauOriginal = dataFetched.data.items;
-        const tableauFormate = tableauOriginal.map((obj) => {
-          const url = new URL(obj.url);
-          const splitUrl = url.hostname;
-          const newObj = {
-            ...obj,
-          };
-          newObj.title = obj.title;
-          newObj.link = obj.url;
-          newObj.site = splitUrl;
-          if (newObj.enclosures) {
-            newObj.media = obj.enclosures[0].url;
-            return newObj;
-          }
-          if (newObj.media) {
-            newObj.media = obj.media.content[0].url;
-            return newObj;
-          }
-          return newObj;
+      if (categorie === 'Musique') {
+        const dataFetched = await axios({
+          method: 'get',
+          url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/music',
         });
-        setCategorieSelected(tableauFormate);
+        console.log('Data fetch', dataFetched);
+        setCategorieSelected([]);
+        setCategorieSelected(dataFetched.data);
+      }
+      else if (categorie === 'Jeux vidéos') {
+        const dataFetched = await axios({
+          method: 'get',
+          url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/gaming',
+        });
+        console.log('Data fetch', dataFetched);
+        setCategorieSelected([]);
+        setCategorieSelected(dataFetched.data);
+      }
+      else if (categorie === 'Sport') {
+        const dataFetched = await axios({
+          method: 'get',
+          url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/sports',
+        });
+        console.log('Data fetch', dataFetched);
+        setCategorieSelected([]);
+        setCategorieSelected(dataFetched.data);
       }
     }
     catch (error) {
@@ -196,7 +196,7 @@ const ToutSurApp = () => {
   };
   const onCategorieSelected = (event) => {
     const clicked = event.target.closest('a');
-    console.log(clicked.name)
+    console.log(clicked.name);
     onClickCategoriePage(clicked.name);
   };
   const onFormSignUp = (name, value) => {
@@ -286,32 +286,6 @@ const ToutSurApp = () => {
     }
   }, []);
 
-  useEffect(async () => {
-    try {
-      console.log('Lancement du fetch favoris categories');
-      const dataCategoriesFetched = await axios({
-        method: 'post',
-        url: 'https://toutsur-app-gachimaster.herokuapp.com/favorites/categories',
-        data: {
-          id: userLog.id,
-        },
-      });
-      setUserBookmarksCategories(dataCategoriesFetched);
-      /*       console.log('Lancement du fetch favoris articles');
-      const dataArticlesFetched = await axios({
-        method: 'post',
-        url: 'https://toutsur-app-gachimaster.herokuapp.com/favorites/articles',
-        data: {
-          id: userLog.id,
-        },
-      });
-      setUserBookmarksArticles(dataArticlesFetched); */
-    }
-    catch (error) {
-      console.log(error.message);
-    }
-  }, []);
-
   // == Rendu de l'application
   return (
     <div className="toutSurApp">
@@ -340,7 +314,9 @@ const ToutSurApp = () => {
 
         {/* Page des articles pour un utilisateur non connecté */}
         <Route path="/articles" exact>
-          <Articles categorieSelected={categorieSelected} />
+          { userLog.logged
+            ? <ArticlesByCategories categorieSelected={categorieSelected} />
+            : <Articles categorieSelected={categorieSelected} />}
         </Route>
 
         {/* Page d'inscription */}
