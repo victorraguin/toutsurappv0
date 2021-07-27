@@ -15,14 +15,15 @@ import Connection from 'src/components/Users/Connection';
 import Categories from 'src/components/Users/Categories';
 import Articles from 'src/components/Users/Articles';
 import ArticlesMember from 'src/components/Members/Articles';
-import SignUpForm from '../Users/SignUpForm';
 import Favoris from 'src/components/Members/Favoris';
+import SignUpForm from '../Users/SignUpForm';
 import Blog from '../Members/Blog';
 
 // == Import members components
 
 // == Data par default
 const initialFormLoginData = ({
+  id: 0,
   email: '',
   password: '',
   error: false,
@@ -127,20 +128,26 @@ const ToutSurApp = () => {
     }
   };
 
-  //== Fonction qui permet de récupérer les catégories ET les articles favoris
+  // == Fonction qui permet de récupérer les catégories ET les articles favoris
   // == de notre utilisateur, dans notre back.
   const onClickBookMarkPage = async () => {
     try {
-      console.log('Lancement du fetch favoris categories')
+      console.log('Lancement du fetch favoris categories');
       const dataCategoriesFetched = await axios({
         method: 'post',
         url: 'https://toutsur-app-gachimaster.herokuapp.com/favorites/categories',
+        data: {
+          id: userLog.id,
+        },
       });
-        setUserBookmarksCategories(dataCategoriesFetched);
-        console.log('Lancement du fetch favoris articles')
+      setUserBookmarksCategories(dataCategoriesFetched);
+      console.log('Lancement du fetch favoris articles');
       const dataArticlesFetched = await axios({
         method: 'post',
         url: 'https://toutsur-app-gachimaster.herokuapp.com/favorites/articles',
+        data: {
+          id: userLog.id,
+        },
       });
       setUserBookmarksArticles(dataArticlesFetched);
     }
@@ -160,7 +167,7 @@ const ToutSurApp = () => {
           password: userLog.password,
         },
       });
-      window.location.replace('/');
+      console.log(userLogged);
       // == Si tout est ok :
       // == On récupère le token JWT envoyé par l'API, on le stock dans le header de axios,
       // == Puis on le stock dans le localStorage en cas de rechargement de la page.
@@ -169,6 +176,7 @@ const ToutSurApp = () => {
       localStorage.setItem('token', userLogged.data.token);
       setUserLog({
         ...userLog,
+        id: userLogged.data.id,
         email: '',
         password: '',
         error: false,
@@ -358,7 +366,7 @@ const ToutSurApp = () => {
           />
         </Route>
 
-          {/* Page des favoris pour un utilisateur  connecté */}
+        {/* Page des favoris pour un utilisateur  connecté */}
         <Route path="/favoris" exact>
           <Favoris />
         </Route>
@@ -372,7 +380,7 @@ const ToutSurApp = () => {
 
         <Route path="/categories" exact>
           <Categories list={cards} onCategorieSelected={onCategorieSelected} />
-            
+
         </Route>
 
         {/* Enfin, dernière route représententant la page 404 (erreur) */}
