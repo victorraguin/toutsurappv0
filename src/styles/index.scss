@@ -1,7 +1,19 @@
 @use 'reset';
 @use 'vars';
 
-body {
+
+html {
+  background-color:whitesmoke;
+  };
+
+#root {
+  background-color:whitesmoke;
+  height: 100%;
+  width: 100%;
+}
+
+
+.root {
   font-family: sans-serif;
 }
 

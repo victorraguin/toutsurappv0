@@ -1,8 +1,8 @@
 const Feed = require('rss-to-json-v2');
 
 const fetchController = {
-  findAll: async (_, res) => {
-    Feed.load('https://www.lemonde.fr/musiques/rss_full.xml', (err, rss) => {
+  findAll: (_, res) => {
+    Feed.load('http://www.rssmix.com/u/13200552/rss.xml', (err, rss) => {
       res.json(rss);
     });
   },

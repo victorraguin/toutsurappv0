@@ -4,6 +4,8 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { render } from 'react-dom';
 import 'semantic-ui-css/semantic.min.css';
 
+import 'src/styles/index.scss';
+
 // == Import : local
 // Composants
 import ToutSurApp from 'src/components/ToutSurApp';

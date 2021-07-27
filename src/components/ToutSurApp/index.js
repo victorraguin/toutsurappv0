@@ -1,7 +1,9 @@
 // == Import npm
 import React, { useState, useEffect } from 'react';
 import { Segment } from 'semantic-ui-react';
-import { Route, Switch, Link } from 'react-router-dom';
+import {
+  Route, Switch, Link, withRouter,
+} from 'react-router-dom';
 import axios from 'axios';
 
 // == Import components & styles
@@ -15,6 +17,7 @@ import Articles from 'src/components/Users/Articles';
 import ArticlesMember from 'src/components/Members/Articles';
 import SignUpForm from '../Users/SignUpForm';
 import Favoris from 'src/components/Members/Favoris';
+import Blog from '../Members/Blog';
 
 // == Import members components
 
@@ -95,7 +98,28 @@ const ToutSurApp = () => {
         url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles',
       });
       if (dataFetched) {
-        setCategorieSelected(dataFetched.data.items);
+        console.log(dataFetched);
+        const tableauOriginal = dataFetched.data.items;
+        const tableauFormate = tableauOriginal.map((obj) => {
+          const url = new URL(obj.url);
+          const splitUrl = url.hostname;
+          const newObj = {
+            ...obj,
+          };
+          newObj.title = obj.title;
+          newObj.link = obj.url;
+          newObj.site = splitUrl;
+          if (newObj.enclosures) {
+            newObj.media = obj.enclosures[0].url;
+            return newObj;
+          }
+          if (newObj.media) {
+            newObj.media = obj.media.content[0].url;
+            return newObj;
+          }
+          return newObj;
+        });
+        setCategorieSelected(tableauFormate);
       }
     }
     catch (error) {
@@ -136,7 +160,13 @@ const ToutSurApp = () => {
           password: userLog.password,
         },
       });
+      window.location.replace('/');
       // == Si tout est ok :
+      // == On récupère le token JWT envoyé par l'API, on le stock dans le header de axios,
+      // == Puis on le stock dans le localStorage en cas de rechargement de la page.
+      axios.defaults.baseURL = 'https://toutsur-app-gachimaster.herokuapp.com';
+      axios.defaults.headers.common.Authorization = ` bearer ${userLogged.data.token} `;
+      localStorage.setItem('token', userLogged.data.token);
       setUserLog({
         ...userLog,
         email: '',
@@ -177,10 +207,22 @@ const ToutSurApp = () => {
     }
   };
 
+  // == Fonction de logOut
+  const logOutUser = () => {
+    localStorage.clear();
+    setUserLog({
+      ...userLog,
+      email: '',
+      password: '',
+      error: false,
+      logged: false,
+      databaseError: false,
+    });
+  };
+
   const onCategorieSelected = (event) => {
     const clicked = event.target.closest('a');
-    console.log('Je voudrais afficher la catégorie', clicked.name);
-    onClickCategoriePage(clicked);
+    onClickCategoriePage(clicked.name);
   };
 
   const onFormSignUp = (name, value) => {
@@ -249,16 +291,30 @@ const ToutSurApp = () => {
   // == useEffect
   // == Appel à la BDD
   useEffect(async () => {
-    try {
-      const dataFetched = await axios({
-        method: 'get',
-        url: 'https://toutsur-app-gachimaster.herokuapp.com/categories',
+    const tokeninLocalStorage = localStorage.getItem('token');
+    if (tokeninLocalStorage) {
+      axios.defaults.baseURL = 'https://toutsur-app-gachimaster.herokuapp.com';
+      axios.defaults.headers.common.Authorization = ` bearer ${tokeninLocalStorage} `;
+      setUserLog({
+        ...userLog,
+        email: '',
+        password: '',
+        error: false,
+        logged: true,
+        databaseError: false,
       });
-      console.log(dataFetched);
-      setCards(dataFetched.data);
     }
-    catch (error) {
-      console.log(error.message);
+    else {
+      try {
+        const dataFetched = await axios({
+          method: 'get',
+          url: 'https://toutsur-app-gachimaster.herokuapp.com/categories',
+        });
+        setCards(dataFetched.data);
+      }
+      catch (error) {
+        console.log(error.message);
+      }
     }
   }, []);
 
@@ -266,7 +322,7 @@ const ToutSurApp = () => {
   return (
     <div className="toutSurApp">
       {/* Composant Header qui représente le menu sur toutes les pages */}
-      <Header userLog={userLog} onClickBookMarkPage={onClickBookMarkPage} />
+      <Header userLog={userLog} logOutUser={logOutUser} onClickBookMarkPage={onClickBookMarkPage} />
 
       {/* Début des routes */}
       {/* Composant Switch & Route qui permet de définir les routes pour nos composants */}
@@ -307,6 +363,18 @@ const ToutSurApp = () => {
           <Favoris />
         </Route>
 
+        {/* Route pour utilisateur connecté pour accéder à la fonction Blog du site */}
+        <Route path="/blog" exact>
+          <Blog />
+        </Route>
+
+        {/* Route pour utilisateur connecté pour accéder aux catégories du site */}
+
+        <Route path="/categories" exact>
+          <Categories list={cards} onCategorieSelected={onCategorieSelected} />
+            
+        </Route>
+
         {/* Enfin, dernière route représententant la page 404 (erreur) */}
         <Route>
           <Link
@@ -318,7 +386,7 @@ const ToutSurApp = () => {
               </h2>
             </Segment>
           </Link>
-          <iframe src="https://giphy.com/embed/TLIj98vlSKpNXnkrBK" width="480" height="480" frameBorder="0" className="giphy-embed" allowFullScreen />
+          <iframe src="https://giphy.com/embed/TLIj98vlSKpNXnkrBK" width="480" height="480" frameBorder="0" allowFullScreen />
         </Route>
 
         {/* Fin de routes */}
@@ -328,4 +396,4 @@ const ToutSurApp = () => {
 };
 
 // == Export
-export default ToutSurApp;
+export default withRouter(ToutSurApp);
