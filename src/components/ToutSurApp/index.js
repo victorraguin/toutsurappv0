@@ -16,6 +16,7 @@ import Categories from 'src/components/Users/Categories';
 import Articles from 'src/components/Users/Articles';
 import ArticlesMember from 'src/components/Members/Articles';
 import SignUpForm from '../Users/SignUpForm';
+import Blog from '../Members/Blog';
 
 // == Import members components
 
@@ -116,7 +117,6 @@ const ToutSurApp = () => {
           }
           return newObj;
         });
-        console.log(tableauFormate);
         setCategorieSelected(tableauFormate);
       }
     }
@@ -333,6 +333,13 @@ const ToutSurApp = () => {
             handleInputSubmit={handleInputSubmit}
           />
         </Route>
+
+        {/* Route pour utilisateur connecté pour accéder à la fonction Blog du site */}
+        <Route path="/blog" exact>
+          <Blog />
+        </Route>
+
+        {/* Route pour utilisateur connecté pour accéder aux catégories du site */}
 
         <Route path="/categories" exact>
           <Categories list={cards} onCategorieSelected={onCategorieSelected} />
