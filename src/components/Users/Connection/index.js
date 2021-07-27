@@ -60,8 +60,8 @@ const Connection = ({ onInputLogUserChange, handleSubmitLogin, userLog }) => {
                 />
               )
               : null}
-            <Form.Field>
-              <p className="input-text">Email :</p>
+            <Form.Field required>
+              <label className="input-text">Email</label>
               <input
                 name="email"
                 type="email"
@@ -72,8 +72,8 @@ const Connection = ({ onInputLogUserChange, handleSubmitLogin, userLog }) => {
             </Form.Field>
             <Divider />
 
-            <Form.Field>
-              <p className="input-text">Mot de passe :</p>
+            <Form.Field required>
+              <label className="input-text">Mot de passe</label>
               <input
                 name="password"
                 type="password"

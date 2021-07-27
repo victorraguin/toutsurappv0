@@ -59,8 +59,8 @@ const SignUpForm = ({ userSignUp, handleInputSubmit, handleInputChange }) =>
               )
               : null}
 
-            <Form.Field>
-              <p className="input-text">Nom:</p>
+            <Form.Field required>
+              <label className="input-text">Nom</label>
               <input
                 type="text"
                 placeholder="Nom"
@@ -73,8 +73,8 @@ const SignUpForm = ({ userSignUp, handleInputSubmit, handleInputChange }) =>
             </Form.Field>
             <Divider />
 
-            <Form.Field>
-              <p className="input-text">Email:</p>
+            <Form.Field required>
+              <label className="input-text">Email:</label>
               <input
                 type="email"
                 placeholder="Email"
@@ -87,8 +87,8 @@ const SignUpForm = ({ userSignUp, handleInputSubmit, handleInputChange }) =>
             </Form.Field>
             <Divider />
 
-            <Form.Field>
-              <p className="input-text">Mot de passe:</p>
+            <Form.Field required>
+              <label className="input-text">Mot de passe:</label>
               <Form.Input
                 fluid
                 type="password"
@@ -102,8 +102,8 @@ const SignUpForm = ({ userSignUp, handleInputSubmit, handleInputChange }) =>
             </Form.Field>
             <Divider />
 
-            <Form.Field>
-              <p className="input-text">Confirmer votre mot de passe:</p>
+            <Form.Field required>
+              <label className="input-text">Confirmer votre mot de passe:</label>
               <Form.Input
                 type="password"
                 placeholder="Confirmez votre mot de passe (8 caractères minimum)"
