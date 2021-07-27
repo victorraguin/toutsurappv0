@@ -42,9 +42,10 @@ const ToutSurApp = () => {
 // == State de l'application
   const [cards, setCards] = useState([]);
   const [userLog, setUserLog] = useState(initialFormLoginData);
-
   const [userSignUp, setUserSignUp] = useState(initialFormSignUpData);
   const [categorieSelected, setCategorieSelected] = useState([]);
+  const [userBookmarksCategories, setUserBookmarksCategories] = useState([]);
+  const [userBookmarksArticles, setUserBookmarksArticles] = useState([]);
 
   // == Fonctions de l'application
 
@@ -96,6 +97,28 @@ const ToutSurApp = () => {
       if (dataFetched) {
         setCategorieSelected(dataFetched.data.items);
       }
+    }
+    catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  //== Fonction qui permet de récupérer les catégories ET les articles favoris
+  // == de notre utilisateur, dans notre back.
+  const onClickBookMarkPage = async () => {
+    try {
+      console.log('Lancement du fetch favoris categories')
+      const dataCategoriesFetched = await axios({
+        method: 'post',
+        url: 'https://toutsur-app-gachimaster.herokuapp.com/favorites/categories',
+      });
+        setUserBookmarksCategories(dataCategoriesFetched);
+        console.log('Lancement du fetch favoris articles')
+      const dataArticlesFetched = await axios({
+        method: 'post',
+        url: 'https://toutsur-app-gachimaster.herokuapp.com/favorites/articles',
+      });
+      setUserBookmarksArticles(dataArticlesFetched);
     }
     catch (error) {
       console.log(error.message);
@@ -243,7 +266,7 @@ const ToutSurApp = () => {
   return (
     <div className="toutSurApp">
       {/* Composant Header qui représente le menu sur toutes les pages */}
-      <Header userLog={userLog} />
+      <Header userLog={userLog} onClickBookMarkPage={onClickBookMarkPage} />
 
       {/* Début des routes */}
       {/* Composant Switch & Route qui permet de définir les routes pour nos composants */}

@@ -1,7 +1,7 @@
 // == Import npm
 import React from 'react';
 import {
-  Card, Icon, Image, Popup,
+  Card, Icon, Image, Popup, Button
 } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
@@ -10,20 +10,18 @@ import './styles.scss';
 
 
 
-
 // == Composant
-const Article = () => (
+const Favori = () => {
+
+  const oneDeleteClick = () => {
+    console.log("fonctionne")
+  }
+
+  return (
   <Card color="orange">
+
     <Card.Content extra className="card-article-container">
-      <a href="#" className="card-article-header">
-        <Popup
-          content="Ajouter l'article à vos favoris"
-          trigger={(
-            <Icon name="bookmark" size="large" />
-            )}
-          position="top center"
-        />
-      </a>
+      
       <a href="#" className="card-article-header">
         <Popup
           content="Signaler l'article"
@@ -33,11 +31,17 @@ const Article = () => (
           position="top center"
         />
       </a>
-
-      
+          <a className="card-article-header">
+          <Popup
+          content="Supprimer l'article"
+          trigger={(
+            <Icon name="close" size="large" color="red"  onClick={oneDeleteClick} />
+         )}
+          position="top center"
+        />
+          </a>
 
     </Card.Content>
-
     <Image src="https://cdn.pixabay.com/photo/2021/07/13/20/00/lion-6464429_960_720.jpg" wrapped ui={false} />
     <Card.Content>
       <Card.Header>Le lion c'est un gros chat</Card.Header>
@@ -61,9 +65,12 @@ const Article = () => (
           position="bottom center"
         />
       </a>
+      
+      
     </Card.Content>
   </Card>
-);
+)
+          }
 
 // == Export
-export default Article;
+export default Favori;

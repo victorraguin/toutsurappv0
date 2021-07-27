@@ -9,7 +9,7 @@ import './styles.scss';
 
 // == Composant
 
-const MenuComponent = ({ userLog }) => (
+const MenuComponent = ({ userLog, onClickBookMarkPage }) => (
   <Container className="container">
     <Menu secondary className="header-menu">
       <NavLink
@@ -46,6 +46,7 @@ const MenuComponent = ({ userLog }) => (
                 position="right"
                 name="favoris"
                 href="/favoris"
+                onClick={onClickBookMarkPage}
               >Mes favoris
               </Menu.Item>
             </NavLink>
