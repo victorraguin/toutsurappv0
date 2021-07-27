@@ -1,6 +1,8 @@
 // == Import npm
 import React from 'react';
-import { Card, Segment, Container, Button } from 'semantic-ui-react';
+import {
+  Card, Segment, Container, Button,
+} from 'semantic-ui-react';
 import FavArticleCard from './FavArticleCard';
 import FavCategorieCard from './FavCategorieCard';
 
@@ -8,9 +10,9 @@ import FavCategorieCard from './FavCategorieCard';
 import './styles.scss';
 
 // == Composant
-const Favoris = () => (
+const Favoris = ({ userBookmarksArticles, userBookmarksCategories, loading }) => (
   <Container>
-        <Segment vertical>
+    <Segment vertical>
       <h1 className="title">
         #Favoris
       </h1>
@@ -20,8 +22,9 @@ const Favoris = () => (
     </Segment>
     <Segment vertical color="teal">
       <Card.Group className="card-group" centered>
-        <FavCategorieCard />
-        <FavCategorieCard />
+        { userBookmarksCategories ? userBookmarksCategories.map((categorie) => (
+          <FavCategorieCard key={categorie.id} categorie={categorie} />
+        )) : <h3>Vous n'avez pas encore enregistré de catégories</h3>}
       </Card.Group>
     </Segment>
 
@@ -31,12 +34,11 @@ const Favoris = () => (
       </h3>
     </Segment>
     <Segment vertical color="orange">
-      <Card.Group className="card-group" >
-        <FavArticleCard />
-        <FavArticleCard />
-        <FavArticleCard />
-        <FavArticleCard />
-        <FavArticleCard />
+      <Card.Group className="card-group" centered>
+        { userBookmarksArticles
+          ? userBookmarksArticles.map((article) => (
+            <FavArticleCard key={article.id} article={article} />
+          )) : <h3>Vous n'avez pas encore d'articles préférés</h3>}
       </Card.Group>
     </Segment>
   </Container>

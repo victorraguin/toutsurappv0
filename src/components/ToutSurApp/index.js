@@ -90,11 +90,11 @@ const ToutSurApp = () => {
     });
   };
   // == Fonction pour récupérer les articles sur l'API RSS
-  const onClickCategoriePage = async () => {
+  const onClickCategoriePage = async (categorie) => {
     try {
       const dataFetched = await axios({
         method: 'get',
-        url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles',
+        url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/music',
       });
       if (dataFetched) {
         console.log(dataFetched);
@@ -120,33 +120,6 @@ const ToutSurApp = () => {
         });
         setCategorieSelected(tableauFormate);
       }
-    }
-    catch (error) {
-      console.log(error.message);
-    }
-  };
-  // == Fonction qui permet de récupérer les catégories ET les articles favoris
-  // == de notre utilisateur, dans notre back.
-  const onClickBookMarkPage = async () => {
-    try {
-      console.log('Lancement du fetch favoris categories');
-      const dataCategoriesFetched = await axios({
-        method: 'post',
-        url: 'https://toutsur-app-gachimaster.herokuapp.com/favorites/categories',
-        data: {
-          id: userLog.id,
-        },
-      });
-      setUserBookmarksCategories(dataCategoriesFetched);
-      console.log('Lancement du fetch favoris articles');
-      const dataArticlesFetched = await axios({
-        method: 'post',
-        url: 'https://toutsur-app-gachimaster.herokuapp.com/favorites/articles',
-        data: {
-          id: userLog.id,
-        },
-      });
-      setUserBookmarksArticles(dataArticlesFetched);
     }
     catch (error) {
       console.log(error.message);
@@ -223,6 +196,7 @@ const ToutSurApp = () => {
   };
   const onCategorieSelected = (event) => {
     const clicked = event.target.closest('a');
+    console.log(clicked.name)
     onClickCategoriePage(clicked.name);
   };
   const onFormSignUp = (name, value) => {
@@ -300,17 +274,41 @@ const ToutSurApp = () => {
         databaseError: false,
       });
     }
-    else {
-      try {
-        const dataFetched = await axios({
-          method: 'get',
-          url: 'https://toutsur-app-gachimaster.herokuapp.com/categories',
-        });
-        setCards(dataFetched.data);
-      }
-      catch (error) {
-        console.log(error.message);
-      }
+    try {
+      const dataFetched = await axios({
+        method: 'get',
+        url: 'https://toutsur-app-gachimaster.herokuapp.com/categories',
+      });
+      setCards(dataFetched.data);
+    }
+    catch (error) {
+      console.log(error.message);
+    }
+  }, []);
+
+  useEffect(async () => {
+    try {
+      console.log('Lancement du fetch favoris categories');
+      const dataCategoriesFetched = await axios({
+        method: 'post',
+        url: 'https://toutsur-app-gachimaster.herokuapp.com/favorites/categories',
+        data: {
+          id: userLog.id,
+        },
+      });
+      setUserBookmarksCategories(dataCategoriesFetched);
+      /*       console.log('Lancement du fetch favoris articles');
+      const dataArticlesFetched = await axios({
+        method: 'post',
+        url: 'https://toutsur-app-gachimaster.herokuapp.com/favorites/articles',
+        data: {
+          id: userLog.id,
+        },
+      });
+      setUserBookmarksArticles(dataArticlesFetched); */
+    }
+    catch (error) {
+      console.log(error.message);
     }
   }, []);
 
@@ -318,7 +316,7 @@ const ToutSurApp = () => {
   return (
     <div className="toutSurApp">
       {/* Composant Header qui représente le menu sur toutes les pages */}
-      <Header userLog={userLog} logOutUser={logOutUser} onClickBookMarkPage={onClickBookMarkPage} />
+      <Header userLog={userLog} logOutUser={logOutUser} />
 
       {/* Début des routes */}
       {/* Composant Switch & Route qui permet de définir les routes pour nos composants */}
@@ -368,7 +366,6 @@ const ToutSurApp = () => {
 
         <Route path="/categories" exact>
           <Categories list={cards} onCategorieSelected={onCategorieSelected} />
-
         </Route>
 
         {/* Enfin, dernière route représententant la page 404 (erreur) */}
