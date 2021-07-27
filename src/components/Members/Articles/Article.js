@@ -8,6 +8,9 @@ import { Link } from 'react-router-dom';
 // == Import
 import './styles.scss';
 
+
+
+
 // == Composant
 const Article = () => (
   <Card color="orange">
@@ -25,11 +28,14 @@ const Article = () => (
         <Popup
           content="Signaler l'article"
           trigger={(
-            <Icon name="warning circle" size="large"/>
+            <Icon name="warning circle" size="large" />
          )}
           position="top center"
         />
       </a>
+
+      <Icon name="close" size="large" color="red" pointer="float" /> 
+
     </Card.Content>
 
     <Image src="https://cdn.pixabay.com/photo/2021/07/13/20/00/lion-6464429_960_720.jpg" wrapped ui={false} />
