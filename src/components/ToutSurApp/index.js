@@ -83,14 +83,12 @@ const ToutSurApp = () => {
       });
     }
   };
-
   const onInputLogUserChange = (name, value) => {
     setUserLog({
       ...userLog,
       [name]: value,
     });
   };
-
   // == Fonction pour récupérer les articles sur l'API RSS
   const onClickCategoriePage = async () => {
     try {
@@ -127,7 +125,6 @@ const ToutSurApp = () => {
       console.log(error.message);
     }
   };
-
   // == Fonction qui permet de récupérer les catégories ET les articles favoris
   // == de notre utilisateur, dans notre back.
   const onClickBookMarkPage = async () => {
@@ -155,7 +152,6 @@ const ToutSurApp = () => {
       console.log(error.message);
     }
   };
-
   // == Envoi d'une requête à l'API BACK pour la connexion de notre utilisateur
   const postLoginUser = async () => {
     try {
@@ -193,7 +189,6 @@ const ToutSurApp = () => {
       });
     }
   };
-
   // == Fonction qui permet de vérifier les inputs de connexion
   const validateLoginForm = () => {
     if (!userLog.email.includes('@')) {
@@ -214,7 +209,6 @@ const ToutSurApp = () => {
       postLoginUser();
     }
   };
-
   // == Fonction de logOut
   const logOutUser = () => {
     localStorage.clear();
@@ -227,19 +221,16 @@ const ToutSurApp = () => {
       databaseError: false,
     });
   };
-
   const onCategorieSelected = (event) => {
     const clicked = event.target.closest('a');
     onClickCategoriePage(clicked.name);
   };
-
   const onFormSignUp = (name, value) => {
     setUserSignUp({
       ...userSignUp,
       [name]: value,
     });
   };
-
   const handleInputChange = (evt) => {
     // Je récupère le nom de l'input qui a changé
     // et sa value (son contenu)
@@ -247,13 +238,11 @@ const ToutSurApp = () => {
     setUserSignUp(name, value);
     onFormSignUp(name, value);
   };
-
   const handleInputSubmit = (evt) => {
     evt.preventDefault();
     // je check le form au submit
     validateForm();
   };
-
   // Fonction pour valider le form
   const validateForm = () => {
     // je veux verifier que password === confirmPassword
@@ -288,7 +277,6 @@ const ToutSurApp = () => {
       postSubscribeUser();
     }
   };
-
   // == Fonction qui permet de vérifier les inputs de mon utilisateur et si tout est bon,
   // == d'envoyer une requête à l'API.
   const handleSubmitLogin = (e) => {
@@ -367,7 +355,7 @@ const ToutSurApp = () => {
         </Route>
 
         {/* Page des favoris pour un utilisateur  connecté */}
-        <Route path="/favoris" exact>
+        <Route path="/favoris" userBookmarksArticles={userBookmarksArticles} userBookmarksCategories={userBookmarksCategories} exact>
           <Favoris />
         </Route>
 
