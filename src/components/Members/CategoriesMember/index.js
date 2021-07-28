@@ -8,7 +8,9 @@ import Categorie from './Categorie';
 import './styles.scss';
 
 // == Composant
-const CategoriesMember = ({ list, onCategorieSelected, onBookmarkACategorie }) => (
+const CategoriesMember = ({
+  list, onCategorieSelected, onBookmarkACategorie, usedButton,
+}) => (
   <Container>
     <Segment vertical>
       <h1 className="title">
@@ -23,7 +25,13 @@ const CategoriesMember = ({ list, onCategorieSelected, onBookmarkACategorie }) =
       <Card.Group className="card-group">
         {
         list.map((card) => (
-          <Categorie key={card.id} categorie={card} onCategorieSelected={onCategorieSelected} onBookmarkACategorie={onBookmarkACategorie} />
+          <Categorie
+            key={card.id}
+            categorie={card}
+            onCategorieSelected={onCategorieSelected}
+            onBookmarkACategorie={onBookmarkACategorie}
+            usedButton={usedButton}
+          />
         ))
           }
       </Card.Group>

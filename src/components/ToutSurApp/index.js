@@ -25,7 +25,6 @@ import Blog from '../Members/Blog';
 
 // == Data par default
 const initialFormLoginData = ({
-  id: 0,
   email: '',
   password: '',
   error: false,
@@ -52,6 +51,7 @@ const ToutSurApp = () => {
   const [categorieSelected, setCategorieSelected] = useState([]);
   const [userBookmarksCategories, setUserBookmarksCategories] = useState([]);
   const [userBookmarksArticles, setUserBookmarksArticles] = useState([]);
+  const [usedButton, setUsedButton] = useState(0);
 
   // == Fonctions de l'application
 
@@ -91,9 +91,6 @@ const ToutSurApp = () => {
       const dataFetched = await axios({
         method: 'put',
         url: `https://toutsur-app-gachimaster.herokuapp.com/categories/${categorie}`,
-        data: {
-          id: userLog.id,
-        },
       });
       console.log('Favoris ajouté', dataFetched);
     }
@@ -104,7 +101,7 @@ const ToutSurApp = () => {
 
   const onBookmarkACategorie = (event) => {
     const clicked = event.target.name;
-    console.log(clicked);
+    setUsedButton(clicked);
     bookmarkACategorie(clicked);
   };
 
@@ -287,9 +284,6 @@ const ToutSurApp = () => {
       const dataCategoriesFetched = await axios({
         method: 'post',
         url: 'https://toutsur-app-gachimaster.herokuapp.com/favorites/categories',
-        data: {
-          id: userLog.id,
-        },
       });
       console.log(dataCategoriesFetched);
       if (dataCategoriesFetched.data.length === 0) {
@@ -301,9 +295,6 @@ const ToutSurApp = () => {
       const dataArticlesFetched = await axios({
         method: 'post',
         url: 'https://toutsur-app-gachimaster.herokuapp.com/favorites/articles',
-        data: {
-          id: userLog.id,
-        },
       });
       console.log(dataArticlesFetched.data);
       if (dataArticlesFetched.data.length === 0) {
@@ -337,6 +328,33 @@ const ToutSurApp = () => {
         logged: true,
         databaseError: false,
       });
+      try {
+        const dataCategoriesFetched = await axios({
+          method: 'post',
+          url: 'https://toutsur-app-gachimaster.herokuapp.com/favorites/categories',
+        });
+        console.log(dataCategoriesFetched);
+        if (dataCategoriesFetched.data.length === 0) {
+          setUserBookmarksCategories(null);
+        }
+        else {
+          setUserBookmarksCategories(dataCategoriesFetched.data);
+        }
+        const dataArticlesFetched = await axios({
+          method: 'post',
+          url: 'https://toutsur-app-gachimaster.herokuapp.com/favorites/articles',
+        });
+        console.log(dataArticlesFetched.data);
+        if (dataArticlesFetched.data.length === 0) {
+          setUserBookmarksArticles(null);
+        }
+        else {
+          setUserBookmarksArticles(dataArticlesFetched.data);
+        }
+      }
+      catch (error) {
+        console.log(error.message);
+      }
     }
     try {
       const dataFetched = await axios({
@@ -349,6 +367,8 @@ const ToutSurApp = () => {
       console.log(error.message);
     }
   }, []);
+
+  // == Vérification du state si utilisateur connecté
 
   // == Rendu de l'application
   return (
@@ -406,7 +426,14 @@ const ToutSurApp = () => {
 
         <Route path="/categories" exact>
           { userLog.logged
-            ? <CategoriesMember list={cards} onCategorieSelected={onCategorieSelected} onBookmarkACategorie={onBookmarkACategorie} />
+            ? (
+              <CategoriesMember
+                list={cards}
+                onCategorieSelected={onCategorieSelected}
+                onBookmarkACategorie={onBookmarkACategorie}
+                usedButton={usedButton}
+              />
+            )
             : <Categories list={cards} onCategorieSelected={onCategorieSelected} />}
         </Route>
 
