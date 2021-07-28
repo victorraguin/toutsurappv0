@@ -51,7 +51,7 @@ const ToutSurApp = () => {
   const [categorieSelected, setCategorieSelected] = useState([]);
   const [userBookmarksCategories, setUserBookmarksCategories] = useState([]);
   const [userBookmarksArticles, setUserBookmarksArticles] = useState([]);
-  const [usedButton, setUsedButton] = useState(0);
+  const [categorieClicked, setCategorieClicked] = useState('');
 
   // == Fonctions de l'application
 
@@ -92,17 +92,19 @@ const ToutSurApp = () => {
         method: 'put',
         url: `https://toutsur-app-gachimaster.herokuapp.com/categories/${categorie}`,
       });
-      console.log('Favoris ajouté', dataFetched);
+      if (dataFetched.data.length === 0) {
+        setUserBookmarksCategories(null);
+      }
+      setUserBookmarksCategories(dataFetched.data);
     }
     catch (error) {
       console.log(error.message);
     }
   };
 
-  const onBookmarkACategorie = (event) => {
-    const clicked = event.target.name;
-    setUsedButton(clicked);
-    bookmarkACategorie(clicked);
+  const onBookmarkACategorie = (data) => {
+    console.log(categorieClicked);
+    bookmarkACategorie(categorieClicked);
   };
 
   const onInputLogUserChange = (name, value) => {
@@ -217,8 +219,10 @@ const ToutSurApp = () => {
   };
   const onCategorieSelected = (event) => {
     const clicked = event.target.closest('a');
+
     console.log(clicked.name);
     onClickCategoriePage(clicked.name);
+    setCategorieClicked(clicked.name);
   };
   const onFormSignUp = (name, value) => {
     setUserSignUp({
@@ -334,6 +338,7 @@ const ToutSurApp = () => {
           url: 'https://toutsur-app-gachimaster.herokuapp.com/favorites/categories',
         });
         console.log(dataCategoriesFetched);
+        console.log(userBookmarksCategories);
         if (dataCategoriesFetched.data.length === 0) {
           setUserBookmarksCategories(null);
         }
@@ -399,7 +404,7 @@ const ToutSurApp = () => {
         {/* Page des articles pour un utilisateur non connecté */}
         <Route path="/articles" exact>
           { userLog.logged
-            ? <ArticlesByCategories categorieSelected={categorieSelected} />
+            ? <ArticlesByCategories categorieSelected={categorieSelected}  categorieClicked={categorieClicked} onBookmarkACategorie={onBookmarkACategorie} />
             : <Articles categorieSelected={categorieSelected} />}
         </Route>
 
@@ -431,7 +436,7 @@ const ToutSurApp = () => {
                 list={cards}
                 onCategorieSelected={onCategorieSelected}
                 onBookmarkACategorie={onBookmarkACategorie}
-                usedButton={usedButton}
+                userBookmarksCategories={userBookmarksCategories}
               />
             )
             : <Categories list={cards} onCategorieSelected={onCategorieSelected} />}

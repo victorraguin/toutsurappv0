@@ -1,23 +1,23 @@
 // == Import npm
 import React from 'react';
-import { Card, Segment, Container } from 'semantic-ui-react';
+import { Card, Segment, Container, Button} from 'semantic-ui-react';
 import Article from './Article';
 
 // == Import
 import './styles.scss';
 
 // == Composant
-const ArticlesByCategories = ({ categorieSelected }) => (
+const ArticlesByCategories = ({ categorieSelected, categorieClicked, onBookmarkACategorie }) => (
   <Container>
     <Segment vertical>
       <h1 className="title">
-        #Articles
+        #{categorieClicked}
       </h1>
     </Segment>
 
     <Segment vertical color="teal">
       <Segment vertical>
-        N'hésitez pas à enregistrer vos articles pour plus tard !
+        <Button color="brown" onClick={onBookmarkACategorie}>Enregistrer #{categorieClicked} en favoris !</Button>
       </Segment>
       <Card.Group className="card-group">
         {

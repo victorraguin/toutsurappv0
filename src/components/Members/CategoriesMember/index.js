@@ -9,7 +9,7 @@ import './styles.scss';
 
 // == Composant
 const CategoriesMember = ({
-  list, onCategorieSelected, onBookmarkACategorie, usedButton,
+  list, onCategorieSelected, onBookmarkACategorie, usedButton, userBookmarksCategories
 }) => (
   <Container>
     <Segment vertical>
@@ -20,7 +20,7 @@ const CategoriesMember = ({
 
     <Segment vertical color="teal">
       <Segment vertical>
-        Vous pouvez ajouter des catégories à vos favoris ou tout simplement lire leurs articles...
+        Vous pouvez ajouter à vos favoris ou tout simplement lire leurs articles...
       </Segment>
       <Card.Group className="card-group">
         {
@@ -31,6 +31,7 @@ const CategoriesMember = ({
             onCategorieSelected={onCategorieSelected}
             onBookmarkACategorie={onBookmarkACategorie}
             usedButton={usedButton}
+            userBookmarksCategories={userBookmarksCategories}
           />
         ))
           }
