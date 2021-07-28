@@ -244,7 +244,7 @@ const ToutSurApp = () => {
   // Fonction pour valider le form
   const validateForm = () => {
     // je veux verifier que password === confirmPassword
-    if (userSignUp.password != userSignUp.confirmPassword) {
+    if (userSignUp.password !== userSignUp.confirmPassword) {
       setUserSignUp({
         ...userSignUp,
         password: '',
@@ -262,8 +262,8 @@ const ToutSurApp = () => {
       });
     }
     // un minimum de huit caracters pour le mdp
-    else if ((userSignUp.password.length < 8) || (userSignUp.confirmPassword.length < 8)
-    && (userSignUp.password != userSignUp.confirmPassword)) {
+    else if (((userSignUp.password.length < 8) || (userSignUp.confirmPassword.length < 8))
+    && (userSignUp.password !== userSignUp.confirmPassword)) {
       setUserSignUp({
         ...userSignUp,
         password: '',
@@ -317,9 +317,57 @@ const ToutSurApp = () => {
       console.log(error.message);
     }
   };
+  // == Fonction pour chercher les articles selon les categories favoris  d'un utilisateur connecter
+  // == A verifier, 404 recu!!! Vu que id de utilisateur n'est pas dans state ??
+  const onClickHomeMemberPage = async (userBookmarksCategories) => {
+    try {
+      // Si l'utilisateur est connecter, je vais chercher ses favoris dans la bdd
+      if (userLog.logged) {
+        const dataFavoriteCategoriesFetched = await axios({
+          method: 'get',
+          url: 'https://toutsur-app-gachimaster.herokuapp.com/API/favorites/categories',
+          data: {
+            id: userLog.id,
+          },
+        });
+        console.log('Favoris recuperer', dataFavoriteCategoriesFetched);
+        return dataFavoriteCategoriesFetched;
+      }
+      // tentative bidon
 
-  const onClickHomeMemberPage = async () => {
-
+      /* dataFavoriteCategoriesFetched.forEach(element => {
+        const dataFetched = await axios({
+          method: 'get',
+          url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/{element}',
+        });
+        console.log('Data fetch', dataFetched);
+      }); */
+      // pas forcement besoin de ca:
+      if (userBookmarksCategories === 'Musique') {
+        const dataFetched = await axios({
+          method: 'get',
+          url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/music',
+        });
+        console.log('Data fetch', dataFetched);
+      }
+      else if (userBookmarksCategories === 'Jeux vidéos') {
+        const dataFetched = await axios({
+          method: 'get',
+          url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/gaming',
+        });
+        console.log('Data fetch', dataFetched);
+      }
+      else if (userBookmarksCategories === 'Sport') {
+        const dataFetched = await axios({
+          method: 'get',
+          url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/sports',
+        });
+        console.log('Data fetch', dataFetched);
+      }
+    }
+    catch (error) {
+      console.log(error.message);
+    }
   };
 
   // == useEffect
@@ -354,7 +402,12 @@ const ToutSurApp = () => {
   return (
     <div className="toutSurApp">
       {/* Composant Header qui représente le menu sur toutes les pages */}
-      <Header userLog={userLog} logOutUser={logOutUser} onClickBookMarkPage={onClickBookMarkPage} />
+      <Header
+        userLog={userLog}
+        logOutUser={logOutUser}
+        onClickBookMarkPage={onClickBookMarkPage}
+        onClickHomeMemberPage={onClickHomeMemberPage}
+      />
 
       {/* Début des routes */}
       {/* Composant Switch & Route qui permet de définir les routes pour nos composants */}

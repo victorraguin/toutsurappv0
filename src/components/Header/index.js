@@ -11,7 +11,7 @@ import './styles.scss';
 
 // == Composant
 
-const MenuComponent = ({ userLog, logOutUser, onClickBookMarkPage }) => (
+const MenuComponent = ({ userLog, logOutUser, onClickBookMarkPage, onClickHomeMemberPage }) => (
   <Container className="container">
     <Menu secondary className="header-menu">
       <NavLink
@@ -28,6 +28,7 @@ const MenuComponent = ({ userLog, logOutUser, onClickBookMarkPage }) => (
             to="/"
             exact
             activeClassName="menu-link--active"
+            onClick={onClickHomeMemberPage}
           >
             <Menu.Item
               className="menu-button"
