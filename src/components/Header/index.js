@@ -56,6 +56,7 @@ const MenuComponent = ({ userLog, logOutUser, onClickBookMarkPage }) => (
             to="/favoris"
             exact
             activeClassName="menu-link--active"
+            onClick={onClickBookMarkPage}
           >
             <Menu.Item
               className="menu-button"

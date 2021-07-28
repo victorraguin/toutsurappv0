@@ -85,6 +85,29 @@ const ToutSurApp = () => {
       });
     }
   };
+
+  const bookmarkACategorie = async (categorie) => {
+    try {
+      const dataFetched = await axios({
+        method: 'put',
+        url: `https://toutsur-app-gachimaster.herokuapp.com/categories/${categorie}`,
+        data: {
+          id: userLog.id,
+        },
+      });
+      console.log('Favoris ajouté', dataFetched);
+    }
+    catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const onBookmarkACategorie = (event) => {
+    const clicked = event.target.name;
+    console.log(clicked);
+    bookmarkACategorie(clicked);
+  };
+
   const onInputLogUserChange = (name, value) => {
     setUserLog({
       ...userLog,
@@ -259,6 +282,46 @@ const ToutSurApp = () => {
     validateLoginForm();
   };
 
+  const onClickBookMarkPage = async () => {
+    try {
+      const dataCategoriesFetched = await axios({
+        method: 'post',
+        url: 'https://toutsur-app-gachimaster.herokuapp.com/favorites/categories',
+        data: {
+          id: userLog.id,
+        },
+      });
+      console.log(dataCategoriesFetched);
+      if (dataCategoriesFetched.data.length === 0) {
+        setUserBookmarksCategories(null);
+      }
+      else {
+        setUserBookmarksCategories(dataCategoriesFetched.data);
+      }
+      const dataArticlesFetched = await axios({
+        method: 'post',
+        url: 'https://toutsur-app-gachimaster.herokuapp.com/favorites/articles',
+        data: {
+          id: userLog.id,
+        },
+      });
+      console.log(dataArticlesFetched.data);
+      if (dataArticlesFetched.data.length === 0) {
+        setUserBookmarksArticles(null);
+      }
+      else {
+        setUserBookmarksArticles(dataArticlesFetched.data);
+      }
+    }
+    catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const onClickHomeMemberPage = async () => {
+
+  };
+
   // == useEffect
   // == Appel à la BDD
   useEffect(async () => {
@@ -291,16 +354,16 @@ const ToutSurApp = () => {
   return (
     <div className="toutSurApp">
       {/* Composant Header qui représente le menu sur toutes les pages */}
-      <Header userLog={userLog} logOutUser={logOutUser} />
+      <Header userLog={userLog} logOutUser={logOutUser} onClickBookMarkPage={onClickBookMarkPage} />
 
       {/* Début des routes */}
       {/* Composant Switch & Route qui permet de définir les routes pour nos composants */}
       <Switch>
 
-        {/* Page d'accueil non connecté (liste les catégories) */}
+        {/* Page d'accueil non connecté (lgiiste les catégories) */}
         <Route path="/" exact>
           { userLog.logged
-            ? <ArticlesMember list={cards} />
+            ? <ArticlesMember list={cards} onClickHomeMemberPage={onClickHomeMemberPage} />
             : <Categories list={cards} onCategorieSelected={onCategorieSelected} />}
         </Route>
 
@@ -330,8 +393,8 @@ const ToutSurApp = () => {
         </Route>
 
         {/* Page des favoris pour un utilisateur  connecté */}
-        <Route path="/favoris" userBookmarksArticles={userBookmarksArticles} userBookmarksCategories={userBookmarksCategories} exact>
-          <Favoris />
+        <Route path="/favoris" exact>
+          <Favoris userBookmarksArticles={userBookmarksArticles} userBookmarksCategories={userBookmarksCategories} bookmarkACategorie={bookmarkACategorie} />
         </Route>
 
         {/* Route pour utilisateur connecté pour accéder à la fonction Blog du site */}
@@ -343,7 +406,7 @@ const ToutSurApp = () => {
 
         <Route path="/categories" exact>
           { userLog.logged
-            ? <CategoriesMember list={cards} onCategorieSelected={onCategorieSelected} />
+            ? <CategoriesMember list={cards} onCategorieSelected={onCategorieSelected} onBookmarkACategorie={onBookmarkACategorie} />
             : <Categories list={cards} onCategorieSelected={onCategorieSelected} />}
         </Route>
 
