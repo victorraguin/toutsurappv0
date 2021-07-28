@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import './styles.scss';
 
 // == Composant
-const Categorie = ({ categorie, onCategorieSelected }) => (
+const Categorie = ({ categorie, onCategorieSelected, onBookmarkACategorie }) => (
   <Popup
     flowing
     hoverable
@@ -32,7 +32,7 @@ const Categorie = ({ categorie, onCategorieSelected }) => (
       </Link>
   )}
   >
-    <Button size="small" inverted basic color="pink">Ajouter en favoris?</Button>
+    <Button size="small" inverted basic color="pink" name={categorie.id} onClick={onBookmarkACategorie}>Ajouter en favoris?</Button>
   </Popup>
 );
 

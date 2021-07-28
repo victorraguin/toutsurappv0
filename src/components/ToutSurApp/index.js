@@ -85,6 +85,29 @@ const ToutSurApp = () => {
       });
     }
   };
+
+  const bookmarkACategorie = async (categorie) => {
+    try {
+      const dataFetched = await axios({
+        method: 'put',
+        url: `https://toutsur-app-gachimaster.herokuapp.com/categories/${categorie}`,
+        data: {
+          id: userLog.id,
+        },
+      });
+      console.log('Favoris ajouté', dataFetched);
+    }
+    catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const onBookmarkACategorie = (event) => {
+    const clicked = event.target.name;
+    console.log(clicked);
+    bookmarkACategorie(clicked);
+  };
+
   const onInputLogUserChange = (name, value) => {
     setUserLog({
       ...userLog,
@@ -295,6 +318,10 @@ const ToutSurApp = () => {
     }
   };
 
+  const onClickHomeMemberPage = async () => {
+
+  };
+
   // == useEffect
   // == Appel à la BDD
   useEffect(async () => {
@@ -333,10 +360,10 @@ const ToutSurApp = () => {
       {/* Composant Switch & Route qui permet de définir les routes pour nos composants */}
       <Switch>
 
-        {/* Page d'accueil non connecté (liste les catégories) */}
+        {/* Page d'accueil non connecté (lgiiste les catégories) */}
         <Route path="/" exact>
           { userLog.logged
-            ? <ArticlesMember list={cards} />
+            ? <ArticlesMember list={cards} onClickHomeMemberPage={onClickHomeMemberPage} />
             : <Categories list={cards} onCategorieSelected={onCategorieSelected} />}
         </Route>
 
@@ -367,7 +394,7 @@ const ToutSurApp = () => {
 
         {/* Page des favoris pour un utilisateur  connecté */}
         <Route path="/favoris" exact>
-          <Favoris userBookmarksArticles={userBookmarksArticles} userBookmarksCategories={userBookmarksCategories} />
+          <Favoris userBookmarksArticles={userBookmarksArticles} userBookmarksCategories={userBookmarksCategories} bookmarkACategorie={bookmarkACategorie} />
         </Route>
 
         {/* Route pour utilisateur connecté pour accéder à la fonction Blog du site */}
@@ -379,7 +406,7 @@ const ToutSurApp = () => {
 
         <Route path="/categories" exact>
           { userLog.logged
-            ? <CategoriesMember list={cards} onCategorieSelected={onCategorieSelected} />
+            ? <CategoriesMember list={cards} onCategorieSelected={onCategorieSelected} onBookmarkACategorie={onBookmarkACategorie} />
             : <Categories list={cards} onCategorieSelected={onCategorieSelected} />}
         </Route>
 

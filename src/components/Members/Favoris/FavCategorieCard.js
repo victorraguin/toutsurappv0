@@ -9,9 +9,9 @@ import { Link } from 'react-router-dom';
 import './styles.scss';
 
 // == Composant
-const FavCategorieCard = ({ categorie }) => {
-  const oneDeleteClick = () => {
-    console.log('Non on ne supprime pas. Pas encore...');
+const FavCategorieCard = ({ categorie, bookmarkACategorie }) => {
+  const oneDeleteClick = (event) => {
+    bookmarkACategorie(event.target.id);
   };
 
   return (
@@ -21,7 +21,7 @@ const FavCategorieCard = ({ categorie }) => {
           <Popup
             content="Supprimer la catégorie"
             trigger={(
-              <Icon name="close" size="large" color="red" onClick={oneDeleteClick} />
+              <Icon name="close" id={categorie.id} size="large" color="red" onClick={oneDeleteClick} />
          )}
             position="top center"
           />
