@@ -1,31 +1,34 @@
 // == Import npm
 import React from 'react';
 import { Card, Segment, Container } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
 import Article from './Article';
 
 // == Import
 import './styles.scss';
 
 // == Composant
-const ArticlesMember = ({ props }) => (
+const ArticlesByCategories = ({ categorieSelected }) => (
   <Container>
     <Segment vertical>
       <h1 className="title">
-        #Accueil
+        #Articles
       </h1>
     </Segment>
 
     <Segment vertical color="teal">
-    <Segment vertical>
-        Bonjour !
+      <Segment vertical>
+        N'hésitez pas à enregistrer vos articles pour plus tard !
       </Segment>
-      <Card.Group className="card-group" centered>
-        <h4>Vous n'avez pas encore de catégories favorites...</h4>
+      <Card.Group className="card-group">
+        {
+          categorieSelected.map((card) => (
+            <Article article={card} />
+          ))
+        }
       </Card.Group>
     </Segment>
   </Container>
 );
 
 // == Export
-export default ArticlesMember;
+export default ArticlesByCategories;

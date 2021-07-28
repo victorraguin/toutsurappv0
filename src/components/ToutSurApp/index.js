@@ -13,8 +13,10 @@ import Header from 'src/components/Header';
 // == Import users components
 import Connection from 'src/components/Users/Connection';
 import Categories from 'src/components/Users/Categories';
+import CategoriesMember from 'src/components/Members/CategoriesMember';
 import Articles from 'src/components/Users/Articles';
 import ArticlesMember from 'src/components/Members/Articles';
+import ArticlesByCategories from 'src/components/Members/ArticlesByCategories';
 import Favoris from 'src/components/Members/Favoris';
 import SignUpForm from '../Users/SignUpForm';
 import Blog from '../Members/Blog';
@@ -83,79 +85,47 @@ const ToutSurApp = () => {
       });
     }
   };
-
   const onInputLogUserChange = (name, value) => {
     setUserLog({
       ...userLog,
       [name]: value,
     });
   };
-
   // == Fonction pour récupérer les articles sur l'API RSS
-  const onClickCategoriePage = async () => {
+  const onClickCategoriePage = async (categorie) => {
     try {
-      const dataFetched = await axios({
-        method: 'get',
-        url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles',
-      });
-      if (dataFetched) {
-        console.log(dataFetched);
-        const tableauOriginal = dataFetched.data.items;
-        const tableauFormate = tableauOriginal.map((obj) => {
-          const url = new URL(obj.url);
-          const splitUrl = url.hostname;
-          const newObj = {
-            ...obj,
-          };
-          newObj.title = obj.title;
-          newObj.link = obj.url;
-          newObj.site = splitUrl;
-          if (newObj.enclosures) {
-            newObj.media = obj.enclosures[0].url;
-            return newObj;
-          }
-          if (newObj.media) {
-            newObj.media = obj.media.content[0].url;
-            return newObj;
-          }
-          return newObj;
+      if (categorie === 'Musique') {
+        const dataFetched = await axios({
+          method: 'get',
+          url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/music',
         });
-        setCategorieSelected(tableauFormate);
+        console.log('Data fetch', dataFetched);
+        setCategorieSelected([]);
+        setCategorieSelected(dataFetched.data);
+      }
+      else if (categorie === 'Jeux vidéos') {
+        const dataFetched = await axios({
+          method: 'get',
+          url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/gaming',
+        });
+        console.log('Data fetch', dataFetched);
+        setCategorieSelected([]);
+        setCategorieSelected(dataFetched.data);
+      }
+      else if (categorie === 'Sport') {
+        const dataFetched = await axios({
+          method: 'get',
+          url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/sports',
+        });
+        console.log('Data fetch', dataFetched);
+        setCategorieSelected([]);
+        setCategorieSelected(dataFetched.data);
       }
     }
     catch (error) {
       console.log(error.message);
     }
   };
-
-  // == Fonction qui permet de récupérer les catégories ET les articles favoris
-  // == de notre utilisateur, dans notre back.
-  const onClickBookMarkPage = async () => {
-    try {
-      console.log('Lancement du fetch favoris categories');
-      const dataCategoriesFetched = await axios({
-        method: 'post',
-        url: 'https://toutsur-app-gachimaster.herokuapp.com/favorites/categories',
-        data: {
-          id: userLog.id,
-        },
-      });
-      setUserBookmarksCategories(dataCategoriesFetched);
-      console.log('Lancement du fetch favoris articles');
-      const dataArticlesFetched = await axios({
-        method: 'post',
-        url: 'https://toutsur-app-gachimaster.herokuapp.com/favorites/articles',
-        data: {
-          id: userLog.id,
-        },
-      });
-      setUserBookmarksArticles(dataArticlesFetched);
-    }
-    catch (error) {
-      console.log(error.message);
-    }
-  };
-
   // == Envoi d'une requête à l'API BACK pour la connexion de notre utilisateur
   const postLoginUser = async () => {
     try {
@@ -193,7 +163,6 @@ const ToutSurApp = () => {
       });
     }
   };
-
   // == Fonction qui permet de vérifier les inputs de connexion
   const validateLoginForm = () => {
     if (!userLog.email.includes('@')) {
@@ -214,7 +183,6 @@ const ToutSurApp = () => {
       postLoginUser();
     }
   };
-
   // == Fonction de logOut
   const logOutUser = () => {
     localStorage.clear();
@@ -227,19 +195,17 @@ const ToutSurApp = () => {
       databaseError: false,
     });
   };
-
   const onCategorieSelected = (event) => {
     const clicked = event.target.closest('a');
+    console.log(clicked.name);
     onClickCategoriePage(clicked.name);
   };
-
   const onFormSignUp = (name, value) => {
     setUserSignUp({
       ...userSignUp,
       [name]: value,
     });
   };
-
   const handleInputChange = (evt) => {
     // Je récupère le nom de l'input qui a changé
     // et sa value (son contenu)
@@ -247,13 +213,11 @@ const ToutSurApp = () => {
     setUserSignUp(name, value);
     onFormSignUp(name, value);
   };
-
   const handleInputSubmit = (evt) => {
     evt.preventDefault();
     // je check le form au submit
     validateForm();
   };
-
   // Fonction pour valider le form
   const validateForm = () => {
     // je veux verifier que password === confirmPassword
@@ -288,7 +252,6 @@ const ToutSurApp = () => {
       postSubscribeUser();
     }
   };
-
   // == Fonction qui permet de vérifier les inputs de mon utilisateur et si tout est bon,
   // == d'envoyer une requête à l'API.
   const handleSubmitLogin = (e) => {
@@ -312,17 +275,15 @@ const ToutSurApp = () => {
         databaseError: false,
       });
     }
-    else {
-      try {
-        const dataFetched = await axios({
-          method: 'get',
-          url: 'https://toutsur-app-gachimaster.herokuapp.com/categories',
-        });
-        setCards(dataFetched.data);
-      }
-      catch (error) {
-        console.log(error.message);
-      }
+    try {
+      const dataFetched = await axios({
+        method: 'get',
+        url: 'https://toutsur-app-gachimaster.herokuapp.com/categories',
+      });
+      setCards(dataFetched.data);
+    }
+    catch (error) {
+      console.log(error.message);
     }
   }, []);
 
@@ -330,7 +291,7 @@ const ToutSurApp = () => {
   return (
     <div className="toutSurApp">
       {/* Composant Header qui représente le menu sur toutes les pages */}
-      <Header userLog={userLog} logOutUser={logOutUser} onClickBookMarkPage={onClickBookMarkPage} />
+      <Header userLog={userLog} logOutUser={logOutUser} />
 
       {/* Début des routes */}
       {/* Composant Switch & Route qui permet de définir les routes pour nos composants */}
@@ -354,7 +315,9 @@ const ToutSurApp = () => {
 
         {/* Page des articles pour un utilisateur non connecté */}
         <Route path="/articles" exact>
-          <Articles categorieSelected={categorieSelected} />
+          { userLog.logged
+            ? <ArticlesByCategories categorieSelected={categorieSelected} />
+            : <Articles categorieSelected={categorieSelected} />}
         </Route>
 
         {/* Page d'inscription */}
@@ -367,7 +330,7 @@ const ToutSurApp = () => {
         </Route>
 
         {/* Page des favoris pour un utilisateur  connecté */}
-        <Route path="/favoris" exact>
+        <Route path="/favoris" userBookmarksArticles={userBookmarksArticles} userBookmarksCategories={userBookmarksCategories} exact>
           <Favoris />
         </Route>
 
@@ -379,8 +342,9 @@ const ToutSurApp = () => {
         {/* Route pour utilisateur connecté pour accéder aux catégories du site */}
 
         <Route path="/categories" exact>
-          <Categories list={cards} onCategorieSelected={onCategorieSelected} />
-
+          { userLog.logged
+            ? <CategoriesMember list={cards} onCategorieSelected={onCategorieSelected} />
+            : <Categories list={cards} onCategorieSelected={onCategorieSelected} />}
         </Route>
 
         {/* Enfin, dernière route représententant la page 404 (erreur) */}

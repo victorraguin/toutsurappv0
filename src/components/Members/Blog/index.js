@@ -37,7 +37,10 @@ const Blog = () => {
       </Segment>
 
       <Segment vertical color="teal">
-        <Form>
+        <Segment vertical>
+          La feature blog n'est pas encore disponible, désolé!
+        </Segment>
+        <Form className="form-container">
           <Form.Group widths="equal">
             <Form.Field
               required
@@ -89,7 +92,7 @@ const Blog = () => {
             label="Je certifie que mon article respect les conditions d'édition de toutSur.app"
             required
           />
-          <Button color="teal" fluid onClick={log}>Submit</Button>
+          <Button disabled color="teal" fluid onClick={log}>Non.</Button>
         </Form>
       </Segment>
     </Container>
