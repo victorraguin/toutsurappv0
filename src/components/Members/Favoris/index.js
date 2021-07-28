@@ -10,7 +10,7 @@ import FavCategorieCard from './FavCategorieCard';
 import './styles.scss';
 
 // == Composant
-const Favoris = ({ userBookmarksArticles, userBookmarksCategories, loading }) => (
+const Favoris = ({ userBookmarksArticles, userBookmarksCategories }) => (
   <Container>
     <Segment vertical>
       <h1 className="title">

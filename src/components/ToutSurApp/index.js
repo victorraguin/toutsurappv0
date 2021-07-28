@@ -261,15 +261,34 @@ const ToutSurApp = () => {
 
   const onClickBookMarkPage = async () => {
     try {
-      const dataFetched = await axios({
+      const dataCategoriesFetched = await axios({
         method: 'post',
         url: 'https://toutsur-app-gachimaster.herokuapp.com/favorites/categories',
         data: {
           id: userLog.id,
         },
       });
-      console.log(dataFetched);
-      setUserBookmarksCategories(dataFetched.data);
+      console.log(dataCategoriesFetched);
+      if (dataCategoriesFetched.data.length === 0) {
+        setUserBookmarksCategories(null);
+      }
+      else {
+        setUserBookmarksCategories(dataCategoriesFetched.data);
+      }
+      const dataArticlesFetched = await axios({
+        method: 'post',
+        url: 'https://toutsur-app-gachimaster.herokuapp.com/favorites/articles',
+        data: {
+          id: userLog.id,
+        },
+      });
+      console.log(dataArticlesFetched.data);
+      if (dataArticlesFetched.data.length === 0) {
+        setUserBookmarksArticles(null);
+      }
+      else {
+        setUserBookmarksArticles(dataArticlesFetched.data);
+      }
     }
     catch (error) {
       console.log(error.message);

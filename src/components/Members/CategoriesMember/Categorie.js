@@ -32,7 +32,7 @@ const Categorie = ({ categorie, onCategorieSelected }) => (
       </Link>
   )}
   >
-    <Button size="small" inverted basic color="pink">en favoris ?</Button>
+    <Button size="small" inverted basic color="pink">Ajouter en favoris?</Button>
   </Popup>
 );
 
