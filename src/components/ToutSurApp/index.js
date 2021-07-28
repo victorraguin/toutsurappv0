@@ -259,6 +259,23 @@ const ToutSurApp = () => {
     validateLoginForm();
   };
 
+  const onClickBookMarkPage = async () => {
+    try {
+      const dataFetched = await axios({
+        method: 'post',
+        url: 'https://toutsur-app-gachimaster.herokuapp.com/favorites/categories',
+        data: {
+          id: userLog.id,
+        },
+      });
+      console.log(dataFetched);
+      setUserBookmarksCategories(dataFetched.data);
+    }
+    catch (error) {
+      console.log(error.message);
+    }
+  };
+
   // == useEffect
   // == Appel à la BDD
   useEffect(async () => {
@@ -291,7 +308,7 @@ const ToutSurApp = () => {
   return (
     <div className="toutSurApp">
       {/* Composant Header qui représente le menu sur toutes les pages */}
-      <Header userLog={userLog} logOutUser={logOutUser} />
+      <Header userLog={userLog} logOutUser={logOutUser} onClickBookMarkPage={onClickBookMarkPage} />
 
       {/* Début des routes */}
       {/* Composant Switch & Route qui permet de définir les routes pour nos composants */}
@@ -330,8 +347,8 @@ const ToutSurApp = () => {
         </Route>
 
         {/* Page des favoris pour un utilisateur  connecté */}
-        <Route path="/favoris" userBookmarksArticles={userBookmarksArticles} userBookmarksCategories={userBookmarksCategories} exact>
-          <Favoris />
+        <Route path="/favoris" exact>
+          <Favoris userBookmarksArticles={userBookmarksArticles} userBookmarksCategories={userBookmarksCategories} />
         </Route>
 
         {/* Route pour utilisateur connecté pour accéder à la fonction Blog du site */}
