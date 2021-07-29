@@ -146,6 +146,24 @@ const ToutSurApp = () => {
         console.log('Data fetch', dataFetched);
         setCategorieSelected(dataFetched.data);
       }
+      else if (categorie === 'Science') {
+        setCategorieSelected([]);
+        const dataFetched = await axios({
+          method: 'get',
+          url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/sciences',
+        });
+        console.log('Data fetch', dataFetched);
+        setCategorieSelected(dataFetched.data);
+      }
+      else if (categorie === 'Art') {
+        setCategorieSelected([]);
+        const dataFetched = await axios({
+          method: 'get',
+          url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/art',
+        });
+        console.log('Data fetch', dataFetched);
+        setCategorieSelected(dataFetched.data);
+      }
     }
     catch (error) {
       console.log(error.message);
