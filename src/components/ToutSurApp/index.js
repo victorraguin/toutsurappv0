@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { Segment } from 'semantic-ui-react';
 import {
-  Route, Switch, Link, withRouter,
+  Route, Switch, Link, withRouter, Redirect,
 } from 'react-router-dom';
 import axios from 'axios';
 
@@ -189,6 +189,7 @@ const ToutSurApp = () => {
       });
     }
   };
+
   // == Fonction qui permet de vérifier les inputs de connexion
   const validateLoginForm = () => {
     if (!userLog.email.includes('@')) {
