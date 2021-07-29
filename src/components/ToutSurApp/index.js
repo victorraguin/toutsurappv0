@@ -1,5 +1,5 @@
 // == Import npm
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { Segment } from 'semantic-ui-react';
 import {
   Route, Switch, Link, withRouter,
@@ -53,6 +53,8 @@ const ToutSurApp = () => {
   const [userBookmarksArticles, setUserBookmarksArticles] = useState([]);
   const [favoritesRSSFeed, setFavoritesRSSFeed] = useState([]);
   const [categorieClicked, setCategorieClicked] = useState('');
+  const [filteredFavorites, setFilteredFavorites] = useState([]);
+
 
 
   // == Fonctions de l'application
@@ -319,6 +321,9 @@ const ToutSurApp = () => {
   const onClickHomeMemberPage = async () => {
     console.log('Je lance la fonction pour récupérer les articles en fonction de mes favoris.');
     let favoritesArticles = [];
+    setFavoritesRSSFeed([]);
+    //loading installer un loader ou uselayouteffect a tester!!
+    //appeler le fetch a optimiser 
     try {
       // Si l'utilisateur est connecter, je vais chercher ses favoris dans la bdd
       if (userLog.logged) {
@@ -378,12 +383,12 @@ const ToutSurApp = () => {
             favoritesArticles = [...favoritesArticles, ...dataFetchedSciences.data];
             setFavoritesRSSFeed([...favoritesArticles, ...favoritesRSSFeed]);
           }
-          const filteredFavoritesArticles = favoritesRSSFeed.sort((a, b) => {
+          /* const filteredFavoritesArticles = favoritesRSSFeed.sort((a, b) => {
             return b.created - a.created;
           });
       
           console.log('Je trie la totalité de mes articles selon la date pour réorganiser mon feed:',filteredFavoritesArticles);
-          console.log('Fetch terminé, tout a été ajouté dans mon state');
+          console.log('Fetch terminé, tout a été ajouté dans mon state'); */
         })
       }
     }
@@ -448,20 +453,22 @@ const ToutSurApp = () => {
     }
   }, []);
 
-  /* useEffect(() => {
+  useEffect(() => {
     //je compare les dates de creation des articles pour avoir les plus recentes en premier
     const filteredFavoritesArticles = favoritesRSSFeed.sort((a, b) => {
       return b.created - a.created;
+      
     });
+    setFilteredFavorites(filteredFavoritesArticles);
 
     console.log('Je trie la totalité de mes articles selon la date pour réorganiser mon feed:',filteredFavoritesArticles);
     console.log('Fetch terminé, tout a été ajouté dans mon state');
-  }, [favoritesRSSFeed]); */
+  }, [favoritesRSSFeed]); 
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     console.log('Je vais lancer la récupération du feed parce que userlog est passé à true',onClickHomeMemberPage);
     onClickHomeMemberPage();
-  }, [userLog.logged]);
+  }, [userLog.logged, userBookmarksCategories]);
 
 
   // == Rendu de l'application
@@ -481,7 +488,7 @@ const ToutSurApp = () => {
         {/* Page d'accueil non connecté (liste les catégories) */}
         <Route path="/" exact>
           { userLog.logged
-            ? <ArticlesMember articles={favoritesRSSFeed} />
+            ? <ArticlesMember articles={filteredFavorites} />
             : <Categories list={cards} onCategorieSelected={onCategorieSelected} />}
         </Route>
 
