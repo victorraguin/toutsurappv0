@@ -50,12 +50,11 @@ const ToutSurApp = () => {
   const [userSignUp, setUserSignUp] = useState(initialFormSignUpData);
   const [categorieSelected, setCategorieSelected] = useState([]);
   const [userBookmarksCategories, setUserBookmarksCategories] = useState([]);
+  const [userBookmarksCategoriesPage, setUserBookmarksCategoriesPage] = useState([]);
   const [userBookmarksArticles, setUserBookmarksArticles] = useState([]);
   const [favoritesRSSFeed, setFavoritesRSSFeed] = useState([]);
   const [categorieClicked, setCategorieClicked] = useState('');
   const [filteredFavorites, setFilteredFavorites] = useState([]);
-
-
 
   // == Fonctions de l'application
 
@@ -223,7 +222,6 @@ const ToutSurApp = () => {
     setFavoritesRSSFeed([]);
   };
 
-
   const onCategorieSelected = (event) => {
     const clicked = event.target.closest('a');
     onClickCategoriePage(clicked.name);
@@ -296,10 +294,10 @@ const ToutSurApp = () => {
       });
       console.log(dataCategoriesFetched);
       if (dataCategoriesFetched.data.length === 0) {
-        setUserBookmarksCategories(null);
+        setUserBookmarksCategoriesPage(null);
       }
       else {
-        setUserBookmarksCategories(dataCategoriesFetched.data);
+        setUserBookmarksCategoriesPage(dataCategoriesFetched.data);
       }
       const dataArticlesFetched = await axios({
         method: 'post',
@@ -322,8 +320,8 @@ const ToutSurApp = () => {
     console.log('Je lance la fonction pour récupérer les articles en fonction de mes favoris.');
     let favoritesArticles = [];
     setFavoritesRSSFeed([]);
-    //loading installer un loader ou uselayouteffect a tester!!
-    //appeler le fetch a optimiser 
+    // loading installer un loader ou uselayouteffect a tester!!
+    // appeler le fetch a optimiser
     try {
       // Si l'utilisateur est connecter, je vais chercher ses favoris dans la bdd
       if (userLog.logged) {
@@ -332,9 +330,8 @@ const ToutSurApp = () => {
           url: 'https://toutsur-app-gachimaster.herokuapp.com/favorites/categories',
         });
         console.log('Je veux ajouter les articles de ces catégories :', dataFavoriteCategoriesFetched.data);
-        
-      
-        dataFavoriteCategoriesFetched.data.forEach(async(data) => {
+
+        dataFavoriteCategoriesFetched.data.forEach(async (data) => {
           if (data.name === 'Sport') {
             const dataFetchedSport = await axios({
               method: 'get',
@@ -360,10 +357,10 @@ const ToutSurApp = () => {
               url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/music',
             });
             console.log('Data fetch', dataFetchedMusic);
-            favoritesArticles = [...favoritesArticles, ...dataFetchedMusic.data]
+            favoritesArticles = [...favoritesArticles, ...dataFetchedMusic.data];
             setFavoritesRSSFeed([...favoritesArticles, ...favoritesRSSFeed]);
           }
-    
+
           if (data.name === 'Art') {
             const dataFetchedArt = await axios({
               method: 'get',
@@ -373,7 +370,7 @@ const ToutSurApp = () => {
             favoritesArticles = [...favoritesArticles, ...dataFetchedArt.data];
             setFavoritesRSSFeed([...favoritesArticles, ...favoritesRSSFeed]);
           }
-    
+
           if (data.name === 'Sciences') {
             const dataFetchedSciences = await axios({
               method: 'get',
@@ -383,13 +380,7 @@ const ToutSurApp = () => {
             favoritesArticles = [...favoritesArticles, ...dataFetchedSciences.data];
             setFavoritesRSSFeed([...favoritesArticles, ...favoritesRSSFeed]);
           }
-          /* const filteredFavoritesArticles = favoritesRSSFeed.sort((a, b) => {
-            return b.created - a.created;
-          });
-      
-          console.log('Je trie la totalité de mes articles selon la date pour réorganiser mon feed:',filteredFavoritesArticles);
-          console.log('Fetch terminé, tout a été ajouté dans mon state'); */
-        })
+        });
       }
     }
     catch (error) {
@@ -417,8 +408,6 @@ const ToutSurApp = () => {
           method: 'post',
           url: 'https://toutsur-app-gachimaster.herokuapp.com/favorites/categories',
         });
-        console.log(dataCategoriesFetched);
-        console.log(userBookmarksCategories);
         if (dataCategoriesFetched.data.length === 0) {
           setUserBookmarksCategories(null);
         }
@@ -454,22 +443,18 @@ const ToutSurApp = () => {
   }, []);
 
   useEffect(() => {
-    //je compare les dates de creation des articles pour avoir les plus recentes en premier
-    const filteredFavoritesArticles = favoritesRSSFeed.sort((a, b) => {
-      return b.created - a.created;
-      
-    });
+    // je compare les dates de creation des articles pour avoir les plus recentes en premier
+    const filteredFavoritesArticles = favoritesRSSFeed.sort((a, b) => b.created - a.created);
     setFilteredFavorites(filteredFavoritesArticles);
 
-    console.log('Je trie la totalité de mes articles selon la date pour réorganiser mon feed:',filteredFavoritesArticles);
+    console.log('Je trie la totalité de mes articles selon la date pour réorganiser mon feed:', filteredFavoritesArticles);
     console.log('Fetch terminé, tout a été ajouté dans mon state');
-  }, [favoritesRSSFeed]); 
+  }, [favoritesRSSFeed]);
 
   useLayoutEffect(() => {
-    console.log('Je vais lancer la récupération du feed parce que userlog est passé à true',onClickHomeMemberPage);
+    console.log('Je vais lancer la récupération du feed parce que userlog est passé à true', onClickHomeMemberPage);
     onClickHomeMemberPage();
   }, [userLog.logged, userBookmarksCategories]);
-
 
   // == Rendu de l'application
   return (
@@ -526,7 +511,7 @@ const ToutSurApp = () => {
         <Route path="/favoris" exact>
           <Favoris
             userBookmarksArticles={userBookmarksArticles}
-            userBookmarksCategories={userBookmarksCategories}
+            userBookmarksCategoriesPage={userBookmarksCategoriesPage}
             bookmarkACategorie={bookmarkACategorie}
           />
         </Route>
@@ -545,7 +530,6 @@ const ToutSurApp = () => {
                 list={cards}
                 onCategorieSelected={onCategorieSelected}
                 onBookmarkACategorie={onBookmarkACategorie}
-                userBookmarksCategories={userBookmarksCategories}
               />
             )
             : <Categories list={cards} onCategorieSelected={onCategorieSelected} />}
