@@ -9,7 +9,7 @@ import './styles.scss';
 // == Composant
 
 const Categorie = ({
-  categorie, onCategorieSelected, onBookmarkACategorie, userBookmarksCategories,
+  categorie, onCategorieSelected, onBookmarkACategorie,
 }) => (
   <div>
     <Card.Content>

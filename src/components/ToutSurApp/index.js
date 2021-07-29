@@ -1,5 +1,5 @@
 // == Import npm
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { Segment } from 'semantic-ui-react';
 import {
   Route, Switch, Link, withRouter,
@@ -50,10 +50,11 @@ const ToutSurApp = () => {
   const [userSignUp, setUserSignUp] = useState(initialFormSignUpData);
   const [categorieSelected, setCategorieSelected] = useState([]);
   const [userBookmarksCategories, setUserBookmarksCategories] = useState([]);
+  const [userBookmarksCategoriesPage, setUserBookmarksCategoriesPage] = useState([]);
   const [userBookmarksArticles, setUserBookmarksArticles] = useState([]);
   const [favoritesRSSFeed, setFavoritesRSSFeed] = useState([]);
   const [categorieClicked, setCategorieClicked] = useState('');
-
+  const [filteredFavorites, setFilteredFavorites] = useState([]);
 
   // == Fonctions de l'application
 
@@ -145,6 +146,24 @@ const ToutSurApp = () => {
         console.log('Data fetch', dataFetched);
         setCategorieSelected(dataFetched.data);
       }
+      else if (categorie === 'Science') {
+        setCategorieSelected([]);
+        const dataFetched = await axios({
+          method: 'get',
+          url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/sciences',
+        });
+        console.log('Data fetch', dataFetched);
+        setCategorieSelected(dataFetched.data);
+      }
+      else if (categorie === 'Art') {
+        setCategorieSelected([]);
+        const dataFetched = await axios({
+          method: 'get',
+          url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/art',
+        });
+        console.log('Data fetch', dataFetched);
+        setCategorieSelected(dataFetched.data);
+      }
     }
     catch (error) {
       console.log(error.message);
@@ -221,7 +240,6 @@ const ToutSurApp = () => {
     setFavoritesRSSFeed([]);
   };
 
-
   const onCategorieSelected = (event) => {
     const clicked = event.target.closest('a');
     onClickCategoriePage(clicked.name);
@@ -294,10 +312,10 @@ const ToutSurApp = () => {
       });
       console.log(dataCategoriesFetched);
       if (dataCategoriesFetched.data.length === 0) {
-        setUserBookmarksCategories(null);
+        setUserBookmarksCategoriesPage(null);
       }
       else {
-        setUserBookmarksCategories(dataCategoriesFetched.data);
+        setUserBookmarksCategoriesPage(dataCategoriesFetched.data);
       }
       const dataArticlesFetched = await axios({
         method: 'post',
@@ -319,6 +337,9 @@ const ToutSurApp = () => {
   const onClickHomeMemberPage = async () => {
     console.log('Je lance la fonction pour récupérer les articles en fonction de mes favoris.');
     let favoritesArticles = [];
+    setFavoritesRSSFeed([]);
+    // loading installer un loader ou uselayouteffect a tester!!
+    // appeler le fetch a optimiser
     try {
       // Si l'utilisateur est connecter, je vais chercher ses favoris dans la bdd
       if (userLog.logged) {
@@ -327,9 +348,8 @@ const ToutSurApp = () => {
           url: 'https://toutsur-app-gachimaster.herokuapp.com/favorites/categories',
         });
         console.log('Je veux ajouter les articles de ces catégories :', dataFavoriteCategoriesFetched.data);
-        
-      
-        dataFavoriteCategoriesFetched.data.forEach(async(data) => {
+
+        dataFavoriteCategoriesFetched.data.forEach(async (data) => {
           if (data.name === 'Sport') {
             const dataFetchedSport = await axios({
               method: 'get',
@@ -337,9 +357,8 @@ const ToutSurApp = () => {
             });
             console.log('Les articles de sport que jajoute dans mon flux rss:', dataFetchedSport.data);
             favoritesArticles = [...favoritesArticles, ...dataFetchedSport.data];
-            setFavoritesRSSFeed([...favoritesArticles, ...favoritesRSSFeed]);
+            setFavoritesRSSFeed([...favoritesArticles]);
           }
-
           if (data.name === 'Jeux vidéos') {
             const dataFetchedGaming = await axios({
               method: 'get',
@@ -347,7 +366,7 @@ const ToutSurApp = () => {
             });
             console.log('Les articles de jeux vidéos que jajoute dans mon flux rss:', dataFetchedGaming.data);
             favoritesArticles = [...favoritesArticles, ...dataFetchedGaming.data];
-            setFavoritesRSSFeed([...favoritesArticles, ...favoritesRSSFeed]);
+            setFavoritesRSSFeed([...favoritesArticles]);
           }
           if (data.name === 'Musique') {
             const dataFetchedMusic = await axios({
@@ -355,10 +374,10 @@ const ToutSurApp = () => {
               url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/music',
             });
             console.log('Data fetch', dataFetchedMusic);
-            favoritesArticles = [...favoritesArticles, ...dataFetchedMusic.data]
-            setFavoritesRSSFeed([...favoritesArticles, ...favoritesRSSFeed]);
+            favoritesArticles = [...favoritesArticles, ...dataFetchedMusic.data];
+            setFavoritesRSSFeed([...favoritesArticles]);
           }
-    
+
           if (data.name === 'Art') {
             const dataFetchedArt = await axios({
               method: 'get',
@@ -366,9 +385,9 @@ const ToutSurApp = () => {
             });
             console.log('Data fetch', dataFetchedArt);
             favoritesArticles = [...favoritesArticles, ...dataFetchedArt.data];
-            setFavoritesRSSFeed([...favoritesArticles, ...favoritesRSSFeed]);
+            setFavoritesRSSFeed([...favoritesArticles]);
           }
-    
+
           if (data.name === 'Sciences') {
             const dataFetchedSciences = await axios({
               method: 'get',
@@ -376,20 +395,24 @@ const ToutSurApp = () => {
             });
             console.log('Data fetch', dataFetchedSciences);
             favoritesArticles = [...favoritesArticles, ...dataFetchedSciences.data];
-            setFavoritesRSSFeed([...favoritesArticles, ...favoritesRSSFeed]);
+            setFavoritesRSSFeed([...favoritesArticles]);
           }
-          const filteredFavoritesArticles = favoritesRSSFeed.sort((a, b) => {
-            return b.created - a.created;
-          });
-      
-          console.log('Je trie la totalité de mes articles selon la date pour réorganiser mon feed:',filteredFavoritesArticles);
-          console.log('Fetch terminé, tout a été ajouté dans mon state');
-        })
+        });
       }
     }
     catch (error) {
       console.log(error.message);
     }
+  };
+
+  const removeDuplicates = (data) => {
+    const unique = [];
+    data.forEach((element) => {
+      if (!unique.includes(element)) {
+        unique.push(element);
+      }
+    });
+    return unique;
   };
 
   // == useEffect
@@ -412,8 +435,6 @@ const ToutSurApp = () => {
           method: 'post',
           url: 'https://toutsur-app-gachimaster.herokuapp.com/favorites/categories',
         });
-        console.log(dataCategoriesFetched);
-        console.log(userBookmarksCategories);
         if (dataCategoriesFetched.data.length === 0) {
           setUserBookmarksCategories(null);
         }
@@ -448,21 +469,21 @@ const ToutSurApp = () => {
     }
   }, []);
 
-  /* useEffect(() => {
-    //je compare les dates de creation des articles pour avoir les plus recentes en premier
-    const filteredFavoritesArticles = favoritesRSSFeed.sort((a, b) => {
-      return b.created - a.created;
-    });
-
-    console.log('Je trie la totalité de mes articles selon la date pour réorganiser mon feed:',filteredFavoritesArticles);
-    console.log('Fetch terminé, tout a été ajouté dans mon state');
-  }, [favoritesRSSFeed]); */
-
   useEffect(() => {
-    console.log('Je vais lancer la récupération du feed parce que userlog est passé à true',onClickHomeMemberPage);
-    onClickHomeMemberPage();
-  }, [userLog.logged]);
+    // je compare les dates de creation des articles pour avoir les plus recentes en premier
+    const filteredFavoritesArticles = favoritesRSSFeed.sort((a, b) => b.created - a.created);
+    const editTable = removeDuplicates(filteredFavoritesArticles);
+    console.log('Est-ce que cest delete', editTable);
+    setFilteredFavorites(filteredFavoritesArticles);
 
+    console.log('Je trie la totalité de mes articles selon la date pour réorganiser mon feed:', filteredFavoritesArticles);
+    console.log('Fetch terminé, tout a été ajouté dans mon state');
+  }, [favoritesRSSFeed]);
+
+  useLayoutEffect(() => {
+    console.log('Je vais lancer la récupération du feed parce que userlog est passé à true', onClickHomeMemberPage);
+    onClickHomeMemberPage();
+  }, [userLog.logged, userBookmarksCategories]);
 
   // == Rendu de l'application
   return (
@@ -481,7 +502,7 @@ const ToutSurApp = () => {
         {/* Page d'accueil non connecté (liste les catégories) */}
         <Route path="/" exact>
           { userLog.logged
-            ? <ArticlesMember articles={favoritesRSSFeed} />
+            ? <ArticlesMember articles={filteredFavorites} />
             : <Categories list={cards} onCategorieSelected={onCategorieSelected} />}
         </Route>
 
@@ -519,7 +540,7 @@ const ToutSurApp = () => {
         <Route path="/favoris" exact>
           <Favoris
             userBookmarksArticles={userBookmarksArticles}
-            userBookmarksCategories={userBookmarksCategories}
+            userBookmarksCategoriesPage={userBookmarksCategoriesPage}
             bookmarkACategorie={bookmarkACategorie}
           />
         </Route>
@@ -538,7 +559,6 @@ const ToutSurApp = () => {
                 list={cards}
                 onCategorieSelected={onCategorieSelected}
                 onBookmarkACategorie={onBookmarkACategorie}
-                userBookmarksCategories={userBookmarksCategories}
               />
             )
             : <Categories list={cards} onCategorieSelected={onCategorieSelected} />}

@@ -10,7 +10,6 @@ import './styles.scss';
 // == Composant
 const CategoriesMember = ({
   list, onCategorieSelected, onBookmarkACategorie, usedButton,
-  userBookmarksCategories,
 }) => (
   <Container>
     <Segment vertical>
@@ -31,8 +30,6 @@ const CategoriesMember = ({
             categorie={card}
             onCategorieSelected={onCategorieSelected}
             onBookmarkACategorie={onBookmarkACategorie}
-            usedButton={usedButton}
-            userBookmarksCategories={userBookmarksCategories}
           />
         ))
           }
