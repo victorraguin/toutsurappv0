@@ -398,6 +398,14 @@ const ToutSurApp = () => {
     }
   };
 
+  //Fonction pour supprimer une categories des favoris
+  const onDeleteClick = (evt) => {
+    console.log('click sur supprimer bouton');
+    
+    /* setBookmarkACategorie(event.target.id); */
+  };
+  
+
   // == useEffect
   // == Appel à la BDD
   useEffect(async () => {
@@ -528,7 +536,7 @@ const ToutSurApp = () => {
           <Favoris
             userBookmarksArticles={userBookmarksArticles}
             userBookmarksCategories={userBookmarksCategories}
-            bookmarkACategorie={bookmarkACategorie}
+            onDeleteClick={onDeleteClick}
           />
         </Route>
 
