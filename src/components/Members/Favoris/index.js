@@ -23,7 +23,7 @@ const Favoris = ({ userBookmarksArticles, userBookmarksCategoriesPage, onDeleteC
     </Segment>
     <Segment vertical color="teal">
       <Card.Group className="card-group" centered>
-        { userBookmarksCategoriesPage ? userBookmarksCategories.map((categorie) => (
+        { userBookmarksCategoriesPage ? userBookmarksCategoriesPage.map((categorie) => (
           <FavCategorieCard key={categorie.id} categorie={categorie} onDeleteClick={onDeleteClick} />
         )) : <h3>Vous n'avez pas encore enregistré de catégories</h3>}
       </Card.Group>
