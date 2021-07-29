@@ -407,8 +407,23 @@ const ToutSurApp = () => {
   };
 
   //Fonction pour supprimer une categories des favoris
-  const onDeleteClick = (evt) => {
-    console.log('click sur supprimer bouton');
+  const onDeleteClick = async (evt) => {
+    const categorieToDelete = evt.target.name
+    try {
+      const dataAfterDelete = await axios({
+        method: 'delete',
+        url: `https://toutsur-app-gachimaster.herokuapp.com/categories/${categorieToDelete}`,
+      });
+      if (dataAfterDelete.data.length === 0) {
+        setUserBookmarksCategories(null);
+      }
+      setUserBookmarksCategories(dataAfterDelete.data);
+      setUserBookmarksCategoriesPage(dataAfterDelete.data);
+    }
+    catch (error) {
+      console.log(error.message);
+    }
+
   };
   
   // == useEffect
@@ -468,8 +483,6 @@ const ToutSurApp = () => {
   useEffect(() => {
     // je compare les dates de creation des articles pour avoir les plus recentes en premier
     const filteredFavoritesArticles = favoritesRSSFeed.sort((a, b) => b.created - a.created);
-    const editTable = removeDuplicates(filteredFavoritesArticles);
-    console.log('Est-ce que cest delete', editTable);
     setFilteredFavorites(filteredFavoritesArticles);
 
     console.log('Je trie la totalité de mes articles selon la date pour réorganiser mon feed:', filteredFavoritesArticles);
