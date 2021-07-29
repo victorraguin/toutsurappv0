@@ -8,7 +8,10 @@ import Categorie from './Categorie';
 import './styles.scss';
 
 // == Composant
-const CategoriesMember = ({ list, onCategorieSelected, onBookmarkACategorie }) => (
+const CategoriesMember = ({
+  list, onCategorieSelected, onBookmarkACategorie, usedButton,
+  userBookmarksCategories,
+}) => (
   <Container>
     <Segment vertical>
       <h1 className="title">
@@ -18,12 +21,19 @@ const CategoriesMember = ({ list, onCategorieSelected, onBookmarkACategorie }) =
 
     <Segment vertical color="teal">
       <Segment vertical>
-        Vous pouvez ajouter des catégories à vos favoris ou tout simplement lire leurs articles...
+        Vous pouvez ajouter à vos favoris ou tout simplement lire leurs articles.
       </Segment>
       <Card.Group className="card-group">
         {
         list.map((card) => (
-          <Categorie key={card.id} categorie={card} onCategorieSelected={onCategorieSelected} onBookmarkACategorie={onBookmarkACategorie} />
+          <Categorie
+            key={card.id}
+            categorie={card}
+            onCategorieSelected={onCategorieSelected}
+            onBookmarkACategorie={onBookmarkACategorie}
+            usedButton={usedButton}
+            userBookmarksCategories={userBookmarksCategories}
+          />
         ))
           }
       </Card.Group>

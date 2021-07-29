@@ -17,15 +17,7 @@ const FavCategorieCard = ({ categorie, bookmarkACategorie }) => {
   return (
     <Card color={categorie.color}>
       <Card.Content extra className="card-article-container">
-        <a className="card-article-header">
-          <Popup
-            content="Supprimer la catégorie"
-            trigger={(
-              <Icon name="close" id={categorie.id} size="large" color="red" onClick={oneDeleteClick} />
-         )}
-            position="top center"
-          />
-        </a>
+        <Button id={categorie.id} size="tiny" color="blue" onClick={oneDeleteClick} >Supprimer</Button>
       </Card.Content>
       <Image src={categorie.picture} wrapped ui={false} />
       <Card.Content>
