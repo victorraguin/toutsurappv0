@@ -219,7 +219,10 @@ const ToutSurApp = () => {
       logged: false,
       databaseError: false,
     });
+    setFavoritesRSSFeed([]);
   };
+
+
   const onCategorieSelected = (event) => {
     const clicked = event.target.closest('a');
     console.log(clicked.name);
@@ -321,7 +324,7 @@ const ToutSurApp = () => {
   };
   // == Fonction pour chercher les articles selon les categories favoris  d'un utilisateur connecter
   const onClickHomeMemberPage = async () => {
-    console.log('je suis dans homeMember page');
+    console.log('Je lance la fonction pour récupérer les articles en fonction de mes favoris.');
     let favoritesArticles = [];
     try {
       // Si l'utilisateur est connecter, je vais chercher ses favoris dans la bdd
@@ -330,7 +333,7 @@ const ToutSurApp = () => {
           method: 'post',
           url: 'https://toutsur-app-gachimaster.herokuapp.com/favorites/categories',
         });
-        console.log('Favoris recuperer', dataFavoriteCategoriesFetched);
+        console.log('Je veux ajouter les articles de ces catégories :', dataFavoriteCategoriesFetched.data);
         
       
         dataFavoriteCategoriesFetched.data.forEach(async(data) => {
@@ -339,12 +342,9 @@ const ToutSurApp = () => {
               method: 'get',
               url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/sports',
             });
-            console.log('Data fetch', dataFetchedSport);
-            console.log('DATA', dataFetchedSport.data);
-
+            console.log('Les articles de sport que jajoute dans mon flux rss:', dataFetchedSport.data);
             favoritesArticles = [...favoritesArticles, ...dataFetchedSport.data];
             setFavoritesRSSFeed([...favoritesArticles, ...favoritesRSSFeed]);
-            
           }
 
           if (data.name === 'Jeux vidéos') {
@@ -352,13 +352,10 @@ const ToutSurApp = () => {
               method: 'get',
               url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/gaming',
             });
-            console.log('Data fetch', dataFetchedGaming);
+            console.log('Les articles de jeux vidéos que jajoute dans mon flux rss:', dataFetchedGaming.data);
             favoritesArticles = [...favoritesArticles, ...dataFetchedGaming.data];
             setFavoritesRSSFeed([...favoritesArticles, ...favoritesRSSFeed]);
-
           }
-          
-          
           if (data.name === 'Musique') {
             const dataFetchedMusic = await axios({
               method: 'get',
@@ -377,7 +374,6 @@ const ToutSurApp = () => {
             console.log('Data fetch', dataFetchedArt);
             favoritesArticles = [...favoritesArticles, ...dataFetchedArt.data];
             setFavoritesRSSFeed([...favoritesArticles, ...favoritesRSSFeed]);
-
           }
     
           if (data.name === 'Sciences') {
@@ -389,11 +385,14 @@ const ToutSurApp = () => {
             favoritesArticles = [...favoritesArticles, ...dataFetchedSciences.data];
             setFavoritesRSSFeed([...favoritesArticles, ...favoritesRSSFeed]);
           }
-          console.log('favorites articles', favoritesArticles);
+          const filteredFavoritesArticles = favoritesRSSFeed.sort((a, b) => {
+            return b.created - a.created;
+          });
+      
+          console.log('Je trie la totalité de mes articles selon la date pour réorganiser mon feed:',filteredFavoritesArticles);
+          console.log('Fetch terminé, tout a été ajouté dans mon state');
         })
       }
-      
-      setFavoritesRSSFeed(favoritesArticles);
     }
     catch (error) {
       console.log(error.message);
@@ -428,19 +427,20 @@ const ToutSurApp = () => {
     }
   }, []);
 
-  useEffect(() => {
+  /* useEffect(() => {
     //je compare les dates de creation des articles pour avoir les plus recentes en premier
     const filteredFavoritesArticles = favoritesRSSFeed.sort((a, b) => {
       return b.created - a.created;
     });
 
-    console.log('sort',filteredFavoritesArticles);
-  }, [favoritesRSSFeed]);
+    console.log('Je trie la totalité de mes articles selon la date pour réorganiser mon feed:',filteredFavoritesArticles);
+    console.log('Fetch terminé, tout a été ajouté dans mon state');
+  }, [favoritesRSSFeed]); */
 
   useEffect(() => {
-    console.log(onClickHomeMemberPage);
+    console.log('Je vais lancer la récupération du feed parce que userlog est passé à true',onClickHomeMemberPage);
     onClickHomeMemberPage();
-  }, [userLog.logged, userBookmarksCategories]);
+  }, [userLog.logged]);
 
   // == Rendu de l'application
   return (
@@ -450,14 +450,13 @@ const ToutSurApp = () => {
         userLog={userLog}
         logOutUser={logOutUser}
         onClickBookMarkPage={onClickBookMarkPage}
-        onClickHomeMemberPage={onClickHomeMemberPage}
       />
 
       {/* Début des routes */}
       {/* Composant Switch & Route qui permet de définir les routes pour nos composants */}
       <Switch>
 
-        {/* Page d'accueil non connecté (lgiiste les catégories) */}
+        {/* Page d'accueil non connecté (liste les catégories) */}
         <Route path="/" exact>
           { userLog.logged
             ? <ArticlesMember articles={favoritesRSSFeed} />

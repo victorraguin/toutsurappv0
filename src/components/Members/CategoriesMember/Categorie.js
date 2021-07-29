@@ -13,7 +13,6 @@ const Categorie = ({ categorie, onCategorieSelected, onBookmarkACategorie }) => 
   <Popup
     flowing
     hoverable
-    onOpen={(e) =>(console.log(e.target))}
     position="top center"
     inverted
     name={categorie.name}
