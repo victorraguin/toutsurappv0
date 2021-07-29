@@ -1,15 +1,12 @@
 // == Import npm
 import React from 'react';
 import {
-  Card, Icon, Image, Popup,
+  Card, Icon, Image, Popup, Label,
 } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 // == Import
 import './styles.scss';
-
-
-
 
 // == Composant
 const Article = ({ article }) => (
@@ -26,7 +23,7 @@ const Article = ({ article }) => (
           position="top center"
         />
       </a>
-      <a href="#" className="card-article-header">
+      {/*       <a href="#" className="card-article-header">
         <Popup
           content="Signaler l'article"
           trigger={(
@@ -34,22 +31,31 @@ const Article = ({ article }) => (
          )}
           position="top center"
         />
-      </a>
+      </a> */}
     </Card.Content>
     <Card
-      image={ article.media ? article.media : 'https://cdn.pixabay.com/photo/2019/04/10/11/56/watercolour-4116932_960_720.png'}
-      link='true'
+      image={article.media ? article.media : 'https://cdn.pixabay.com/photo/2019/04/10/11/56/watercolour-4116932_960_720.png'}
+      link="true"
       href={article.url}
       target="_blank"
       rel="noreferrer"
     />
+    <Label
+      color="grey"
+      attached="top right"
+      as="a"
+      href={article.url}
+      target="_blank"
+      rel="noreferrer"
+    >{article.site}
+    </Label>
     <Card.Content
-    textAlign="left"
+      textAlign="left"
       image={article.media}
       header={article.title}
-      description={ article.media ? article.site : `${article.site} : Impossible de charger l'image.`}
+      description={article.media ? '' : 'Impossible de charger l\'image.'}
     />
-    <Card.Content extra className="card-article-container">
+    {/*     <Card.Content extra className="card-article-container">
       <a className="card-article-header">
         <Popup
           content="Upvoter l'article"
@@ -68,7 +74,7 @@ const Article = ({ article }) => (
           position="bottom center"
         />
       </a>
-    </Card.Content>
+    </Card.Content> */}
   </Card>
 );
 

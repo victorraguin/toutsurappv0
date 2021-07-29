@@ -1,7 +1,7 @@
 // == Import npm
 import React from 'react';
 import {
-  Card, Icon, Image, Popup,
+  Card, Icon, Image, Popup, Label
 } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
@@ -40,6 +40,15 @@ const Article = ({ article }) => (
       target="_blank"
       rel="noreferrer"
     />
+    <Label
+      color="grey"
+      attached="top right"
+      as="a"
+      href={article.url}
+      target="_blank"
+      rel="noreferrer"
+    >{article.site}
+    </Label>
     <Card.Content
     textAlign="left"
       image={article.media}
