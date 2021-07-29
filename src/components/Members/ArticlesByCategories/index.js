@@ -17,7 +17,7 @@ const ArticlesByCategories = ({ categorieSelected, categorieClicked, onBookmarkA
 
     <Segment vertical color="teal">
       <Segment vertical>
-        <Button color="brown" onClick={onBookmarkACategorie}>Enregistrer #{categorieClicked} en favoris !</Button>
+        Hello !
       </Segment>
       <Card.Group className="card-group">
         {

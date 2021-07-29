@@ -102,9 +102,9 @@ const ToutSurApp = () => {
     }
   };
 
-  const onBookmarkACategorie = (data) => {
-    console.log(categorieClicked);
-    bookmarkACategorie(categorieClicked);
+  const onBookmarkACategorie = (event) => {
+    const clicked = event.target;
+    bookmarkACategorie(clicked.name);
   };
 
   const onInputLogUserChange = (name, value) => {
@@ -117,30 +117,30 @@ const ToutSurApp = () => {
   const onClickCategoriePage = async (categorie) => {
     try {
       if (categorie === 'Musique') {
+        setCategorieSelected([]);
         const dataFetched = await axios({
           method: 'get',
           url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/music',
         });
         console.log('Data fetch', dataFetched);
-        setCategorieSelected([]);
         setCategorieSelected(dataFetched.data);
       }
       else if (categorie === 'Jeux vidéos') {
+        setCategorieSelected([]);
         const dataFetched = await axios({
           method: 'get',
           url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/gaming',
         });
         console.log('Data fetch', dataFetched);
-        setCategorieSelected([]);
         setCategorieSelected(dataFetched.data);
       }
       else if (categorie === 'Sport') {
+        setCategorieSelected([]);
         const dataFetched = await axios({
           method: 'get',
           url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/sports',
         });
         console.log('Data fetch', dataFetched);
-        setCategorieSelected([]);
         setCategorieSelected(dataFetched.data);
       }
     }
@@ -219,8 +219,6 @@ const ToutSurApp = () => {
   };
   const onCategorieSelected = (event) => {
     const clicked = event.target.closest('a');
-
-    console.log(clicked.name);
     onClickCategoriePage(clicked.name);
     setCategorieClicked(clicked.name);
   };
@@ -404,7 +402,12 @@ const ToutSurApp = () => {
         {/* Page des articles pour un utilisateur non connecté */}
         <Route path="/articles" exact>
           { userLog.logged
-            ? <ArticlesByCategories categorieSelected={categorieSelected}  categorieClicked={categorieClicked} onBookmarkACategorie={onBookmarkACategorie} />
+            ? (
+              <ArticlesByCategories
+                categorieSelected={categorieSelected}
+                categorieClicked={categorieClicked}
+              />
+            )
             : <Articles categorieSelected={categorieSelected} />}
         </Route>
 
@@ -419,7 +422,11 @@ const ToutSurApp = () => {
 
         {/* Page des favoris pour un utilisateur  connecté */}
         <Route path="/favoris" exact>
-          <Favoris userBookmarksArticles={userBookmarksArticles} userBookmarksCategories={userBookmarksCategories} bookmarkACategorie={bookmarkACategorie} />
+          <Favoris
+            userBookmarksArticles={userBookmarksArticles}
+            userBookmarksCategories={userBookmarksCategories}
+            bookmarkACategorie={bookmarkACategorie}
+          />
         </Route>
 
         {/* Route pour utilisateur connecté pour accéder à la fonction Blog du site */}
