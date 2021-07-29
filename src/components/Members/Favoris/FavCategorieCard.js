@@ -17,7 +17,7 @@ const FavCategorieCard = ({ categorie, bookmarkACategorie }) => {
   return (
     <Card color={categorie.color}>
       <Card.Content extra className="card-article-container">
-        <Button id={categorie.id} size="tiny" color="brown" onClick={oneDeleteClick} >Supprimer</Button>
+        <Button id={categorie.id} size="tiny" color="blue" onClick={oneDeleteClick} >Supprimer</Button>
       </Card.Content>
       <Image src={categorie.picture} wrapped ui={false} />
       <Card.Content>
