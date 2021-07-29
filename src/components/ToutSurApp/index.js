@@ -51,7 +51,9 @@ const ToutSurApp = () => {
   const [categorieSelected, setCategorieSelected] = useState([]);
   const [userBookmarksCategories, setUserBookmarksCategories] = useState([]);
   const [userBookmarksArticles, setUserBookmarksArticles] = useState([]);
+  const [favoritesRSSFeed, setFavoritesRSSFeed] = useState([]);
   const [categorieClicked, setCategorieClicked] = useState('');
+
 
   // == Fonctions de l'application
 
@@ -216,7 +218,10 @@ const ToutSurApp = () => {
       logged: false,
       databaseError: false,
     });
+    setFavoritesRSSFeed([]);
   };
+
+
   const onCategorieSelected = (event) => {
     const clicked = event.target.closest('a');
     onClickCategoriePage(clicked.name);
@@ -243,7 +248,7 @@ const ToutSurApp = () => {
   // Fonction pour valider le form
   const validateForm = () => {
     // je veux verifier que password === confirmPassword
-    if (userSignUp.password != userSignUp.confirmPassword) {
+    if (userSignUp.password !== userSignUp.confirmPassword) {
       setUserSignUp({
         ...userSignUp,
         password: '',
@@ -261,8 +266,8 @@ const ToutSurApp = () => {
       });
     }
     // un minimum de huit caracters pour le mdp
-    else if ((userSignUp.password.length < 8) || (userSignUp.confirmPassword.length < 8)
-    && (userSignUp.password != userSignUp.confirmPassword)) {
+    else if (((userSignUp.password.length < 8) || (userSignUp.confirmPassword.length < 8))
+    && (userSignUp.password !== userSignUp.confirmPassword)) {
       setUserSignUp({
         ...userSignUp,
         password: '',
@@ -310,9 +315,81 @@ const ToutSurApp = () => {
       console.log(error.message);
     }
   };
-
+  // == Fonction pour chercher les articles selon les categories favoris  d'un utilisateur connecter
   const onClickHomeMemberPage = async () => {
+    console.log('Je lance la fonction pour récupérer les articles en fonction de mes favoris.');
+    let favoritesArticles = [];
+    try {
+      // Si l'utilisateur est connecter, je vais chercher ses favoris dans la bdd
+      if (userLog.logged) {
+        const dataFavoriteCategoriesFetched = await axios({
+          method: 'post',
+          url: 'https://toutsur-app-gachimaster.herokuapp.com/favorites/categories',
+        });
+        console.log('Je veux ajouter les articles de ces catégories :', dataFavoriteCategoriesFetched.data);
+        
+      
+        dataFavoriteCategoriesFetched.data.forEach(async(data) => {
+          if (data.name === 'Sport') {
+            const dataFetchedSport = await axios({
+              method: 'get',
+              url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/sports',
+            });
+            console.log('Les articles de sport que jajoute dans mon flux rss:', dataFetchedSport.data);
+            favoritesArticles = [...favoritesArticles, ...dataFetchedSport.data];
+            setFavoritesRSSFeed([...favoritesArticles, ...favoritesRSSFeed]);
+          }
 
+          if (data.name === 'Jeux vidéos') {
+            const dataFetchedGaming = await axios({
+              method: 'get',
+              url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/gaming',
+            });
+            console.log('Les articles de jeux vidéos que jajoute dans mon flux rss:', dataFetchedGaming.data);
+            favoritesArticles = [...favoritesArticles, ...dataFetchedGaming.data];
+            setFavoritesRSSFeed([...favoritesArticles, ...favoritesRSSFeed]);
+          }
+          if (data.name === 'Musique') {
+            const dataFetchedMusic = await axios({
+              method: 'get',
+              url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/music',
+            });
+            console.log('Data fetch', dataFetchedMusic);
+            favoritesArticles = [...favoritesArticles, ...dataFetchedMusic.data]
+            setFavoritesRSSFeed([...favoritesArticles, ...favoritesRSSFeed]);
+          }
+    
+          if (data.name === 'Art') {
+            const dataFetchedArt = await axios({
+              method: 'get',
+              url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/art',
+            });
+            console.log('Data fetch', dataFetchedArt);
+            favoritesArticles = [...favoritesArticles, ...dataFetchedArt.data];
+            setFavoritesRSSFeed([...favoritesArticles, ...favoritesRSSFeed]);
+          }
+    
+          if (data.name === 'Sciences') {
+            const dataFetchedSciences = await axios({
+              method: 'get',
+              url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/sciences',
+            });
+            console.log('Data fetch', dataFetchedSciences);
+            favoritesArticles = [...favoritesArticles, ...dataFetchedSciences.data];
+            setFavoritesRSSFeed([...favoritesArticles, ...favoritesRSSFeed]);
+          }
+          const filteredFavoritesArticles = favoritesRSSFeed.sort((a, b) => {
+            return b.created - a.created;
+          });
+      
+          console.log('Je trie la totalité de mes articles selon la date pour réorganiser mon feed:',filteredFavoritesArticles);
+          console.log('Fetch terminé, tout a été ajouté dans mon state');
+        })
+      }
+    }
+    catch (error) {
+      console.log(error.message);
+    }
   };
 
   // == useEffect
@@ -371,22 +448,40 @@ const ToutSurApp = () => {
     }
   }, []);
 
-  // == Vérification du state si utilisateur connecté
+  /* useEffect(() => {
+    //je compare les dates de creation des articles pour avoir les plus recentes en premier
+    const filteredFavoritesArticles = favoritesRSSFeed.sort((a, b) => {
+      return b.created - a.created;
+    });
+
+    console.log('Je trie la totalité de mes articles selon la date pour réorganiser mon feed:',filteredFavoritesArticles);
+    console.log('Fetch terminé, tout a été ajouté dans mon state');
+  }, [favoritesRSSFeed]); */
+
+  useEffect(() => {
+    console.log('Je vais lancer la récupération du feed parce que userlog est passé à true',onClickHomeMemberPage);
+    onClickHomeMemberPage();
+  }, [userLog.logged]);
+
 
   // == Rendu de l'application
   return (
     <div className="toutSurApp">
       {/* Composant Header qui représente le menu sur toutes les pages */}
-      <Header userLog={userLog} logOutUser={logOutUser} onClickBookMarkPage={onClickBookMarkPage} />
+      <Header
+        userLog={userLog}
+        logOutUser={logOutUser}
+        onClickBookMarkPage={onClickBookMarkPage}
+      />
 
       {/* Début des routes */}
       {/* Composant Switch & Route qui permet de définir les routes pour nos composants */}
       <Switch>
 
-        {/* Page d'accueil non connecté (lgiiste les catégories) */}
+        {/* Page d'accueil non connecté (liste les catégories) */}
         <Route path="/" exact>
           { userLog.logged
-            ? <ArticlesMember list={cards} onClickHomeMemberPage={onClickHomeMemberPage} />
+            ? <ArticlesMember articles={favoritesRSSFeed} />
             : <Categories list={cards} onCategorieSelected={onCategorieSelected} />}
         </Route>
 

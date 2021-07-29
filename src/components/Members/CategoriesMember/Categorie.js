@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import './styles.scss';
 
 // == Composant
+
 const Categorie = ({
   categorie, onCategorieSelected, onBookmarkACategorie, userBookmarksCategories,
 }) => (
