@@ -13,8 +13,10 @@ const Categorie = ({ categorie, onCategorieSelected, onBookmarkACategorie }) => 
   <Popup
     flowing
     hoverable
+    onOpen={(e) =>(console.log(e.target))}
     position="top center"
     inverted
+    name={categorie.name}
     trigger={(
       <Link
         to="/articles"
@@ -27,12 +29,17 @@ const Categorie = ({ categorie, onCategorieSelected, onBookmarkACategorie }) => 
           header={`#${categorie.name}`}
           color={categorie.color}
           align="center"
-          name={categorie.name}
+          
         />
+
       </Link>
   )}
   >
-    <Button size="small" inverted basic color="pink" name={categorie.id} onClick={onBookmarkACategorie}>Ajouter en favoris?</Button>
+    <Button size="small" inverted basic color="pink" name={categorie.id} onClick={onBookmarkACategorie}>
+      {
+      `${false ? `Supprimer` : `Ajouter` } en favoris`
+      }
+    </Button>
   </Popup>
 );
 

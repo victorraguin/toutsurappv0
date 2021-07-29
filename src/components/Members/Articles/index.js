@@ -8,7 +8,7 @@ import Article from './Article';
 import './styles.scss';
 
 // == Composant
-const ArticlesMember = ({ props }) => (
+const ArticlesMember = ({ articles }) => (
   <Container>
     <Segment vertical>
       <h1 className="title">
@@ -18,10 +18,13 @@ const ArticlesMember = ({ props }) => (
 
     <Segment vertical color="teal">
     <Segment vertical>
-        Bonjour !
       </Segment>
       <Card.Group className="card-group" centered>
-        <h4>Vous n'avez pas encore de catégories favorites...</h4>
+    {
+          articles.map((article) => (
+            <Article article={article} />
+          ))
+    }
       </Card.Group>
     </Segment>
   </Container>

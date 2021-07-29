@@ -52,6 +52,8 @@ const ToutSurApp = () => {
   const [categorieSelected, setCategorieSelected] = useState([]);
   const [userBookmarksCategories, setUserBookmarksCategories] = useState([]);
   const [userBookmarksArticles, setUserBookmarksArticles] = useState([]);
+  const [favoritesRSSFeed, setFavoritesRSSFeed] = useState([]);
+
 
   // == Fonctions de l'application
 
@@ -318,8 +320,9 @@ const ToutSurApp = () => {
     }
   };
   // == Fonction pour chercher les articles selon les categories favoris  d'un utilisateur connecter
-  // == A verifier, 404 recu!!! Vu que id de utilisateur n'est pas dans state ??
   const onClickHomeMemberPage = async () => {
+    console.log('je suis dans homeMember page');
+    let favoritesArticles = [];
     try {
       // Si l'utilisateur est connecter, je vais chercher ses favoris dans la bdd
       if (userLog.logged) {
@@ -328,52 +331,70 @@ const ToutSurApp = () => {
           url: 'https://toutsur-app-gachimaster.herokuapp.com/favorites/categories',
         });
         console.log('Favoris recuperer', dataFavoriteCategoriesFetched);
-      
-      dataFavoriteCategoriesFetched.data.forEach(async(data) => {
-        if (data.name === 'Sport') {
-          const dataFetched = await axios({
-            method: 'get',
-            url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/sports',
-          });
-          console.log('Data fetch', dataFetched);
-        }
-
-        if (data.name === 'Jeux vidéos') {
-          const dataFetched = await axios({
-            method: 'get',
-            url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/gaming',
-          });
-          console.log('Data fetch', dataFetched);
-        }
         
-        if (data.name === 'Musique') {
-          const dataFetched = await axios({
-            method: 'get',
-            url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/music',
-          });
-          console.log('Data fetch', dataFetched);
-        }
-  
-        if (data.name === 'Art') {
-          const dataFetched = await axios({
-            method: 'get',
-            url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/art',
-          });
-          console.log('Data fetch', dataFetched);
-        }
-  
-        if (data.name === 'Sciences') {
-          const dataFetched = await axios({
-            method: 'get',
-            url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/sciences',
-          });
-          console.log('Data fetch', dataFetched);
-        }
-
-
-      })
       
-    }}
+        dataFavoriteCategoriesFetched.data.forEach(async(data) => {
+          if (data.name === 'Sport') {
+            const dataFetchedSport = await axios({
+              method: 'get',
+              url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/sports',
+            });
+            console.log('Data fetch', dataFetchedSport);
+            console.log('DATA', dataFetchedSport.data);
+
+            favoritesArticles = [...favoritesArticles, ...dataFetchedSport.data];
+            setFavoritesRSSFeed([...favoritesArticles, ...favoritesRSSFeed]);
+            
+          }
+
+          if (data.name === 'Jeux vidéos') {
+            const dataFetchedGaming = await axios({
+              method: 'get',
+              url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/gaming',
+            });
+            console.log('Data fetch', dataFetchedGaming);
+            favoritesArticles = [...favoritesArticles, ...dataFetchedGaming.data];
+            setFavoritesRSSFeed([...favoritesArticles, ...favoritesRSSFeed]);
+
+          }
+          
+          
+          if (data.name === 'Musique') {
+            const dataFetchedMusic = await axios({
+              method: 'get',
+              url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/music',
+            });
+            console.log('Data fetch', dataFetchedMusic);
+            favoritesArticles = [...favoritesArticles, ...dataFetchedMusic.data]
+            setFavoritesRSSFeed([...favoritesArticles, ...favoritesRSSFeed]);
+          }
+    
+          if (data.name === 'Art') {
+            const dataFetchedArt = await axios({
+              method: 'get',
+              url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/art',
+            });
+            console.log('Data fetch', dataFetchedArt);
+            favoritesArticles = [...favoritesArticles, ...dataFetchedArt.data];
+            setFavoritesRSSFeed([...favoritesArticles, ...favoritesRSSFeed]);
+
+          }
+    
+          if (data.name === 'Sciences') {
+            const dataFetchedSciences = await axios({
+              method: 'get',
+              url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/sciences',
+            });
+            console.log('Data fetch', dataFetchedSciences);
+            favoritesArticles = [...favoritesArticles, ...dataFetchedSciences.data];
+            setFavoritesRSSFeed([...favoritesArticles, ...favoritesRSSFeed]);
+          }
+          console.log('favorites articles', favoritesArticles);
+        })
+      }
+      
+      setFavoritesRSSFeed(favoritesArticles);
+    }
     catch (error) {
       console.log(error.message);
     }
@@ -407,6 +428,20 @@ const ToutSurApp = () => {
     }
   }, []);
 
+  useEffect(() => {
+    //je compare les dates de creation des articles pour avoir les plus recentes en premier
+    const filteredFavoritesArticles = favoritesRSSFeed.sort((a, b) => {
+      return b.created - a.created;
+    });
+
+    console.log('sort',filteredFavoritesArticles);
+  }, [favoritesRSSFeed]);
+
+  useEffect(() => {
+    console.log(onClickHomeMemberPage);
+    onClickHomeMemberPage();
+  }, [userLog.logged, userBookmarksCategories]);
+
   // == Rendu de l'application
   return (
     <div className="toutSurApp">
@@ -425,7 +460,7 @@ const ToutSurApp = () => {
         {/* Page d'accueil non connecté (lgiiste les catégories) */}
         <Route path="/" exact>
           { userLog.logged
-            ? <ArticlesMember list={cards} onClickHomeMemberPage={onClickHomeMemberPage} />
+            ? <ArticlesMember articles={favoritesRSSFeed} />
             : <Categories list={cards} onCategorieSelected={onCategorieSelected} />}
         </Route>
 

@@ -12,8 +12,10 @@ import './styles.scss';
 
 
 // == Composant
-const Article = () => (
-  <Card color="orange">
+const Article = ({ article }) => (
+  <Card
+    color="orange"
+  >
     <Card.Content extra className="card-article-container">
       <a href="#" className="card-article-header">
         <Popup
@@ -33,15 +35,20 @@ const Article = () => (
           position="top center"
         />
       </a>
-
-      
-
     </Card.Content>
-
-    <Image src="https://cdn.pixabay.com/photo/2021/07/13/20/00/lion-6464429_960_720.jpg" wrapped ui={false} />
-    <Card.Content>
-      <Card.Header>Valentin c'est un gros chat</Card.Header>
-    </Card.Content>
+    <Card
+      image={ article.media ? article.media : 'https://cdn.pixabay.com/photo/2019/04/10/11/56/watercolour-4116932_960_720.png'}
+      link='true'
+      href={article.url}
+      target="_blank"
+      rel="noreferrer"
+    />
+    <Card.Content
+    textAlign="left"
+      image={article.media}
+      header={article.title}
+      description={ article.media ? article.site : `${article.site} : Impossible de charger l'image.`}
+    />
     <Card.Content extra className="card-article-container">
       <a className="card-article-header">
         <Popup
