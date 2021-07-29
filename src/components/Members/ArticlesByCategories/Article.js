@@ -1,7 +1,7 @@
 // == Import npm
 import React from 'react';
 import {
-  Card, Icon, Image, Popup, Label
+  Card, Icon, Image, Popup, Label,
 } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
@@ -23,7 +23,7 @@ const Article = ({ article }) => (
           position="top center"
         />
       </a>
-{/*       <a href="#" className="card-article-header">
+      {/*       <a href="#" className="card-article-header">
         <Popup
           content="Signaler l'article"
           trigger={(
@@ -34,8 +34,8 @@ const Article = ({ article }) => (
       </a> */}
     </Card.Content>
     <Card
-      image={ article.media ? article.media : 'https://cdn.pixabay.com/photo/2020/04/19/08/17/watercolor-5062356__340.jpg'}
-      link='true'
+      image={article.media ? article.media : 'https://cdn.pixabay.com/photo/2020/04/19/08/17/watercolor-5062356__340.jpg'}
+      link="true"
       href={article.url}
       target="_blank"
       rel="noreferrer"
@@ -50,12 +50,12 @@ const Article = ({ article }) => (
     >{article.site}
     </Label>
     <Card.Content
-    textAlign="left"
+      textAlign="left"
       image={article.media}
       header={article.title}
-      description={ article.media ? article.site : `${article.site} : Impossible de charger l'image.`}
+      description={article.media ? '' : 'Impossible de charger l\'image.'}
     />
-{/*     <Card.Content extra className="card-article-container">
+    {/*     <Card.Content extra className="card-article-container">
       <a className="card-article-header">
         <Popup
           content="Upvoter l'article"

@@ -357,9 +357,8 @@ const ToutSurApp = () => {
             });
             console.log('Les articles de sport que jajoute dans mon flux rss:', dataFetchedSport.data);
             favoritesArticles = [...favoritesArticles, ...dataFetchedSport.data];
-            setFavoritesRSSFeed([...favoritesArticles, ...favoritesRSSFeed]);
+            setFavoritesRSSFeed([...favoritesArticles]);
           }
-
           if (data.name === 'Jeux vidéos') {
             const dataFetchedGaming = await axios({
               method: 'get',
@@ -367,7 +366,7 @@ const ToutSurApp = () => {
             });
             console.log('Les articles de jeux vidéos que jajoute dans mon flux rss:', dataFetchedGaming.data);
             favoritesArticles = [...favoritesArticles, ...dataFetchedGaming.data];
-            setFavoritesRSSFeed([...favoritesArticles, ...favoritesRSSFeed]);
+            setFavoritesRSSFeed([...favoritesArticles]);
           }
           if (data.name === 'Musique') {
             const dataFetchedMusic = await axios({
@@ -376,7 +375,7 @@ const ToutSurApp = () => {
             });
             console.log('Data fetch', dataFetchedMusic);
             favoritesArticles = [...favoritesArticles, ...dataFetchedMusic.data];
-            setFavoritesRSSFeed([...favoritesArticles, ...favoritesRSSFeed]);
+            setFavoritesRSSFeed([...favoritesArticles]);
           }
 
           if (data.name === 'Art') {
@@ -386,7 +385,7 @@ const ToutSurApp = () => {
             });
             console.log('Data fetch', dataFetchedArt);
             favoritesArticles = [...favoritesArticles, ...dataFetchedArt.data];
-            setFavoritesRSSFeed([...favoritesArticles, ...favoritesRSSFeed]);
+            setFavoritesRSSFeed([...favoritesArticles]);
           }
 
           if (data.name === 'Sciences') {
@@ -396,7 +395,7 @@ const ToutSurApp = () => {
             });
             console.log('Data fetch', dataFetchedSciences);
             favoritesArticles = [...favoritesArticles, ...dataFetchedSciences.data];
-            setFavoritesRSSFeed([...favoritesArticles, ...favoritesRSSFeed]);
+            setFavoritesRSSFeed([...favoritesArticles]);
           }
         });
       }
@@ -404,6 +403,16 @@ const ToutSurApp = () => {
     catch (error) {
       console.log(error.message);
     }
+  };
+
+  const removeDuplicates = (data) => {
+    const unique = [];
+    data.forEach((element) => {
+      if (!unique.includes(element)) {
+        unique.push(element);
+      }
+    });
+    return unique;
   };
 
   // == useEffect
@@ -463,6 +472,8 @@ const ToutSurApp = () => {
   useEffect(() => {
     // je compare les dates de creation des articles pour avoir les plus recentes en premier
     const filteredFavoritesArticles = favoritesRSSFeed.sort((a, b) => b.created - a.created);
+    const editTable = removeDuplicates(filteredFavoritesArticles);
+    console.log('Est-ce que cest delete', editTable);
     setFilteredFavorites(filteredFavoritesArticles);
 
     console.log('Je trie la totalité de mes articles selon la date pour réorganiser mon feed:', filteredFavoritesArticles);
