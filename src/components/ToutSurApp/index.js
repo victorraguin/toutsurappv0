@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { Segment } from 'semantic-ui-react';
 import {
-  Route, Switch, Link, withRouter,
+  Route, Switch, Link, withRouter, Redirect,
 } from 'react-router-dom';
 import axios from 'axios';
 
@@ -206,6 +206,7 @@ const ToutSurApp = () => {
       });
     }
   };
+
   // == Fonction qui permet de vérifier les inputs de connexion
   const validateLoginForm = () => {
     if (!userLog.email.includes('@')) {
@@ -405,16 +406,11 @@ const ToutSurApp = () => {
     }
   };
 
-  const removeDuplicates = (data) => {
-    const unique = [];
-    data.forEach((element) => {
-      if (!unique.includes(element)) {
-        unique.push(element);
-      }
-    });
-    return unique;
+  //Fonction pour supprimer une categories des favoris
+  const onDeleteClick = (evt) => {
+    console.log('click sur supprimer bouton');
   };
-
+  
   // == useEffect
   // == Appel à la BDD
   useEffect(async () => {
@@ -541,7 +537,7 @@ const ToutSurApp = () => {
           <Favoris
             userBookmarksArticles={userBookmarksArticles}
             userBookmarksCategoriesPage={userBookmarksCategoriesPage}
-            bookmarkACategorie={bookmarkACategorie}
+            onDeleteClick={onDeleteClick}
           />
         </Route>
 

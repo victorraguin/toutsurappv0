@@ -3,7 +3,7 @@ import React from 'react';
 import {
   Form, Divider, Button, Segment, Container, Message,
 } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 // == Import
 import './styles.scss';
@@ -84,6 +84,7 @@ const Connection = ({ onInputLogUserChange, handleSubmitLogin, userLog }) => {
             </Form.Field>
             <Divider />
             <Button primary onClick={handleSubmitLogin}>Valider</Button>
+            { userLog.logged ? <Redirect to='/'/> : null }
           </Form>
         </div>
       </Segment>

@@ -10,7 +10,8 @@ import FavCategorieCard from './FavCategorieCard';
 import './styles.scss';
 
 // == Composant
-const Favoris = ({ userBookmarksArticles, userBookmarksCategoriesPage, bookmarkACategorie }) => (
+const Favoris = ({ userBookmarksArticles, userBookmarksCategoriesPage, onDeleteClick }) => (
+
   <Container>
     <Segment vertical>
       <h1 className="title">
@@ -22,8 +23,8 @@ const Favoris = ({ userBookmarksArticles, userBookmarksCategoriesPage, bookmarkA
     </Segment>
     <Segment vertical color="teal">
       <Card.Group className="card-group" centered>
-        { userBookmarksCategoriesPage ? userBookmarksCategoriesPage.map((categorie) => (
-          <FavCategorieCard key={categorie.id} categorie={categorie} bookmarkACategorie={bookmarkACategorie} />
+        { userBookmarksCategoriesPage ? userBookmarksCategories.map((categorie) => (
+          <FavCategorieCard key={categorie.id} categorie={categorie} onDeleteClick={onDeleteClick} />
         )) : <h3>Vous n'avez pas encore enregistré de catégories</h3>}
       </Card.Group>
     </Segment>
