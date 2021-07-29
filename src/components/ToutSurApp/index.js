@@ -319,52 +319,61 @@ const ToutSurApp = () => {
   };
   // == Fonction pour chercher les articles selon les categories favoris  d'un utilisateur connecter
   // == A verifier, 404 recu!!! Vu que id de utilisateur n'est pas dans state ??
-  const onClickHomeMemberPage = async (userBookmarksCategories) => {
+  const onClickHomeMemberPage = async () => {
     try {
       // Si l'utilisateur est connecter, je vais chercher ses favoris dans la bdd
       if (userLog.logged) {
         const dataFavoriteCategoriesFetched = await axios({
-          method: 'get',
-          url: 'https://toutsur-app-gachimaster.herokuapp.com/API/favorites/categories',
-          data: {
-            id: userLog.id,
-          },
+          method: 'post',
+          url: 'https://toutsur-app-gachimaster.herokuapp.com/favorites/categories',
         });
         console.log('Favoris recuperer', dataFavoriteCategoriesFetched);
-        return dataFavoriteCategoriesFetched;
-      }
-      // tentative bidon
+      
+      dataFavoriteCategoriesFetched.data.forEach(async(data) => {
+        if (data.name === 'Sport') {
+          const dataFetched = await axios({
+            method: 'get',
+            url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/sports',
+          });
+          console.log('Data fetch', dataFetched);
+        }
 
-      /* dataFavoriteCategoriesFetched.forEach(element => {
-        const dataFetched = await axios({
-          method: 'get',
-          url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/{element}',
-        });
-        console.log('Data fetch', dataFetched);
-      }); */
-      // pas forcement besoin de ca:
-      if (userBookmarksCategories === 'Musique') {
-        const dataFetched = await axios({
-          method: 'get',
-          url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/music',
-        });
-        console.log('Data fetch', dataFetched);
-      }
-      else if (userBookmarksCategories === 'Jeux vidéos') {
-        const dataFetched = await axios({
-          method: 'get',
-          url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/gaming',
-        });
-        console.log('Data fetch', dataFetched);
-      }
-      else if (userBookmarksCategories === 'Sport') {
-        const dataFetched = await axios({
-          method: 'get',
-          url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/sports',
-        });
-        console.log('Data fetch', dataFetched);
-      }
-    }
+        if (data.name === 'Jeux vidéos') {
+          const dataFetched = await axios({
+            method: 'get',
+            url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/gaming',
+          });
+          console.log('Data fetch', dataFetched);
+        }
+        
+        if (data.name === 'Musique') {
+          const dataFetched = await axios({
+            method: 'get',
+            url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/music',
+          });
+          console.log('Data fetch', dataFetched);
+        }
+  
+        if (data.name === 'Art') {
+          const dataFetched = await axios({
+            method: 'get',
+            url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/art',
+          });
+          console.log('Data fetch', dataFetched);
+        }
+  
+        if (data.name === 'Sciences') {
+          const dataFetched = await axios({
+            method: 'get',
+            url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/sciences',
+          });
+          console.log('Data fetch', dataFetched);
+        }
+
+
+      })
+      
+    }}
     catch (error) {
       console.log(error.message);
     }
