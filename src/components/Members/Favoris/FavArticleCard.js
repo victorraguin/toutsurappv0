@@ -1,28 +1,56 @@
 // == Import npm
 import React from 'react';
 import {
-  Card, Icon, Image, Popup, Button
+  Card, Icon, Popup,
 } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 // == Import
 import './styles.scss';
 
-
-
 // == Composant
-const Favori = () => {
-
-  const oneDeleteClick = () => {
-    console.log("fonctionne")
-  }
+const FavArticleCard = ({ article, setUserBookmarksArticles }) => {
+  const deleteFavoriteArticle = async () => {
+    try {
+      const FavoriteArticleDeleted = await axios({
+        method: 'delete',
+        url: 'https://toutsur-app-gachimaster.herokuapp.com/articles',
+        data: {
+          title: article.title,
+        },
+      });
+      console.log(FavoriteArticleDeleted);
+      if (FavoriteArticleDeleted.data.length === 0) {
+        setUserBookmarksArticles(null);
+      }
+      else {
+        setUserBookmarksArticles(FavoriteArticleDeleted.data);
+      }
+    }
+    catch (error) {
+      console.log(error.message);
+    }
+  };
 
   return (
-  <Card color="orange">
-
-    <Card.Content extra className="card-article-container">
-      
-      <a href="#" className="card-article-header">
+    <Card
+      color="orange"
+    >
+      <Card.Content extra className="card-article-container">
+        <a href="#" className="card-article-header">
+          <Popup
+            content="Ajouter l'article à vos favoris"
+            trigger={(
+              <Icon
+                size="large"
+                name="remove bookmark"
+                onClick={deleteFavoriteArticle}
+              />
+            )}
+            position="top center"
+          />
+        </a>
+        {/*       <a href="#" className="card-article-header">
         <Popup
           content="Signaler l'article"
           trigger={(
@@ -30,23 +58,31 @@ const Favori = () => {
          )}
           position="top center"
         />
-      </a>
-          <a className="card-article-header">
-          <Popup
-          content="Supprimer l'article"
-          trigger={(
-            <Icon name="close" size="large" color="red"  onClick={oneDeleteClick} />
-         )}
-          position="top center"
-        />
-          </a>
-
-    </Card.Content>
-    <Image src="https://cdn.pixabay.com/photo/2021/07/13/20/00/lion-6464429_960_720.jpg" wrapped ui={false} />
-    <Card.Content>
-      <Card.Header>Le lion c'est un gros chat</Card.Header>
-    </Card.Content>
-    <Card.Content extra className="card-article-container">
+      </a> */}
+      </Card.Content>
+      <Card
+        image={article.media ? article.media : 'https://cdn.pixabay.com/photo/2019/04/10/11/56/watercolour-4116932_960_720.png'}
+        link="true"
+        href={article.url}
+        target="_blank"
+        rel="noreferrer"
+      />
+      <Label
+        color="grey"
+        attached="top right"
+        as="a"
+        href={article.url}
+        target="_blank"
+        rel="noreferrer"
+      >{article.site}
+      </Label>
+      <Card.Content
+        textAlign="left"
+        image={article.media}
+        header={article.title}
+        description={article.media ? '' : 'Impossible de charger l\'image.'}
+      />
+      {/*     <Card.Content extra className="card-article-container">
       <a className="card-article-header">
         <Popup
           content="Upvoter l'article"
@@ -65,12 +101,10 @@ const Favori = () => {
           position="bottom center"
         />
       </a>
-      
-      
-    </Card.Content>
-  </Card>
-)
-          }
+    </Card.Content> */}
+    </Card>
+  );
+};
 
 // == Export
-export default Favori;
+export default FavArticleCard;

@@ -7,7 +7,7 @@ import Article from './Article';
 import './styles.scss';
 
 // == Composant
-const ArticlesByCategories = ({ categorieSelected, categorieClicked, onBookmarkACategorie }) => (
+const ArticlesByCategories = ({ categorieSelected, categorieClicked, onBookmarkACategorie, setUserBookmarksArticles }) => (
   <Container>
     <Segment vertical>
       <h1 className="title">
@@ -22,7 +22,7 @@ const ArticlesByCategories = ({ categorieSelected, categorieClicked, onBookmarkA
       <Card.Group className="card-group">
         {
           categorieSelected.map((card) => (
-            <Article article={card} />
+            <Article article={card} setUserBookmarksArticles={setUserBookmarksArticles} />
           ))
         }
       </Card.Group>

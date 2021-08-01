@@ -533,6 +533,7 @@ const ToutSurApp = () => {
               <ArticlesByCategories
                 categorieSelected={categorieSelected}
                 categorieClicked={categorieClicked}
+                setUserBookmarksArticles={setUserBookmarksArticles}
               />
             )
             : <Articles categorieSelected={categorieSelected} />}
