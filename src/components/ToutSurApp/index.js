@@ -1,9 +1,8 @@
-// == Import npm
+ // == Import npm
 import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { Segment } from 'semantic-ui-react';
 import {
-  Route, Switch, Link, withRouter, Redirect,
-} from 'react-router-dom';
+  Route, Switch, Link, withRouter } from 'react-router-dom';
 import axios from 'axios';
 
 // == Import components & styles
@@ -54,7 +53,7 @@ const ToutSurApp = () => {
   const [userBookmarksArticles, setUserBookmarksArticles] = useState([]);
   const [favoritesRSSFeed, setFavoritesRSSFeed] = useState([]);
   const [categorieClicked, setCategorieClicked] = useState('');
-  const [filteredFavorites, setFilteredFavorites] = useState([]);
+  const [filteredFavorites, setFilteredFavorites] = useState(false);
 
   // == Fonctions de l'application
 
@@ -483,6 +482,9 @@ const ToutSurApp = () => {
   useEffect(() => {
     // je compare les dates de creation des articles pour avoir les plus recentes en premier
     const filteredFavoritesArticles = favoritesRSSFeed.sort((a, b) => b.created - a.created);
+    if (filteredFavoritesArticles.length === 0) {
+      setFilteredFavorites(false);
+    }
     setFilteredFavorites(filteredFavoritesArticles);
 
     console.log('Je trie la totalité de mes articles selon la date pour réorganiser mon feed:', filteredFavoritesArticles);
@@ -511,7 +513,7 @@ const ToutSurApp = () => {
         {/* Page d'accueil non connecté (liste les catégories) */}
         <Route path="/" exact>
           { userLog.logged
-            ? <ArticlesMember articles={filteredFavorites} />
+            ? <ArticlesMember articles={filteredFavorites} setUserBookmarksArticles={setUserBookmarksArticles} />
             : <Categories list={cards} onCategorieSelected={onCategorieSelected} />}
         </Route>
 

@@ -8,7 +8,7 @@ import Article from './Article';
 import './styles.scss';
 
 // == Composant
-const ArticlesMember = ({ articles }) => (
+const ArticlesMember = ({ articles, setUserBookmarksArticles }) => (
   <Container>
     <Segment vertical>
       <h1 className="title">
@@ -17,12 +17,11 @@ const ArticlesMember = ({ articles }) => (
     </Segment>
 
     <Segment vertical color="teal">
-    <Segment vertical>
-      </Segment>
+      <Segment vertical />
       <Card.Group className="card-group" centered>
-    {
+        {
           articles.map((article) => (
-            <Article article={article} />
+            <Article article={article} setUserBookmarksArticles={setUserBookmarksArticles} />
           ))
     }
       </Card.Group>

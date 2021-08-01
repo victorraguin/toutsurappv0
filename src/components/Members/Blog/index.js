@@ -70,7 +70,7 @@ const Blog = () => {
               <Editor
                 onInit={(_evt, editor) => editorRef.current = editor}
                 apiKey="wj36z8itpdy4p2j1o6fy8iptv5up7rfb7ksn6uxuzp7jn0n9"
-                initialValue="<p>Vous pouvez dès maintenant créer votre propre article! Félicitation!</p>"
+                initialValue="<p>Vous pouvez dès maintenant créer votre propre article! Félicitations!</p>"
                 init={{
                   height: 400,
                   menubar: true,
@@ -80,9 +80,9 @@ const Blog = () => {
                     'insertdatetime media table paste code help wordcount',
                   ],
                   toolbar: 'undo redo | formatselect | '
-           + 'bold italic backcolor | alignleft aligncenter '
-           + 'alignright alignjustify | bullist numlist outdent indent | '
-           + 'removeformat | help',
+          + 'bold italic backcolor | alignleft aligncenter '
+          + 'alignright alignjustify | bullist numlist outdent indent | '
+          + 'removeformat | help',
                   content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
                 }}
               />
@@ -92,7 +92,7 @@ const Blog = () => {
             label="Je certifie que mon article respect les conditions d'édition de toutSur.app"
             required
           />
-          <Button disabled color="teal" fluid onClick={log}>Non.</Button>
+          <Button color="teal" fluid onClick={log}>Submit</Button>
         </Form>
       </Segment>
     </Container>

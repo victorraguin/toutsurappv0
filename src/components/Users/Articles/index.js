@@ -19,7 +19,7 @@ const Articles = ({ categorieSelected }) => (
     </Segment>
     <Segment vertical color="teal">
       <Segment vertical>
-        Pour enregistrer vos articles en favoris, pensez à<Link to="/inscription"> vous inscrire !</Link>
+        <h3>Bienvenue sur toutSur.app !</h3><Link to="/inscription"> Pensez à vous inscrire !</Link>
       </Segment>
       <Card.Group className="card-group">
         {

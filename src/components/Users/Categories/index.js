@@ -18,7 +18,7 @@ const Categories = ({ list, onCategorieSelected }) => (
 
     <Segment vertical color="teal">
       <Segment vertical>
-        Pour enregistrer vos catégories et recevoir l'ensemble des articles correspondant, vous pouvez aussi<Link to="/inscription"> vous inscrire... !</Link>
+      <h3>Bienvenue sur toutSur.app !</h3><Link to="/inscription"> Pensez à vous inscrire !</Link>
       </Segment>
       <Card.Group className="card-group">
         {
