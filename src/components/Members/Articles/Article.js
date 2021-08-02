@@ -39,9 +39,10 @@ const Article = ({ article, setUserBookmarksArticles }) => {
       color="orange"
     >
       <Card.Content extra className="card-article-container">
-        <a href="#" className="card-article-header">
+        <a className="card-article-header">
           <Popup
             content="Ajouter l'article à vos favoris"
+            size="small"
             trigger={(
               <Icon
                 size="large"

@@ -54,6 +54,7 @@ const ToutSurApp = () => {
   const [favoritesRSSFeed, setFavoritesRSSFeed] = useState([]);
   const [categorieClicked, setCategorieClicked] = useState('');
   const [filteredFavorites, setFilteredFavorites] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // == Fonctions de l'application
 
@@ -117,6 +118,7 @@ const ToutSurApp = () => {
   };
   // == Fonction pour récupérer les articles sur l'API RSS
   const onClickCategoriePage = async (categorie) => {
+    setIsLoading(true);
     try {
       if (categorie === 'Musique') {
         setCategorieSelected([]);
@@ -124,7 +126,6 @@ const ToutSurApp = () => {
           method: 'get',
           url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/music',
         });
-        console.log('Data fetch', dataFetched);
         setCategorieSelected(dataFetched.data);
       }
       else if (categorie === 'Jeux vidéos') {
@@ -133,7 +134,6 @@ const ToutSurApp = () => {
           method: 'get',
           url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/gaming',
         });
-        console.log('Data fetch', dataFetched);
         setCategorieSelected(dataFetched.data);
       }
       else if (categorie === 'Sport') {
@@ -142,7 +142,6 @@ const ToutSurApp = () => {
           method: 'get',
           url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/sports',
         });
-        console.log('Data fetch', dataFetched);
         setCategorieSelected(dataFetched.data);
       }
       else if (categorie === 'Science') {
@@ -151,7 +150,6 @@ const ToutSurApp = () => {
           method: 'get',
           url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/sciences',
         });
-        console.log('Data fetch', dataFetched);
         setCategorieSelected(dataFetched.data);
       }
       else if (categorie === 'Art') {
@@ -160,12 +158,14 @@ const ToutSurApp = () => {
           method: 'get',
           url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/art',
         });
-        console.log('Data fetch', dataFetched);
         setCategorieSelected(dataFetched.data);
       }
     }
     catch (error) {
       console.log(error.message);
+    }
+    finally {
+      setIsLoading(false);
     }
   };
   // == Envoi d'une requête à l'API BACK pour la connexion de notre utilisateur
@@ -179,7 +179,6 @@ const ToutSurApp = () => {
           password: userLog.password,
         },
       });
-      console.log(userLogged);
       // == Si tout est ok :
       // == On récupère le token JWT envoyé par l'API, on le stock dans le header de axios,
       // == Puis on le stock dans le localStorage en cas de rechargement de la page.
@@ -310,7 +309,6 @@ const ToutSurApp = () => {
         method: 'post',
         url: 'https://toutsur-app-gachimaster.herokuapp.com/favorites/categories',
       });
-      console.log(dataCategoriesFetched);
       if (dataCategoriesFetched.data.length === 0) {
         setUserBookmarksCategoriesPage(null);
       }
@@ -321,7 +319,6 @@ const ToutSurApp = () => {
         method: 'post',
         url: 'https://toutsur-app-gachimaster.herokuapp.com/favorites/articles',
       });
-      console.log(dataArticlesFetched.data);
       if (dataArticlesFetched.data.length === 0) {
         setUserBookmarksArticles(null);
       }
@@ -335,7 +332,6 @@ const ToutSurApp = () => {
   };
   // == Fonction pour chercher les articles selon les categories favoris  d'un utilisateur connecter
   const onClickHomeMemberPage = async () => {
-    console.log('Je lance la fonction pour récupérer les articles en fonction de mes favoris.');
     let favoritesArticles = [];
     setFavoritesRSSFeed([]);
     // loading installer un loader ou uselayouteffect a tester!!
@@ -347,7 +343,6 @@ const ToutSurApp = () => {
           method: 'post',
           url: 'https://toutsur-app-gachimaster.herokuapp.com/favorites/categories',
         });
-        console.log('Je veux ajouter les articles de ces catégories :', dataFavoriteCategoriesFetched.data);
 
         dataFavoriteCategoriesFetched.data.forEach(async (data) => {
           if (data.name === 'Sport') {
@@ -355,7 +350,6 @@ const ToutSurApp = () => {
               method: 'get',
               url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/sports',
             });
-            console.log('Les articles de sport que jajoute dans mon flux rss:', dataFetchedSport.data);
             favoritesArticles = [...favoritesArticles, ...dataFetchedSport.data];
             setFavoritesRSSFeed([...favoritesArticles]);
           }
@@ -364,7 +358,6 @@ const ToutSurApp = () => {
               method: 'get',
               url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/gaming',
             });
-            console.log('Les articles de jeux vidéos que jajoute dans mon flux rss:', dataFetchedGaming.data);
             favoritesArticles = [...favoritesArticles, ...dataFetchedGaming.data];
             setFavoritesRSSFeed([...favoritesArticles]);
           }
@@ -373,7 +366,6 @@ const ToutSurApp = () => {
               method: 'get',
               url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/music',
             });
-            console.log('Data fetch', dataFetchedMusic);
             favoritesArticles = [...favoritesArticles, ...dataFetchedMusic.data];
             setFavoritesRSSFeed([...favoritesArticles]);
           }
@@ -383,7 +375,6 @@ const ToutSurApp = () => {
               method: 'get',
               url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/art',
             });
-            console.log('Data fetch', dataFetchedArt);
             favoritesArticles = [...favoritesArticles, ...dataFetchedArt.data];
             setFavoritesRSSFeed([...favoritesArticles]);
           }
@@ -393,7 +384,6 @@ const ToutSurApp = () => {
               method: 'get',
               url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/sciences',
             });
-            console.log('Data fetch', dataFetchedSciences);
             favoritesArticles = [...favoritesArticles, ...dataFetchedSciences.data];
             setFavoritesRSSFeed([...favoritesArticles]);
           }
@@ -413,16 +403,20 @@ const ToutSurApp = () => {
         method: 'delete',
         url: `https://toutsur-app-gachimaster.herokuapp.com/categories/${categorieToDelete}`,
       });
+      console.log('Les catégories après delete:', dataAfterDelete)
       if (dataAfterDelete.data.length === 0) {
+        console.log('on passe a null');
+        setUserBookmarksCategoriesPage(null);
         setUserBookmarksCategories(null);
       }
+      else {
       setUserBookmarksCategories(dataAfterDelete.data);
       setUserBookmarksCategoriesPage(dataAfterDelete.data);
     }
+  }
     catch (error) {
       console.log(error.message);
     }
-
   };
   
   // == useEffect
@@ -450,12 +444,12 @@ const ToutSurApp = () => {
         }
         else {
           setUserBookmarksCategories(dataCategoriesFetched.data);
+          setUserBookmarksCategoriesPage(dataCategoriesFetched.data)
         }
         const dataArticlesFetched = await axios({
           method: 'post',
           url: 'https://toutsur-app-gachimaster.herokuapp.com/favorites/articles',
         });
-        console.log(dataArticlesFetched.data);
         if (dataArticlesFetched.data.length === 0) {
           setUserBookmarksArticles(null);
         }
@@ -483,16 +477,12 @@ const ToutSurApp = () => {
     // je compare les dates de creation des articles pour avoir les plus recentes en premier
     const filteredFavoritesArticles = favoritesRSSFeed.sort((a, b) => b.created - a.created);
     if (filteredFavoritesArticles.length === 0) {
-      setFilteredFavorites(false);
+      setFilteredFavorites(null);
     }
-    setFilteredFavorites(filteredFavoritesArticles);
-
-    console.log('Je trie la totalité de mes articles selon la date pour réorganiser mon feed:', filteredFavoritesArticles);
-    console.log('Fetch terminé, tout a été ajouté dans mon state');
+    else { setFilteredFavorites(filteredFavoritesArticles) }
   }, [favoritesRSSFeed]);
 
   useLayoutEffect(() => {
-    console.log('Je vais lancer la récupération du feed parce que userlog est passé à true', onClickHomeMemberPage);
     onClickHomeMemberPage();
   }, [userLog.logged, userBookmarksCategories]);
 
@@ -513,7 +503,7 @@ const ToutSurApp = () => {
         {/* Page d'accueil non connecté (liste les catégories) */}
         <Route path="/" exact>
           { userLog.logged
-            ? <ArticlesMember articles={filteredFavorites} setUserBookmarksArticles={setUserBookmarksArticles} />
+            ? <ArticlesMember articles={filteredFavorites} setUserBookmarksArticles={setUserBookmarksArticles} isLoading={isLoading}/>
             : <Categories list={cards} onCategorieSelected={onCategorieSelected} />}
         </Route>
 
@@ -534,9 +524,10 @@ const ToutSurApp = () => {
                 categorieSelected={categorieSelected}
                 categorieClicked={categorieClicked}
                 setUserBookmarksArticles={setUserBookmarksArticles}
+                isLoading={isLoading}
               />
             )
-            : <Articles categorieSelected={categorieSelected} />}
+            : <Articles categorieSelected={categorieSelected} isLoading={isLoading}/>}
         </Route>
 
         {/* Page d'inscription */}
@@ -572,6 +563,7 @@ const ToutSurApp = () => {
                 list={cards}
                 onCategorieSelected={onCategorieSelected}
                 onBookmarkACategorie={onBookmarkACategorie}
+                isLoading={isLoading}
               />
             )
             : <Categories list={cards} onCategorieSelected={onCategorieSelected} />}

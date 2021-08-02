@@ -1,7 +1,7 @@
 // == Import npm
 import React from 'react';
 import {
-  Card, Icon, Popup, Label
+  Card, Icon, Popup, Label, Button
 } from 'semantic-ui-react';
 import axios from 'axios';
 
@@ -37,19 +37,8 @@ const FavArticleCard = ({ article, setUserBookmarksArticles }) => {
       color="orange"
     >
       <Card.Content extra className="card-article-container">
-        <a href="#" className="card-article-header">
-          <Popup
-            content="Supprimer l'article de vos favoris"
-            size='small'
-            trigger={(
-              <Icon
-                size="large"
-                name="delete"
-                onClick={deleteFavoriteArticle}
-              />
-            )}
-            position="top center"
-          />
+        <a className="card-article-header">
+        <Button size="tiny" onClick={deleteFavoriteArticle} name={article.id} >Supprimer</Button>
         </a>
         {/*       <a href="#" className="card-article-header">
         <Popup
