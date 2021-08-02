@@ -554,6 +554,7 @@ const ToutSurApp = () => {
             userBookmarksArticles={userBookmarksArticles}
             userBookmarksCategoriesPage={userBookmarksCategoriesPage}
             onDeleteClick={onDeleteClick}
+            setUserBookmarksArticles={setUserBookmarksArticles}
           />
         </Route>
 

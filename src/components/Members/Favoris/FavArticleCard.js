@@ -1,7 +1,7 @@
 // == Import npm
 import React from 'react';
 import {
-  Card, Icon, Popup,
+  Card, Icon, Popup, Label
 } from 'semantic-ui-react';
 import axios from 'axios';
 
@@ -39,11 +39,12 @@ const FavArticleCard = ({ article, setUserBookmarksArticles }) => {
       <Card.Content extra className="card-article-container">
         <a href="#" className="card-article-header">
           <Popup
-            content="Ajouter l'article à vos favoris"
+            content="Supprimer l'article de vos favoris"
+            size='small'
             trigger={(
               <Icon
                 size="large"
-                name="remove bookmark"
+                name="delete"
                 onClick={deleteFavoriteArticle}
               />
             )}
@@ -61,7 +62,7 @@ const FavArticleCard = ({ article, setUserBookmarksArticles }) => {
       </a> */}
       </Card.Content>
       <Card
-        image={article.media ? article.media : 'https://cdn.pixabay.com/photo/2019/04/10/11/56/watercolour-4116932_960_720.png'}
+        image={article.picture ? article.picture : 'https://cdn.pixabay.com/photo/2019/04/10/11/56/watercolour-4116932_960_720.png'}
         link="true"
         href={article.url}
         target="_blank"
@@ -78,9 +79,9 @@ const FavArticleCard = ({ article, setUserBookmarksArticles }) => {
       </Label>
       <Card.Content
         textAlign="left"
-        image={article.media}
+        image={article.picture}
         header={article.title}
-        description={article.media ? '' : 'Impossible de charger l\'image.'}
+        description={article.picture ? '' : 'Impossible de charger l\'image.'}
       />
       {/*     <Card.Content extra className="card-article-container">
       <a className="card-article-header">
