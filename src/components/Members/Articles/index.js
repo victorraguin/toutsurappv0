@@ -1,6 +1,6 @@
 // == Import npm
 import React from 'react';
-import { Card, Segment, Container, Loader } from 'semantic-ui-react';
+import { Card, Segment, Container, Loader, Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import Article from './Article';
 
@@ -8,7 +8,7 @@ import Article from './Article';
 import './styles.scss';
 
 // == Composant
-const ArticlesMember = ({ articles, setUserBookmarksArticles, isLoading}) => (
+const ArticlesMember = ({ articles, setUserBookmarksArticles, isLoading, visible, scrollToTop}) => (
   <Container>
     <Segment vertical>
       <h1 className="title">
@@ -28,6 +28,14 @@ const ArticlesMember = ({ articles, setUserBookmarksArticles, isLoading}) => (
           )) : <h4>Vous n'avez pas encore enregistré de catégories dans vos favoris ! N'oubliez pas de personnaliser votre feed</h4>
     }
       </Card.Group>
+      <Icon
+      className='scroll-up-button'
+      name='arrow circle up'
+      size='huge'
+      style={{display: visible ? 'inline-block' : 'none'}}
+      onClick={scrollToTop}
+      color='teal'
+      />
     </Segment>
   </Container>
 );

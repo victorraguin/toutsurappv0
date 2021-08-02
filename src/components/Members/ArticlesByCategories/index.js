@@ -1,13 +1,13 @@
 // == Import npm
 import React from 'react';
-import { Card, Segment, Container, Button, Loader} from 'semantic-ui-react';
+import { Card, Segment, Container, Icon, Loader} from 'semantic-ui-react';
 import Article from './Article';
 
 // == Import
 import './styles.scss';
 
 // == Composant
-const ArticlesByCategories = ({ categorieSelected, categorieClicked, onBookmarkACategorie, setUserBookmarksArticles, isLoading }) => (
+const ArticlesByCategories = ({ categorieSelected, categorieClicked, onBookmarkACategorie, setUserBookmarksArticles, isLoading, visible, scrollToTop }) => (
   <Container>
     <Segment vertical>
       <h1 className="title">
@@ -26,6 +26,14 @@ const ArticlesByCategories = ({ categorieSelected, categorieClicked, onBookmarkA
           ))
         }
       </Card.Group>
+      <Icon
+      className='scroll-up-button'
+      name='arrow circle up'
+      size='huge'
+      style={{display: visible ? 'inline-block' : 'none'}}
+      onClick={scrollToTop}
+      color='teal'
+      />
     </Segment>
   </Container>
 );
