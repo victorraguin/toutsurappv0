@@ -24,7 +24,7 @@ const Articles = ({ categorieSelected }) => (
       <Card.Group className="card-group">
         {
         categorieSelected.map((card) => (
-          <Article key={card.id} article={card} />
+          <Article key={card.id} article={card} className="article" />
         ))
           }
       </Card.Group>
