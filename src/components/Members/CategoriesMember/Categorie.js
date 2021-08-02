@@ -1,6 +1,6 @@
 // == Import npm
 import React from 'react';
-import { Card, Button, Icon } from 'semantic-ui-react';
+import { Card, Image } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 // == Import
@@ -11,28 +11,24 @@ import './styles.scss';
 const Categorie = ({
   categorie, onCategorieSelected, onBookmarkACategorie,
 }) => (
-  <Card>
-    <Card.Content>
-      <Button name={categorie.id} onClick={onBookmarkACategorie} circular>
-        Ajouter aux favoris
-      </Button>
-    </Card.Content>
-    <Link
-      to="/articles"
-      onClick={onCategorieSelected}
-      name={categorie.name}
-      id={categorie.id}
-    >
-      <Card
-        className="card-categorie"
-        image={categorie.picture}
-        header={`#${categorie.name}`}
-        color={categorie.color}
-        align="center"
-        name={categorie.name}
-      />
-    </Link>
-  </Card>
+  <Link
+    to="/articles"
+    onClick={onCategorieSelected}
+    name={categorie.name}
+    id={categorie.id}
+  >
+    <Card color={categorie.color} name={categorie.name}>
+      <Image src={categorie.picture} />
+      <Card.Content>
+        <Card.Header>#{categorie.name}</Card.Header>
+      </Card.Content>
+      <Card.Content>
+        <Link name={categorie.id} onClick={onBookmarkACategorie}>
+          Ajouter aux favoris
+        </Link>
+      </Card.Content>
+    </Card>
+  </Link>
 );
 
 // == Export

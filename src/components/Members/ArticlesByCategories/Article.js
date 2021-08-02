@@ -42,6 +42,7 @@ const Article = ({ article, setUserBookmarksArticles }) => {
         <a href="#">
           <Popup
             content="Ajouter l'article à vos favoris"
+            size="small"
             trigger={(
               <Icon name="bookmark" size="large" onClick={addFavoriteArticle} />
             )}
@@ -75,6 +76,10 @@ const Article = ({ article, setUserBookmarksArticles }) => {
       >{article.site}
       </Label>
       <Card.Content
+        link="true"
+        href={article.url}
+        target="_blank"
+        rel="noreferrer"
         textAlign="left"
         image={article.media}
         header={article.title}

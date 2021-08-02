@@ -19,7 +19,7 @@ const Article = ({ article, setUserBookmarksArticles }) => {
           title: article.title,
           picture: article.media,
           URL: article.url,
-        }
+        },
       });
       console.log(FavoriteArticleAdded);
       if (FavoriteArticleAdded.data.length === 0) {
@@ -80,6 +80,10 @@ const Article = ({ article, setUserBookmarksArticles }) => {
       >{article.site}
       </Label>
       <Card.Content
+        link="true"
+        href={article.url}
+        target="_blank"
+        rel="noreferrer"
         textAlign="left"
         image={article.media}
         header={article.title}
