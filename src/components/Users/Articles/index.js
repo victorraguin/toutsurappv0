@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {
-  Card, Segment, Container, Icon,
+  Card, Segment, Container, Icon, Loader
 } from 'semantic-ui-react';
 import Article from './Article';
 
@@ -10,7 +10,7 @@ import Article from './Article';
 import './styles.scss';
 
 // == Composant
-const Articles = ({ categorieSelected }) => (
+const Articles = ({ categorieSelected, isLoading }) => (
   <Container>
     <Segment vertical>
       <h1 className="title">
@@ -19,12 +19,12 @@ const Articles = ({ categorieSelected }) => (
     </Segment>
     <Segment vertical color="teal">
       <Segment vertical>
-        Pour enregistrer vos articles en favoris, pensez à<Link to="/inscription"> vous inscrire !</Link>
+        <h3>Bienvenue sur toutSur.app !</h3><Link to="/inscription"> Pensez à vous inscrire !</Link>
       </Segment>
       <Card.Group className="card-group">
-        {
+        { isLoading ? <Loader active size='big' inline='centered'/>  :
         categorieSelected.map((card) => (
-          <Article key={card.id} article={card} />
+          <Article key={card.id} article={card} className="article" />
         ))
           }
       </Card.Group>

@@ -10,7 +10,7 @@ import FavCategorieCard from './FavCategorieCard';
 import './styles.scss';
 
 // == Composant
-const Favoris = ({ userBookmarksArticles, userBookmarksCategoriesPage, onDeleteClick }) => (
+const Favoris = ({ userBookmarksArticles, userBookmarksCategoriesPage, onDeleteClick, setUserBookmarksArticles }) => (
 
   <Container>
     <Segment vertical>
@@ -38,7 +38,7 @@ const Favoris = ({ userBookmarksArticles, userBookmarksCategoriesPage, onDeleteC
       <Card.Group className="card-group" centered>
         { userBookmarksArticles
           ? userBookmarksArticles.map((article) => (
-            <FavArticleCard key={article.id} article={article} />
+            <FavArticleCard key={article.id} article={article} setUserBookmarksArticles={setUserBookmarksArticles} />
           )) : <h3>Vous n'avez pas encore d'articles préférés</h3>}
       </Card.Group>
     </Segment>

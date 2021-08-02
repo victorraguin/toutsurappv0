@@ -84,7 +84,7 @@ const Connection = ({ onInputLogUserChange, handleSubmitLogin, userLog }) => {
             </Form.Field>
             <Divider />
             <Button primary onClick={handleSubmitLogin}>Valider</Button>
-            { userLog.logged ? <Redirect to='/'/> : null }
+            { userLog.logged ? <Redirect to="/" /> : null }
           </Form>
         </div>
       </Segment>

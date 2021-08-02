@@ -2,7 +2,7 @@
 import React from 'react';
 
 import {
-  Menu, Header, Container, Icon,
+  Menu, Header, Container,
 } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
 
@@ -90,8 +90,9 @@ const MenuComponent = ({ userLog, logOutUser, onClickBookMarkPage }) => (
               className="menu-button"
               position="right"
               name="disconnect"
+              href="/"
               color="blue"
-            ><Icon name="thumbs down outline" size="large" />
+            >Déconnexion
             </Menu.Item>
           </NavLink>
         </Menu.Menu>
