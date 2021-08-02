@@ -17,8 +17,9 @@ const ArticlesMember = ({ articles, setUserBookmarksArticles, isLoading}) => (
     </Segment>
 
     <Segment vertical color="teal">
-      Bonjour
-      <Segment vertical />
+      <Segment vertical >
+    <h3>Bonne lecture sur toutSur.app !</h3>
+    </Segment>
       <Card.Group className="card-group" centered>
         { articles ? 
         isLoading ? <Loader active size='big' inline='centered'/> 

@@ -38,7 +38,7 @@ const FavArticleCard = ({ article, setUserBookmarksArticles }) => {
     >
       <Card.Content extra className="card-article-container">
         <a className="card-article-header">
-        <Button size="tiny" onClick={deleteFavoriteArticle} name={article.id} >Supprimer</Button>
+        <Button onClick={deleteFavoriteArticle} name={article.id} circular >Supprimer</Button>
         </a>
         {/*       <a href="#" className="card-article-header">
         <Popup

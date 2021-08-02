@@ -36,7 +36,7 @@ const Article = ({ article, setUserBookmarksArticles }) => {
 
   return (
     <Card
-      color="orange"
+      color="teal"
     >
       <Card.Content extra className="card-article-container">
         <a className="card-article-header">

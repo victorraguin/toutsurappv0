@@ -5,10 +5,6 @@
   padding-top: 0.5em;
 }
 
-.categories {
-  padding-top: 2em;
-}
-
 .card-group {
   display: flex;
   flex-wrap: wrap;
@@ -19,7 +15,7 @@
 }
 
 
-//== Animation au hover de la carte
+/* //== Animation au hover de la carte
 .card {
   will-change: transform;
   transition: transform 0.4s;
@@ -27,7 +23,7 @@
 .card:hover {
   transition: transform 0.1s;
   transform: translateY(-7px);
-}
+} */
 
 
 //== Si des personnes ont activées la préférence de réduction des animations : 

@@ -9,12 +9,12 @@ import './styles.scss';
 // == Composant
 
 const Categorie = ({
-  categorie, onCategorieSelected, onBookmarkACategorie
+  categorie, onCategorieSelected, onBookmarkACategorie,
 }) => (
   <Card>
     <Card.Content>
-      <Button name={categorie.id} onClick={onBookmarkACategorie}>
-        Ajouter en favoris
+      <Button name={categorie.id} onClick={onBookmarkACategorie} circular>
+        Ajouter aux favoris
       </Button>
     </Card.Content>
     <Link
