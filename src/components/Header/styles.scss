@@ -4,18 +4,23 @@
 }
 
 .header-menu {
-  outline: solid 1px red;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: space-between;
-  //align-content: center;
-  //align-items: center;
+  align-content: center;
+  align-items: center;
+}
+
+.right{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Redressed&display=swap');
 .ui.header:first-child {
-margin: auto 0px auto 2em;
+margin: auto 0px auto 0em;
 font-size: xx-large;
 font-family: 'Redressed', cursive;
 }
