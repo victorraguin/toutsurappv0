@@ -90,6 +90,7 @@ const MenuComponent = ({ userLog, logOutUser, onClickBookMarkPage }) => (
               className="menu-button"
               position="right"
               name="disconnect"
+              href="/"
               color="blue"
             >Déconnexion
             </Menu.Item>
