@@ -11,7 +11,9 @@ import './styles.scss';
 // == Composant
 const ArticlesByCategories = ({
   categorieSelected, categorieClicked, onBookmarkACategorie, setUserBookmarksArticles, isLoading, visible, scrollToTop,
-}) => (
+}) => {
+
+  return(
   <Container>
     <Segment vertical>
       <h1 className="title">
@@ -31,13 +33,13 @@ const ArticlesByCategories = ({
         className="scroll-up-button"
         name="arrow circle up"
         size="huge"
-        style={{ display: visible ? 'inline-block' : 'none' }}
+        style={{ display: visible ? 'inline' : 'none' }}
         onClick={scrollToTop}
         color="teal"
       />
     </Segment>
   </Container>
-);
+  )};
 
 // == Export
 export default ArticlesByCategories;
