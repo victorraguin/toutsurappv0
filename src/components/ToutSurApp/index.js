@@ -55,6 +55,7 @@ const ToutSurApp = () => {
   const [categorieClicked, setCategorieClicked] = useState('');
   const [filteredFavorites, setFilteredFavorites] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [visible, setVisible] = useState(false);
 
   // == Fonctions de l'application
 
@@ -418,6 +419,27 @@ const ToutSurApp = () => {
       console.log(error.message);
     }
   };
+
+  //Fonction pour montrer bouton-scroll-to-top
+  const toggleVisible = () => {
+    const scrolled = document.documentElement.scrollTop;
+    if (scrolled > 300){
+      setVisible(true);
+    } else if (scrolled <= 300){
+      setVisible(false);
+    }
+  };
+
+  //Fonction pour utiliser bouton-scroll-to-top
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
+  window.addEventListener('scroll', toggleVisible);
+  
   
   // == useEffect
   // == Appel à la BDD
@@ -503,8 +525,19 @@ const ToutSurApp = () => {
         {/* Page d'accueil non connecté (liste les catégories) */}
         <Route path="/" exact>
           { userLog.logged
-            ? <ArticlesMember articles={filteredFavorites} setUserBookmarksArticles={setUserBookmarksArticles} isLoading={isLoading}/>
-            : <Categories list={cards} onCategorieSelected={onCategorieSelected} />}
+            ? <ArticlesMember
+            articles={filteredFavorites}
+            setUserBookmarksArticles={setUserBookmarksArticles}
+            isLoading={isLoading}
+            visible={visible}
+            scrollToTop={scrollToTop}
+            />
+            : <Categories 
+            list={cards} 
+            onCategorieSelected={onCategorieSelected}
+            visible={visible}
+            scrollToTop={scrollToTop}
+            />}
         </Route>
 
         {/* Page de connection */}
@@ -525,9 +558,16 @@ const ToutSurApp = () => {
                 categorieClicked={categorieClicked}
                 setUserBookmarksArticles={setUserBookmarksArticles}
                 isLoading={isLoading}
+                visible={visible}
+                scrollToTop={scrollToTop}
               />
             )
-            : <Articles categorieSelected={categorieSelected} isLoading={isLoading}/>}
+            : <Articles
+                categorieSelected={categorieSelected}
+                isLoading={isLoading}
+                visible={visible}
+                scrollToTop={scrollToTop}
+              />}
         </Route>
 
         {/* Page d'inscription */}
