@@ -1,6 +1,6 @@
 // == Import npm
 import React from 'react';
-import { Card, Segment, Container } from 'semantic-ui-react';
+import { Card, Segment, Container, Grid } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import Categorie from './Categorie';
 
@@ -23,16 +23,20 @@ const CategoriesMember = ({
         Vous pouvez ajouter à vos favoris ou tout simplement lire leurs articles.
       </Segment>
       <Card.Group className="card-group">
-        {
+        <Grid columns={5} doubling relaxed>
+          {
         list.map((card) => (
-          <Categorie
-            key={card.id}
-            categorie={card}
-            onCategorieSelected={onCategorieSelected}
-            onBookmarkACategorie={onBookmarkACategorie}
-          />
+          <Grid.Column>
+            <Categorie
+              key={card.id}
+              categorie={card}
+              onCategorieSelected={onCategorieSelected}
+              onBookmarkACategorie={onBookmarkACategorie}
+            />
+          </Grid.Column>
         ))
           }
+        </Grid>
       </Card.Group>
     </Segment>
   </Container>

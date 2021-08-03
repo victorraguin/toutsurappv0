@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {
-  Card, Segment, Container, Icon, Loader
+  Card, Segment, Container, Grid, Loader,
 } from 'semantic-ui-react';
 import Article from './Article';
 
@@ -22,11 +22,10 @@ const Articles = ({ categorieSelected, isLoading, visible, scrollToTop }) => (
         <h3>Bienvenue sur toutSur.app !</h3><Link to="/inscription"> Pensez à vous inscrire !</Link>
       </Segment>
       <Card.Group className="card-group">
-        { isLoading ? <Loader active size='big' inline='centered'/>  :
-        categorieSelected.map((card) => (
-          <Article key={card.id} article={card} className="article" />
-        ))
-          }
+          { isLoading ? <Loader active size="big" inline="centered" />
+            : categorieSelected.map((card) => (
+                <Article key={card.id} article={card} className="article" />
+            ))}
       </Card.Group>
       <Icon
       className='scroll-up-button'

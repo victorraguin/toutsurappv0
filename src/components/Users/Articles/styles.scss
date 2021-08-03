@@ -1,7 +1,6 @@
 .card-icons {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
   align-content: center;
   align-items: center;
 }
@@ -34,5 +33,11 @@
   100% {
     opacity: 0.5;
   }
+}
+
+.card-group {
+  display:flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 

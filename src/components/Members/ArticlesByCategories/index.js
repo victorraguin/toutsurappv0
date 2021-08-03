@@ -17,7 +17,6 @@ const ArticlesByCategories = ({ categorieSelected, categorieClicked, onBookmarkA
 
     <Segment vertical color="teal">
       <Segment vertical>
-        Hello !
       </Segment>
       <Card.Group className="card-group">
         { isLoading ? <Loader active size='big' inline='centered'/>  : 
