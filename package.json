@@ -15,7 +15,7 @@
     "@babel/plugin-proposal-class-properties": "^7.13.0",
     "@babel/plugin-proposal-object-rest-spread": "^7.14.4",
     "@babel/preset-env": "^7.14.4",
-    "@babel/preset-react": "^7.13.13",
+    "@babel/peset-react": "^7.13.13",
     "babel-loader": "^8.2.2",
     "bundle-stats-webpack-plugin": "^3.0.1",
     "clean-webpack-plugin": "^3.0.0",

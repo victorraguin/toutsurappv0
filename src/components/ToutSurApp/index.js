@@ -220,6 +220,7 @@ const ToutSurApp = () => {
         databaseError: true,
         error: false,
       });
+      
     }
   };
 
@@ -352,6 +353,7 @@ const ToutSurApp = () => {
   const onClickHomeMemberPage = async () => {
     let favoritesArticles = [];
     setFavoritesRSSFeed([]);
+    setIsLoading(true);
     // loading installer un loader ou uselayouteffect a tester!!
     // appeler le fetch a optimiser
     try {
@@ -427,6 +429,9 @@ const ToutSurApp = () => {
     catch (error) {
       console.log(error.message);
     }
+    finally {
+      setIsLoading(false);
+    }
   };
 
   // Fonction pour supprimer une categories des favoris
@@ -476,6 +481,7 @@ const ToutSurApp = () => {
 
   // == useEffect
   // == Appel à la BDD
+
   useEffect(async () => {
     const tokeninLocalStorage = localStorage.getItem('token');
     if (tokeninLocalStorage) {

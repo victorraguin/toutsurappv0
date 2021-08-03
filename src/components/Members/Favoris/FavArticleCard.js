@@ -37,17 +37,6 @@ const FavArticleCard = ({ article, setUserBookmarksArticles }) => {
     <Card
       color="orange"
     >
-      <Card.Content extra className="card-article-container">
-        {/*       <a href="#" className="card-article-header">
-        <Popup
-        content="Signaler l'article"
-        trigger={(
-          <Icon name="warning circle" size="large" />
-          )}
-          position="top center"
-          />
-        </a> */}
-      </Card.Content>
       <Card
         image={article.picture ? article.picture : 'https://cdn.pixabay.com/photo/2019/04/10/11/56/watercolour-4116932_960_720.png'}
         link="true"
@@ -55,15 +44,6 @@ const FavArticleCard = ({ article, setUserBookmarksArticles }) => {
         target="_blank"
         rel="noreferrer"
       />
-      <Label
-        color="grey"
-        attached="top right"
-        as="a"
-        href={article.URL}
-        target="_blank"
-        rel="noreferrer"
-      >{article.site}
-      </Label>
       <Card.Content
         textAlign="left"
         href={article.URL}
