@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {
-  Card, Segment, Container, Grid, Loader,
+  Card, Segment, Container, Loader, Icon
 } from 'semantic-ui-react';
 import Article from './Article';
 

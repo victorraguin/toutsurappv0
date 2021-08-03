@@ -161,6 +161,22 @@ const ToutSurApp = () => {
         });
         setCategorieSelected(dataFetched.data);
       }
+      else if (categorie === 'Voyage') {
+        setCategorieSelected([]);
+        const dataFetched = await axios({
+          method: 'get',
+          url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/travel',
+        });
+        setCategorieSelected(dataFetched.data);
+      }
+      else if (categorie === 'Technologie') {
+        setCategorieSelected([]);
+        const dataFetched = await axios({
+          method: 'get',
+          url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/technology',
+        });
+        setCategorieSelected(dataFetched.data);
+      }
     }
     catch (error) {
       console.log(error.message);
