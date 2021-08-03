@@ -11,6 +11,11 @@
 .ui.card>.image {
   height: 186px;
 }
+
+.card-group>a {
+  margin: 1em;
+}
+
 .ui.card>.content:hover {
   background-color: rgba(0, 0, 0, 0.075);
 }

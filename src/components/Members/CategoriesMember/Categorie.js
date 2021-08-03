@@ -11,24 +11,27 @@ import './styles.scss';
 const Categorie = ({
   categorie, onCategorieSelected, onBookmarkACategorie,
 }) => (
-  <Link
-    to="/articles"
-    onClick={onCategorieSelected}
-    name={categorie.name}
-    id={categorie.id}
-  >
-    <Card color={categorie.color} name={categorie.name}>
-      <Image src={categorie.picture} />
-      <Card.Content>
-        <Card.Header>#{categorie.name}</Card.Header>
-      </Card.Content>
-      <Card.Content>
-        <Link name={categorie.id} onClick={onBookmarkACategorie}>
-          Ajouter aux favoris
-        </Link>
-      </Card.Content>
-    </Card>
-  </Link>
+  <Card color={categorie.color}>
+    <Link
+      to="/articles"
+      onClick={onCategorieSelected}
+      name={categorie.name}
+      id={categorie.id}
+      as="a"
+    >
+      <Card  name={categorie.name}>
+        <Image src={categorie.picture} />
+        <Card.Content>
+          <Card.Header>#{categorie.name}</Card.Header>
+        </Card.Content>
+      </Card>
+    </Link>
+    <Card.Content>
+      <Link name={categorie.id} onClick={onBookmarkACategorie}>
+        Ajouter aux favoris
+      </Link>
+    </Card.Content>
+  </Card>
 );
 
 // == Export

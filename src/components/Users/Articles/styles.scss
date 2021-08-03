@@ -9,6 +9,16 @@
   padding-left: 200%;
 }
 
+.card-group{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.article {
+  margin: 2em;
+}
+
 //css du .scroll-up-button
 .scroll-up-button{
   position: fixed;
