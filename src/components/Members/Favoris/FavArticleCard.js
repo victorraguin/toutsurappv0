@@ -53,9 +53,6 @@ const FavArticleCard = ({ article, setUserBookmarksArticles }) => {
       <Card
         image={article.picture ? article.picture : 'https://cdn.pixabay.com/photo/2019/04/10/11/56/watercolour-4116932_960_720.png'}
         link="true"
-        href={article.url}
-        target="_blank"
-        rel="noreferrer"
       />
       <Label
         color="grey"
