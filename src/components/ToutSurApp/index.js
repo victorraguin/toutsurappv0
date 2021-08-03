@@ -1,8 +1,9 @@
- // == Import npm
+// == Import npm
 import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { Segment } from 'semantic-ui-react';
 import {
-  Route, Switch, Link, withRouter } from 'react-router-dom';
+  Route, Switch, Link, withRouter,
+} from 'react-router-dom';
 import axios from 'axios';
 
 // == Import components & styles
@@ -404,6 +405,22 @@ const ToutSurApp = () => {
             favoritesArticles = [...favoritesArticles, ...dataFetchedSciences.data];
             setFavoritesRSSFeed([...favoritesArticles]);
           }
+          if (data.name === 'Voyage') {
+            const dataFetchedTravel = await axios({
+              method: 'get',
+              url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/travel',
+            });
+            favoritesArticles = [...favoritesArticles, ...dataFetchedTravel.data];
+            setFavoritesRSSFeed([...favoritesArticles]);
+          }
+          if (data.name === 'Technologie') {
+            const dataFetchedTechno = await axios({
+              method: 'get',
+              url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/technology',
+            });
+            favoritesArticles = [...favoritesArticles, ...dataFetchedTechno.data];
+            setFavoritesRSSFeed([...favoritesArticles]);
+          }
         });
       }
     }
@@ -412,51 +429,51 @@ const ToutSurApp = () => {
     }
   };
 
-  //Fonction pour supprimer une categories des favoris
+  // Fonction pour supprimer une categories des favoris
   const onDeleteClick = async (evt) => {
-    const categorieToDelete = evt.target.name
+    const categorieToDelete = evt.target.name;
     try {
       const dataAfterDelete = await axios({
         method: 'delete',
         url: `https://toutsur-app-gachimaster.herokuapp.com/categories/${categorieToDelete}`,
       });
-      console.log('Les catégories après delete:', dataAfterDelete)
+      console.log('Les catégories après delete:', dataAfterDelete);
       if (dataAfterDelete.data.length === 0) {
         console.log('on passe a null');
         setUserBookmarksCategoriesPage(null);
         setUserBookmarksCategories(null);
       }
       else {
-      setUserBookmarksCategories(dataAfterDelete.data);
-      setUserBookmarksCategoriesPage(dataAfterDelete.data);
+        setUserBookmarksCategories(dataAfterDelete.data);
+        setUserBookmarksCategoriesPage(dataAfterDelete.data);
+      }
     }
-  }
     catch (error) {
       console.log(error.message);
     }
   };
 
-  //Fonction pour montrer bouton-scroll-to-top
+  // Fonction pour montrer bouton-scroll-to-top
   const toggleVisible = () => {
     const scrolled = document.documentElement.scrollTop;
-    if (scrolled > 300){
+    if (scrolled > 300) {
       setVisible(true);
-    } else if (scrolled <= 300){
+    }
+    else if (scrolled <= 300) {
       setVisible(false);
     }
   };
 
-  //Fonction pour utiliser bouton-scroll-to-top
+  // Fonction pour utiliser bouton-scroll-to-top
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: 'smooth',
     });
   };
 
   window.addEventListener('scroll', toggleVisible);
-  
-  
+
   // == useEffect
   // == Appel à la BDD
   useEffect(async () => {
@@ -482,7 +499,7 @@ const ToutSurApp = () => {
         }
         else {
           setUserBookmarksCategories(dataCategoriesFetched.data);
-          setUserBookmarksCategoriesPage(dataCategoriesFetched.data)
+          setUserBookmarksCategoriesPage(dataCategoriesFetched.data);
         }
         const dataArticlesFetched = await axios({
           method: 'post',
@@ -517,7 +534,9 @@ const ToutSurApp = () => {
     if (filteredFavoritesArticles.length === 0) {
       setFilteredFavorites(null);
     }
-    else { setFilteredFavorites(filteredFavoritesArticles) }
+    else {
+      setFilteredFavorites(filteredFavoritesArticles);
+    }
   }, [favoritesRSSFeed]);
 
   useLayoutEffect(() => {
@@ -541,19 +560,23 @@ const ToutSurApp = () => {
         {/* Page d'accueil non connecté (liste les catégories) */}
         <Route path="/" exact>
           { userLog.logged
-            ? <ArticlesMember
-            articles={filteredFavorites}
-            setUserBookmarksArticles={setUserBookmarksArticles}
-            isLoading={isLoading}
-            visible={visible}
-            scrollToTop={scrollToTop}
-            />
-            : <Categories 
-            list={cards} 
-            onCategorieSelected={onCategorieSelected}
-            visible={visible}
-            scrollToTop={scrollToTop}
-            />}
+            ? (
+              <ArticlesMember
+                articles={filteredFavorites}
+                setUserBookmarksArticles={setUserBookmarksArticles}
+                isLoading={isLoading}
+                visible={visible}
+                scrollToTop={scrollToTop}
+              />
+            )
+            : (
+              <Categories
+                list={cards}
+                onCategorieSelected={onCategorieSelected}
+                visible={visible}
+                scrollToTop={scrollToTop}
+              />
+            )}
         </Route>
 
         {/* Page de connection */}
@@ -578,12 +601,14 @@ const ToutSurApp = () => {
                 scrollToTop={scrollToTop}
               />
             )
-            : <Articles
+            : (
+              <Articles
                 categorieSelected={categorieSelected}
                 isLoading={isLoading}
                 visible={visible}
                 scrollToTop={scrollToTop}
-              />}
+              />
+            )}
         </Route>
 
         {/* Page d'inscription */}
@@ -602,6 +627,7 @@ const ToutSurApp = () => {
             userBookmarksCategoriesPage={userBookmarksCategoriesPage}
             onDeleteClick={onDeleteClick}
             setUserBookmarksArticles={setUserBookmarksArticles}
+            onCategorieSelected={onCategorieSelected}
           />
         </Route>
 
