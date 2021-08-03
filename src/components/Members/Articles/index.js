@@ -32,7 +32,7 @@ const ArticlesMember = ({ articles, setUserBookmarksArticles, isLoading, visible
       className='scroll-up-button'
       name='arrow circle up'
       size='huge'
-      style={{display: visible ? 'inline-block' : 'none'}}
+      style={{display: visible ? 'inline' : 'none'}}
       onClick={scrollToTop}
       color='teal'
       />
