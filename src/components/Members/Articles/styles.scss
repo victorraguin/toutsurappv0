@@ -9,5 +9,8 @@
 }
 
 .card-group {
-  padding-top: 2em;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  padding: 2em 0px 1em 0px;
 }
