@@ -10,7 +10,9 @@ import Article from './Article';
 import './styles.scss';
 
 // == Composant
-const Articles = ({ categorieSelected, isLoading, visible, scrollToTop }) => (
+const Articles = ({
+  categorieSelected, isLoading, visible, scrollToTop,
+}) => (
   <Container>
     <Segment vertical>
       <h1 className="title">
@@ -28,12 +30,12 @@ const Articles = ({ categorieSelected, isLoading, visible, scrollToTop }) => (
             ))}
       </Card.Group>
       <Icon
-      className='scroll-up-button'
-      name='arrow circle up'
-      size='huge'
-      style={{display: visible ? 'inline' : 'none'}}
-      onClick={scrollToTop}
-      color='teal'
+        className="scroll-up-button"
+        name="arrow circle up"
+        size="huge"
+        style={{ display: visible ? 'inline' : 'none' }}
+        onClick={scrollToTop}
+        color="teal"
       />
     </Segment>
   </Container>
