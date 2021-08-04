@@ -25,7 +25,7 @@ const Categorie = ({
 } */
 
   return (
-  <Card color={categorie.color}>
+  <Card color={categorie.color} className="card-categorie">
     <Link
       to="/articles"
       onClick={onCategorieSelected}
@@ -33,7 +33,7 @@ const Categorie = ({
       id={categorie.id}
       as="a"
     >
-      <Card  name={categorie.name}>
+      <Card  name={categorie.name} className="card-categorie">
         <Image src={categorie.picture} />
         <Card.Content>
           <Card.Header>#{categorie.name}</Card.Header>

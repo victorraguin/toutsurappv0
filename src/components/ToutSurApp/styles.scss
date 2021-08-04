@@ -19,6 +19,22 @@
   height: 3em;
 }
 
+.ui.card.card-article-header>.content {
+  height: 3em;
+}
+
+.ui.card>.content {
+  height: 11em;
+}
+
+.ui.card>.extra, .ui.cards>.card>.extra {
+  height: 3em;
+}
+
+
+
+
+
 .ui.card>.content:hover {
   background-color: rgba(0, 0, 0, 0.075);
 }

@@ -10,7 +10,7 @@ import './styles.scss';
 
 // == Composant
 const FavCategorieCard = ({ categorie, onDeleteClick, onCategorieSelected }) => (
-        <Card  color={categorie.color}>
+        <Card  color={categorie.color} className="card-categorie">
         <Link
       to="/articles"
       onClick={onCategorieSelected}
@@ -18,7 +18,7 @@ const FavCategorieCard = ({ categorie, onDeleteClick, onCategorieSelected }) => 
       id={categorie.id}
       as="a"
     >
-  <Card>
+  <Card className="card-categorie">
       <Image src={categorie.picture} wrapped ui={false} />
       <Card.Content>
         <Card.Header>#{categorie.name}</Card.Header>
