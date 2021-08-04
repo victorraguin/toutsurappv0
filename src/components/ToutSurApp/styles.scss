@@ -4,7 +4,6 @@
   text-align: center;
 }
 
-
 .ui.card>.image:not(.ui)>img {
   height: 186px;
 }
@@ -12,10 +11,22 @@
   height: 186px;
 }
 
-.card-group>a {
-  margin: 1em;
+.ui.card>a>.left.aligned.content {
+  height: 11em;
+}
+
+.ui.card.card-categorie>.content {
+  height: 3em;
 }
 
 .ui.card>.content:hover {
   background-color: rgba(0, 0, 0, 0.075);
 }
+/* .ui.card.card-categorie{
+  height: 3em;
+} */
+
+.card-group>a {
+  margin: 1em;
+}
+

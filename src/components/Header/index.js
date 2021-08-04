@@ -64,7 +64,6 @@ const MenuComponent = ({ userLog, logOutUser, onClickBookMarkPage, setUserSignUp
               to="/"
               exact
               activeClassName="menu-link--active"
-              onClick={removeErrorClick}
             >
               <Menu.Item
                 className="menu-button"
@@ -79,7 +78,6 @@ const MenuComponent = ({ userLog, logOutUser, onClickBookMarkPage, setUserSignUp
               to="/categories"
               exact
               activeClassName="menu-link--active"
-              onClick={removeErrorClick}
             >
               <Menu.Item
                 className="menu-button"
@@ -94,7 +92,7 @@ const MenuComponent = ({ userLog, logOutUser, onClickBookMarkPage, setUserSignUp
               to="/favoris"
               exact
               activeClassName="menu-link--active"
-              onClick={{onClickBookMarkPage}, {removeErrorClick}}
+              onClick={onClickBookMarkPage}
             >
               <Menu.Item
                 className="menu-button"
@@ -109,7 +107,6 @@ const MenuComponent = ({ userLog, logOutUser, onClickBookMarkPage, setUserSignUp
               to="/blog"
               exact
               activeClassName="menu-link--active"
-              onClick={removeErrorClick}
             >
               <Menu.Item
                 className="menu-button"
