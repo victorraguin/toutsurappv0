@@ -9,8 +9,22 @@ import './styles.scss';
 // == Composant
 
 const Categorie = ({
-  categorie, onCategorieSelected, onBookmarkACategorie,
-}) => (
+  categorie, onCategorieSelected, onBookmarkACategorie, userBookmarksCategoriesPage, isfavorite
+}) => {
+/*   const isBooked = (card) => {
+    userBookmarksCategoriesPage.forEach((bookmark => {
+        console.log('Favoris utilisateur :', bookmark.name, bookmark.id)
+        console.log('ID de la carte de la catégorie:', card)
+        console.log(bookmark.id === card);
+        if (bookmark.id === card) {
+          console.log('Jenvooi true');
+          return true
+        }
+  }))
+  return null
+} */
+
+  return (
   <Card color={categorie.color}>
     <Link
       to="/articles"
@@ -28,11 +42,12 @@ const Categorie = ({
     </Link>
     <Card.Content>
       <Link name={categorie.id} onClick={onBookmarkACategorie}>
-        Ajouter aux favoris
+        {isfavorite ? 'Supprimer des favoris' : 'Ajouter aux favoris'}
       </Link>
     </Card.Content>
   </Card>
 );
+}
 
 // == Export
 export default Categorie;

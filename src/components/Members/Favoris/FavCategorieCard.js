@@ -10,15 +10,25 @@ import './styles.scss';
 
 // == Composant
 const FavCategorieCard = ({ categorie, onDeleteClick, onCategorieSelected }) => (
-  <Card color={categorie.color}>
+        <Card  color={categorie.color}>
+        <Link
+      to="/articles"
+      onClick={onCategorieSelected}
+      name={categorie.name}
+      id={categorie.id}
+      as="a"
+    >
+  <Card>
       <Image src={categorie.picture} wrapped ui={false} />
       <Card.Content>
         <Card.Header>#{categorie.name}</Card.Header>
       </Card.Content>
+  </Card>
+      </Link>
       <Card.Content className="card-article-header">
         <Link id={categorie.id} onClick={onDeleteClick} name={categorie.id} circular>Supprimer des favoris</Link>
       </Card.Content>
-  </Card>
+      </Card>
 );
 
 // == Export
