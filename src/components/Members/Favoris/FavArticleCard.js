@@ -54,6 +54,7 @@ const FavArticleCard = ({ article, setUserBookmarksArticles }) => {
         rel="noreferrer"
       />
       <Card.Content
+        className="card-article-header"
         textAlign="left"
         href={article.URL}
         target="_blank"
@@ -63,9 +64,9 @@ const FavArticleCard = ({ article, setUserBookmarksArticles }) => {
         header={article.title}
         description={article.picture ? '' : 'Impossible de charger l\'image.'}
       />
-      <Card.Content className="card-article-header">
-        <Link className="card-categorie" onClick={deleteFavoriteArticle} name={article.id}>Supprimer des favoris</Link>
-      </Card.Content>
+        <Card.Content className="card-article-button">
+          <Link className="card-categorie" onClick={deleteFavoriteArticle} name={article.id}>Supprimer des favoris</Link>
+        </Card.Content>
       {/*     <Card.Content extra className="card-article-container">
       <a className="card-article-header">
       <Popup
