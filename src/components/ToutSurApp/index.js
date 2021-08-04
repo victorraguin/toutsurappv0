@@ -168,6 +168,7 @@ const ToutSurApp = () => {
           method: 'get',
           url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/travel',
         });
+        console.log(dataFetched.data);
         setCategorieSelected(dataFetched.data);
       }
       else if (categorie === 'Technologie') {
@@ -175,6 +176,30 @@ const ToutSurApp = () => {
         const dataFetched = await axios({
           method: 'get',
           url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/technology',
+        });
+        setCategorieSelected(dataFetched.data);
+      }
+      else if (categorie === 'Mode') {
+        setCategorieSelected([]);
+        const dataFetched = await axios({
+          method: 'get',
+          url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/fashion',
+        });
+        setCategorieSelected(dataFetched.data);
+      }
+      else if (categorie === 'Actualités') {
+        setCategorieSelected([]);
+        const dataFetched = await axios({
+          method: 'get',
+          url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/news',
+        });
+        setCategorieSelected(dataFetched.data);
+      }
+      else if (categorie === 'Cinema') {
+        setCategorieSelected([]);
+        const dataFetched = await axios({
+          method: 'get',
+          url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/cinema',
         });
         setCategorieSelected(dataFetched.data);
       }
@@ -363,7 +388,6 @@ const ToutSurApp = () => {
           method: 'post',
           url: 'https://toutsur-app-gachimaster.herokuapp.com/favorites/categories',
         });
-
         dataFavoriteCategoriesFetched.data.forEach(async (data) => {
           if (data.name === 'Sport') {
             const dataFetchedSport = await axios({
@@ -421,6 +445,30 @@ const ToutSurApp = () => {
               url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/technology',
             });
             favoritesArticles = [...favoritesArticles, ...dataFetchedTechno.data];
+            setFavoritesRSSFeed([...favoritesArticles]);
+          }
+          if (data.name === 'Mode') {
+            const dataFetchedMode = await axios({
+              method: 'get',
+              url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/fashion',
+            });
+            favoritesArticles = [...favoritesArticles, ...dataFetchedMode.data];
+            setFavoritesRSSFeed([...favoritesArticles]);
+          }
+          if (data.name === 'Actualités') {
+            const dataFetchedActu = await axios({
+              method: 'get',
+              url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/news',
+            });
+            favoritesArticles = [...favoritesArticles, ...dataFetchedActu.data];
+            setFavoritesRSSFeed([...favoritesArticles]);
+          }
+          if (data.name === 'Cinema') {
+            const dataFetchedCinema = await axios({
+              method: 'get',
+              url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/cinema',
+            });
+            favoritesArticles = [...favoritesArticles, ...dataFetchedCinema.data];
             setFavoritesRSSFeed([...favoritesArticles]);
           }
         });
