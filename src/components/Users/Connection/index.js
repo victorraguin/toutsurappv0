@@ -37,8 +37,8 @@ const Connection = ({ onInputLogUserChange, handleSubmitLogin, userLog }) => {
               ? (
                 <Message
                   error
-                  header="Erreur dans vos données"
-                  content="Veuillez vérifier vos informations..."
+                  header="Il y a une erreur dans vos données :"
+                  content="Votre email et/ou mot de passe n'est pas valide. Veuillez vérifier vos informations..."
                 />
               )
               : null}

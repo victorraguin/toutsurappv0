@@ -9,5 +9,28 @@
 }
 
 .card-group {
-  padding-top: 2em;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 2em 0px 1em 0px;
+}
+
+.h4center {
+  margin: auto;
+}
+
+.ui.card>.image:not(.ui)>img {
+  height: 186px;
+}
+.ui.card>.image {
+  height: 186px;
+}
+
+.card-group>a {
+  margin: 1em;
+}
+
+.ui.card>.content:hover {
+  background-color: rgba(0, 0, 0, 0.075);
 }

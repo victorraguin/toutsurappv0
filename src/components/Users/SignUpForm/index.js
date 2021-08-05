@@ -35,8 +35,8 @@ const SignUpForm = ({ userSignUp, handleInputSubmit, handleInputChange }) =>
               ? (
                 <Message
                   error
-                  header="Erreur dans vos données :"
-                  content="Veuillez vérifier vos informations..."
+                  header="Il y a une erreur dans vos données :"
+                  content="Votre nom, email et/ou mot de passe n'est pas valide. Veuillez vérifier vos informations..."
                 />
               )
               : null}
@@ -52,9 +52,9 @@ const SignUpForm = ({ userSignUp, handleInputSubmit, handleInputChange }) =>
             { userSignUp.databaseError
               ? (
                 <Message
-                  color="pink"
-                  header="Erreur à la base de données..."
-                  content="Réessayez ou contactez un administrateur"
+                  color="red"
+                  header="Erreur:"
+                  content="Cet email est déjà existant."
                 />
               )
               : null}

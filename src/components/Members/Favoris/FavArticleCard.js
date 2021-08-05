@@ -37,6 +37,7 @@ const FavArticleCard = ({ article, setUserBookmarksArticles }) => {
     <Card
       color="orange"
     >
+
       <Card
         image={article.picture ? article.picture : 'https://cdn.pixabay.com/photo/2019/04/10/11/56/watercolour-4116932_960_720.png'}
         link="true"
@@ -45,6 +46,7 @@ const FavArticleCard = ({ article, setUserBookmarksArticles }) => {
         rel="noreferrer"
       />
       <Card.Content
+        className="card-article-header"
         textAlign="left"
         href={article.URL}
         target="_blank"
@@ -54,9 +56,9 @@ const FavArticleCard = ({ article, setUserBookmarksArticles }) => {
         header={article.title}
         description={article.picture ? '' : 'Impossible de charger l\'image.'}
       />
-      <Card.Content className="card-article-header">
-        <Link onClick={deleteFavoriteArticle} name={article.id}>Supprimer des favoris</Link>
-      </Card.Content>
+        <Card.Content className="card-article-button" as="a" onClick={deleteFavoriteArticle}>
+          <Link className="card-categorie" name={article.id}>Supprimer des favoris</Link>
+        </Card.Content>
       {/*     <Card.Content extra className="card-article-container">
       <a className="card-article-header">
       <Popup
