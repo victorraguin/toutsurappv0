@@ -52,9 +52,9 @@ const SignUpForm = ({ userSignUp, handleInputSubmit, handleInputChange }) =>
             { userSignUp.databaseError
               ? (
                 <Message
-                  color="pink"
-                  header="Erreur à la base de données..."
-                  content="Veuillez réssayer ou contacter un administrateur."
+                  color="red"
+                  header="Erreur:"
+                  content="Cet email est déjà existant."
                 />
               )
               : null}

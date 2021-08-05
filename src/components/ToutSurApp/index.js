@@ -300,6 +300,18 @@ const ToutSurApp = () => {
     const { name, value } = evt.target;
     setUserSignUp(name, value);
     onFormSignUp(name, value);
+    if (userSignUp.error) {
+      setUserSignUp({
+        ...userSignUp,
+        error :  false
+      })
+    }
+    if (userSignUp.databaseError) {
+      setUserSignUp({
+        ...userSignUp,
+        databaseError :  false
+      })
+    }
   };
   const handleInputSubmit = (evt) => {
     evt.preventDefault();
@@ -553,6 +565,7 @@ const ToutSurApp = () => {
         }
         else {
           setUserBookmarksCategories(dataCategoriesFetched.data);
+          console.log(dataCategoriesFetched.data);
           setUserBookmarksCategoriesPage(dataCategoriesFetched.data);
         }
         const dataArticlesFetched = await axios({
@@ -575,6 +588,7 @@ const ToutSurApp = () => {
         method: 'get',
         url: 'https://toutsur-app-gachimaster.herokuapp.com/categories',
       });
+      console.log('Catégories de notre site web:', dataFetched.data)
       setCards(dataFetched.data);
     }
     catch (error) {
@@ -605,6 +619,9 @@ const ToutSurApp = () => {
         userLog={userLog}
         logOutUser={logOutUser}
         onClickBookMarkPage={onClickBookMarkPage}
+        setUserLog={setUserLog}
+        setUserSignUp={setUserSignUp}
+        userSignUp={userSignUp}
       />
 
       {/* Début des routes */}
@@ -700,6 +717,8 @@ const ToutSurApp = () => {
                 onCategorieSelected={onCategorieSelected}
                 onBookmarkACategorie={onBookmarkACategorie}
                 isLoading={isLoading}
+                userBookmarksCategoriesPage={userBookmarksCategoriesPage}
+                cards={cards}
               />
             )
             : <Categories list={cards} onCategorieSelected={onCategorieSelected} />}

@@ -9,8 +9,10 @@ import './styles.scss';
 
 // == Composant
 const CategoriesMember = ({
-  list, onCategorieSelected, onBookmarkACategorie, usedButton,
-}) => (
+  list, onCategorieSelected, onBookmarkACategorie, usedButton, userBookmarksCategoriesPage, cards
+}) => {
+
+  return (
   <Container>
     <Segment vertical>
       <h1 className="title">
@@ -24,7 +26,7 @@ const CategoriesMember = ({
       </Segment>
       <Card.Group className="card-group">
         <Grid columns={5} doubling relaxed>
-          {
+        {
         list.map((card) => (
           <Grid.Column>
             <Categorie
@@ -32,6 +34,17 @@ const CategoriesMember = ({
               categorie={card}
               onCategorieSelected={onCategorieSelected}
               onBookmarkACategorie={onBookmarkACategorie}
+              /* isfavorite={userBookmarksCategoriesPage.forEach((bookmark => {
+                console.log('Favoris utilisateur :', bookmark.name, bookmark.id)
+                console.log('Catégorie de notre BDD:', card.name, card.id)
+                console.log(bookmark.id === card.id);
+                if (bookmark.id === card.id) {
+                  console.log(' ---------------- Je return true pour changer le texte ---------------------');
+                  return true
+                }
+              return }))}*/
+              userBookmarksCategoriesPage={userBookmarksCategoriesPage}
+              cards={cards}
             />
           </Grid.Column>
         ))
@@ -41,6 +54,7 @@ const CategoriesMember = ({
     </Segment>
   </Container>
 );
+      }
 
 // == Export
 export default CategoriesMember;

@@ -4,18 +4,33 @@
   text-align: center;
 }
 
-
 .ui.card>.image:not(.ui)>img {
   height: 186px;
 }
 .ui.card>.image {
   height: 186px;
 }
+//je selection tous les classes content dans le parent ui-card sauf les classes "extra"
+.ui.card>.content:not(.extra){
+  height: 11em;
+}
+
+.ui.card.card-categorie>.content {
+  height: 3em;
+}
+
+//j'utilise le !important malgres la mauvaise pratique vu le manque de temps avnat la presentation
+.card-article-button {
+  height: 3em !important;
+}
+
+
+.ui.card>.content:hover {
+  background-color: rgba(0, 0, 0, 0.075);
+}
+
 
 .card-group>a {
   margin: 1em;
 }
 
-.ui.card>.content:hover {
-  background-color: rgba(0, 0, 0, 0.075);
-}
