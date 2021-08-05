@@ -9,12 +9,26 @@ import { Link, Redirect } from 'react-router-dom';
 import './styles.scss';
 
 // == Composant
-const Connection = ({ onInputLogUserChange, handleSubmitLogin, userLog }) => {
+const Connection = ({ onInputLogUserChange, handleSubmitLogin, userLog, setUserLog }) => {
   const handleInputChange = (evt) => {
     // Je récupère le nom de l'input qui a changé
     // et sa value (son contenu)
     const { name, value } = evt.target;
     onInputLogUserChange(name, value);
+    if (userLog.error) {
+      setUserLog({
+        ...userLog,
+        password: '',    
+        error :  false
+      })
+    }
+    if (userLog.databaseError) {
+      setUserLog({
+        ...userLog,
+        password: '',      
+        databaseError :  false
+      })
+    }
   };
 
   return (

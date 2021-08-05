@@ -468,6 +468,7 @@ const ToutSurApp = () => {
             });
             favoritesArticles = [...favoritesArticles, ...dataFetchedMode.data];
             setFavoritesRSSFeed([...favoritesArticles]);
+            console.log(dataFetchedMode.data)
           }
           if (data.name === 'Actualités') {
             const dataFetchedActu = await axios({
@@ -476,6 +477,7 @@ const ToutSurApp = () => {
             });
             favoritesArticles = [...favoritesArticles, ...dataFetchedActu.data];
             setFavoritesRSSFeed([...favoritesArticles]);
+            console.log(dataFetchedActu.data);
           }
           if (data.name === 'Cinema') {
             const dataFetchedCinema = await axios({
@@ -658,6 +660,7 @@ const ToutSurApp = () => {
             onInputLogUserChange={onInputLogUserChange}
             handleSubmitLogin={handleSubmitLogin}
             userLog={userLog}
+            setUserLog={setUserLog}
           />
         </Route>
 
