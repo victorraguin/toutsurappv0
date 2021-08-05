@@ -34,7 +34,7 @@ const SignUpForm = ({ userSignUp, handleInputSubmit, handleInputChange }) =>
             { userSignUp.error
               ? (
                 <Message
-                  error
+                  color="red"
                   header="Il y a une erreur dans vos données :"
                   content="Votre nom, email et/ou mot de passe n'est pas valide. Veuillez vérifier vos informations..."
                 />
@@ -53,8 +53,8 @@ const SignUpForm = ({ userSignUp, handleInputSubmit, handleInputChange }) =>
               ? (
                 <Message
                   color="red"
-                  header="Erreur:"
-                  content="Cet email est déjà existant."
+                  header="Il y a une erreur dans vos données :"
+                  content="Votre nom, email et/ou mot de passe n'est pas valide. Veuillez vérifier vos informations..."
                 />
               )
               : null}
