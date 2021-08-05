@@ -19,6 +19,13 @@
   height: 3em;
 }
 
+@media (max-width: 400px) {
+  .ui.card.card-categorie>.content {
+    height: 5em;
+  }
+}
+
+
 //j'utilise le !important malgres la mauvaise pratique vu le manque de temps avnat la presentation
 .card-article-button {
   height: 3em !important;
@@ -33,4 +40,5 @@
 .card-group>a {
   margin: 1em;
 }
+
 
