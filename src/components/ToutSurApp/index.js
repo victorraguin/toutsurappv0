@@ -287,6 +287,7 @@ const ToutSurApp = () => {
     const clicked = event.target.closest('a');
     onClickCategoriePage(clicked.name);
     setCategorieClicked(clicked.name);
+    console.log(clicked.name);
   };
   const onFormSignUp = (name, value) => {
     setUserSignUp({
@@ -435,13 +436,14 @@ const ToutSurApp = () => {
             setFavoritesRSSFeed([...favoritesArticles]);
           }
 
-          if (data.name === 'Sciences') {
+          if (data.name === 'Science') {
             const dataFetchedSciences = await axios({
               method: 'get',
               url: 'https://toutsur-app-gachimaster.herokuapp.com/API/articles/sciences',
             });
             favoritesArticles = [...favoritesArticles, ...dataFetchedSciences.data];
             setFavoritesRSSFeed([...favoritesArticles]);
+            console.log(dataFetchedSciences);
           }
           if (data.name === 'Voyage') {
             const dataFetchedTravel = await axios({
