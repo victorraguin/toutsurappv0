@@ -57,6 +57,7 @@ const ToutSurApp = () => {
   const [filteredFavorites, setFilteredFavorites] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [message, setMessage] = useState(false)
 
   // == Fonctions de l'application
 
@@ -108,6 +109,8 @@ const ToutSurApp = () => {
   };
 
   const onBookmarkACategorie = (event) => {
+    setMessage(true);
+    setTimeout(() => setMessage(false), 1000);
     const clicked = event.target;
     bookmarkACategorie(clicked.name);
   };
@@ -724,6 +727,7 @@ const ToutSurApp = () => {
                 isLoading={isLoading}
                 userBookmarksCategoriesPage={userBookmarksCategoriesPage}
                 cards={cards}
+                message={message}
               />
             )
             : <Categories list={cards} onCategorieSelected={onCategorieSelected} />}

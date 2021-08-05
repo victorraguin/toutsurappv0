@@ -1,6 +1,8 @@
 // == Import npm
 import React from 'react';
-import { Card, Segment, Container, Grid } from 'semantic-ui-react';
+import {
+  Card, Segment, Container, Grid,
+} from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import Categorie from './Categorie';
 
@@ -9,10 +11,8 @@ import './styles.scss';
 
 // == Composant
 const CategoriesMember = ({
-  list, onCategorieSelected, onBookmarkACategorie, usedButton, userBookmarksCategoriesPage, cards
-}) => {
-
-  return (
+  list, onCategorieSelected, onBookmarkACategorie, usedButton, userBookmarksCategoriesPage, cards, message, categorieSelected,
+}) => (
   <Container>
     <Segment vertical>
       <h1 className="title">
@@ -22,11 +22,12 @@ const CategoriesMember = ({
 
     <Segment vertical color="teal">
       <Segment vertical>
-        Vous pouvez ajouter à vos favoris ou tout simplement lire leurs articles.
+        {message ? 'Catégorie ajoutée à vos favoris !' : 'Personnalisez votre feed d\'accueil avec vos catégories préférées ou prenez simplement le temps de parcourir une catégorie.'}
+
       </Segment>
       <Card.Group className="card-group">
         <Grid columns={5} doubling relaxed>
-        {
+          {
         list.map((card) => (
           <Grid.Column>
             <Categorie
@@ -42,7 +43,7 @@ const CategoriesMember = ({
                   console.log(' ---------------- Je return true pour changer le texte ---------------------');
                   return true
                 }
-              return }))}*/
+              return }))} */
               userBookmarksCategoriesPage={userBookmarksCategoriesPage}
               cards={cards}
             />
@@ -54,7 +55,6 @@ const CategoriesMember = ({
     </Segment>
   </Container>
 );
-      }
 
 // == Export
 export default CategoriesMember;
