@@ -16,7 +16,7 @@ const Articles = ({
   <Container>
     <Segment vertical>
       <h1 className="title">
-        #Articles
+        #{categorieSelected}
       </h1>
     </Segment>
     <Segment vertical color="teal">

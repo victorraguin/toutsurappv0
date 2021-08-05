@@ -16,7 +16,7 @@ const CategoriesMember = ({
   <Container>
     <Segment vertical>
       <h1 className="title">
-        #Accueil
+        #Catégories
       </h1>
     </Segment>
 
