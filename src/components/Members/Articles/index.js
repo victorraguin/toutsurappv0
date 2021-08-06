@@ -31,7 +31,6 @@ const ArticlesMember = ({
           <h3>Bonne lecture sur toutSur.app !</h3>
         </Segment>
         <Card.Group className="card-group">
-          {/* <Grid columns={5} doubling relaxed> */}
           { articles
             ? isLoading ? <Loader active size="big" inline="centered" />
               : articles.map((article) => (
@@ -46,7 +45,6 @@ const ArticlesMember = ({
                   </div>
                 </div>
             )}
-          {/* </Grid> */}
         </Card.Group>
         <Icon
           className="scroll-up-button"

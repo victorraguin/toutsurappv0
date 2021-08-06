@@ -13,7 +13,7 @@ const Article = ({ article }) => (
     rel="noreferrer"
   >
     <Card
-      className="card-article"
+      className="card-article card-style"
       image={ article.media ? article.media : 'https://cdn.pixabay.com/photo/2020/04/19/08/17/watercolor-5062356__340.jpg'}
       header={`${article.title}`}
       description={ article.media ? article.site : `${article.site} : Impossible de charger l'image.`}

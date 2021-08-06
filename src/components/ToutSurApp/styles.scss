@@ -5,18 +5,44 @@
 }
 
 .ui.card>.image:not(.ui)>img {
-  height: 186px;
+  height: 200px;
 }
 .ui.card>.image {
-  height: 186px;
+  height: 200px;
 }
+
+.button-feed:hover {
+  background-color: #3282b87e !important;
+}
+
+.menu-link--active {
+  background: #3282b841;
+}
+
+
+
+.card-style {
+  overflow: hidden;
+  border-radius: 15px !important;
+  box-shadow:
+    rgba(black, 0.66) 0 3px 10px 0,
+    inset rgba(white, 0.5) 0 0 0 3px !important;
+}
+.card-style:hover {
+  box-shadow:
+    rgba(black, 0.66) 0 10px 15px 0,
+    inset rgba(white, 0.5) 0 0 0 6px !important;
+}
+
 //je selection tous les classes content dans le parent ui-card sauf les classes "extra"
 .ui.card>.content:not(.extra){
-  height: 11em;
+  height: 10em;
+  
 }
 
 .ui.card.card-categorie>.content {
   height: 3em;
+  
 }
 
 @media (max-width: 400px) {
@@ -32,13 +58,6 @@
 }
 
 
-.ui.card>.content:hover {
-  background-color: rgba(0, 0, 0, 0.075);
+.ui.card:hover {
+  background-color: rgba(0, 0, 0, 0.027);
 }
-
-
-.card-group>a {
-  margin: 1em;
-}
-
-

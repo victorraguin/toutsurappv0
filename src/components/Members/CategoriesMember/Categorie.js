@@ -25,7 +25,7 @@ const Categorie = ({
 } */
 
   return (
-  <Card color={categorie.color} className="card-categorie">
+  <Card color={categorie.color} className="card-categorie card-style">
     <Link
       to="/articles"
       onClick={onCategorieSelected}

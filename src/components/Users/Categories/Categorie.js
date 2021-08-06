@@ -14,7 +14,7 @@ const Categorie = ({ categorie, onCategorieSelected }) => (
     name={categorie.name}
   >
     <Card
-      className="card-categorie"
+      className="card-categorie card-style"
       image={categorie.picture}
       header={`#${categorie.name}`}
       color={categorie.color}

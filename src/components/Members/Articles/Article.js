@@ -1,7 +1,7 @@
 // == Import npm
 import React from 'react';
 import {
-  Card, Icon, Popup, Label,
+  Card, Label, Image, Icon
 } from 'semantic-ui-react';
 import axios from 'axios';
 
@@ -37,47 +37,37 @@ const Article = ({ article, setUserBookmarksArticles }) => {
   return (
     <Card
       color="teal"
+      className="card-style"
     >
-      <Card.Content extra className="card-article-container">
-        <a className="card-article-header">
-          <Popup
-            content="Ajouter l'article à vos favoris"
-            size="small"
-            trigger={(
-              <Icon
-                size="large"
-                name="bookmark"
-                onClick={addFavoriteArticle}
-              />
-            )}
-            position="top center"
-          />
-        </a>
-        {/*       <a href="#" className="card-article-header">
-        <Popup
-          content="Signaler l'article"
-          trigger={(
-            <Icon name="warning circle" size="large" />
-         )}
-          position="top center"
-        />
-      </a> */}
-      </Card.Content>
-      <Card
-        image={article.media ? article.media : 'https://cdn.pixabay.com/photo/2019/04/10/11/56/watercolour-4116932_960_720.png'}
-        link="true"
+      <Image
+        src={article.media ? article.media : 'https://cdn.pixabay.com/photo/2019/04/10/11/56/watercolour-4116932_960_720.png'}
+        wrapped
+        ui={false}
+        as="a"
         href={article.url}
         target="_blank"
         rel="noreferrer"
       />
       <Label
-        color="grey"
-        attached="top right"
+        color="black"
+        attached="bottom"
         as="a"
         href={article.url}
         target="_blank"
         rel="noreferrer"
       >{article.site}
+      </Label>
+      <Label
+        color="teal"
+        attached="top left"
+        as="a"
+        onClick={addFavoriteArticle}
+      ><Icon
+        name="favorite"
+        size="large"
+        as="a"
+        onClick={addFavoriteArticle}
+      />
       </Label>
       <Card.Content
         link="true"
@@ -89,26 +79,6 @@ const Article = ({ article, setUserBookmarksArticles }) => {
         header={article.title}
         description={article.media ? '' : 'Impossible de charger l\'image.'}
       />
-      {/*     <Card.Content extra className="card-article-container">
-      <a className="card-article-header">
-        <Popup
-          content="Upvoter l'article"
-          trigger={(
-            <Icon name="fire" size="large" color="orange" />
-        )}
-          position="bottom center"
-        />
-      </a>
-      <a className="card-article-header">
-        <Popup
-          content="Commenter l'article"
-          trigger={(
-            <Icon name="commenting" size="large" />
-      )}
-          position="bottom center"
-        />
-      </a>
-    </Card.Content> */}
     </Card>
   );
 };

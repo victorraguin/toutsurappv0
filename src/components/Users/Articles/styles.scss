@@ -1,22 +1,7 @@
-.card-icons {
-  display: flex;
-  flex-wrap: wrap;
-  align-content: center;
-  align-items: center;
-}
-
-.card-icon{
-  padding-left: 200%;
-}
-
 .card-group{
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-}
-
-.article {
-  margin: 2em;
 }
 
 //css du .scroll-up-button
@@ -44,10 +29,3 @@
     opacity: 0.5;
   }
 }
-
-.card-group {
-  display:flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-

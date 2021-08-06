@@ -4,7 +4,7 @@ import { Segment } from 'semantic-ui-react';
 import {
   Route, Switch, Link, withRouter,
 } from 'react-router-dom';
-import { AnimatePresence, motion} from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import axios from 'axios';
 
 // == Import components & styles
