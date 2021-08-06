@@ -1,14 +1,12 @@
 // == Import npm
 import React from 'react';
-import { Card, Container } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
+import { Card } from 'semantic-ui-react';
 
 // == Import
 import './styles.scss';
 
 // == Composant
 const Article = ({ article }) => (
-  
   <a
     href={article.link}
     target="_blank"

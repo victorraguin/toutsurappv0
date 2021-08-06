@@ -4,6 +4,7 @@ import { Segment } from 'semantic-ui-react';
 import {
   Route, Switch, Link, withRouter,
 } from 'react-router-dom';
+import { AnimatePresence, motion} from 'framer-motion';
 import axios from 'axios';
 
 // == Import components & styles
@@ -57,7 +58,7 @@ const ToutSurApp = () => {
   const [filteredFavorites, setFilteredFavorites] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [visible, setVisible] = useState(false);
-  const [message, setMessage] = useState(false)
+  const [message, setMessage] = useState(false);
 
   // == Fonctions de l'application
 
@@ -248,7 +249,6 @@ const ToutSurApp = () => {
         databaseError: true,
         error: false,
       });
-      
     }
   };
 
@@ -307,14 +307,14 @@ const ToutSurApp = () => {
     if (userSignUp.error) {
       setUserSignUp({
         ...userSignUp,
-        error :  false
-      })
+        error: false,
+      });
     }
     if (userSignUp.databaseError) {
       setUserSignUp({
         ...userSignUp,
-        databaseError :  false
-      })
+        databaseError: false,
+      });
     }
   };
   const handleInputSubmit = (evt) => {
@@ -471,7 +471,7 @@ const ToutSurApp = () => {
             });
             favoritesArticles = [...favoritesArticles, ...dataFetchedMode.data];
             setFavoritesRSSFeed([...favoritesArticles]);
-            console.log(dataFetchedMode.data)
+            console.log(dataFetchedMode.data);
           }
           if (data.name === 'Actualités') {
             const dataFetchedActu = await axios({
@@ -595,7 +595,7 @@ const ToutSurApp = () => {
         method: 'get',
         url: 'https://toutsur-app-gachimaster.herokuapp.com/categories',
       });
-      console.log('Catégories de notre site web:', dataFetched.data)
+      console.log('Catégories de notre site web:', dataFetched.data);
       setCards(dataFetched.data);
     }
     catch (error) {
@@ -633,122 +633,123 @@ const ToutSurApp = () => {
 
       {/* Début des routes */}
       {/* Composant Switch & Route qui permet de définir les routes pour nos composants */}
-      <Switch>
+      <AnimatePresence>
+        <Switch>
+          {/* Page d'accueil non connecté (liste les catégories) */}
+          <Route path="/" exact>
+            { userLog.logged
+              ? (
+                <ArticlesMember
+                  articles={filteredFavorites}
+                  setUserBookmarksArticles={setUserBookmarksArticles}
+                  isLoading={isLoading}
+                  visible={visible}
+                  scrollToTop={scrollToTop}
+                />
+              )
+              : (
+                <Categories
+                  list={cards}
+                  onCategorieSelected={onCategorieSelected}
+                  visible={visible}
+                  scrollToTop={scrollToTop}
+                />
+              )}
+          </Route>
 
-        {/* Page d'accueil non connecté (liste les catégories) */}
-        <Route path="/" exact>
-          { userLog.logged
-            ? (
-              <ArticlesMember
-                articles={filteredFavorites}
-                setUserBookmarksArticles={setUserBookmarksArticles}
-                isLoading={isLoading}
-                visible={visible}
-                scrollToTop={scrollToTop}
-              />
-            )
-            : (
-              <Categories
-                list={cards}
-                onCategorieSelected={onCategorieSelected}
-                visible={visible}
-                scrollToTop={scrollToTop}
-              />
-            )}
-        </Route>
+          {/* Page de connection */}
+          <Route path="/connection" exact>
+            <Connection
+              onInputLogUserChange={onInputLogUserChange}
+              handleSubmitLogin={handleSubmitLogin}
+              userLog={userLog}
+              setUserLog={setUserLog}
+            />
+          </Route>
 
-        {/* Page de connection */}
-        <Route path="/connection" exact>
-          <Connection
-            onInputLogUserChange={onInputLogUserChange}
-            handleSubmitLogin={handleSubmitLogin}
-            userLog={userLog}
-            setUserLog={setUserLog}
-          />
-        </Route>
+          {/* Page des articles pour un utilisateur non connecté */}
+          <Route path="/articles" exact>
+            { userLog.logged
+              ? (
+                <ArticlesByCategories
+                  categorieSelected={categorieSelected}
+                  categorieClicked={categorieClicked}
+                  setUserBookmarksArticles={setUserBookmarksArticles}
+                  isLoading={isLoading}
+                  visible={visible}
+                  scrollToTop={scrollToTop}
+                />
+              )
+              : (
+                <Articles
+                  categorieSelected={categorieSelected}
+                  isLoading={isLoading}
+                  visible={visible}
+                  scrollToTop={scrollToTop}
+                />
+              )}
+          </Route>
 
-        {/* Page des articles pour un utilisateur non connecté */}
-        <Route path="/articles" exact>
-          { userLog.logged
-            ? (
-              <ArticlesByCategories
-                categorieSelected={categorieSelected}
-                categorieClicked={categorieClicked}
-                setUserBookmarksArticles={setUserBookmarksArticles}
-                isLoading={isLoading}
-                visible={visible}
-                scrollToTop={scrollToTop}
-              />
-            )
-            : (
-              <Articles
-                categorieSelected={categorieSelected}
-                isLoading={isLoading}
-                visible={visible}
-                scrollToTop={scrollToTop}
-              />
-            )}
-        </Route>
+          {/* Page d'inscription */}
+          <Route path="/inscription" exact>
+            <SignUpForm
+              userSignUp={userSignUp}
+              handleInputChange={handleInputChange}
+              handleInputSubmit={handleInputSubmit}
+            />
+          </Route>
 
-        {/* Page d'inscription */}
-        <Route path="/inscription" exact>
-          <SignUpForm
-            userSignUp={userSignUp}
-            handleInputChange={handleInputChange}
-            handleInputSubmit={handleInputSubmit}
-          />
-        </Route>
+          {/* Page des favoris pour un utilisateur  connecté */}
+          <Route path="/favoris" exact>
+            <Favoris
+              userBookmarksArticles={userBookmarksArticles}
+              userBookmarksCategoriesPage={userBookmarksCategoriesPage}
+              onDeleteClick={onDeleteClick}
+              setUserBookmarksArticles={setUserBookmarksArticles}
+              onCategorieSelected={onCategorieSelected}
+            />
+          </Route>
 
-        {/* Page des favoris pour un utilisateur  connecté */}
-        <Route path="/favoris" exact>
-          <Favoris
-            userBookmarksArticles={userBookmarksArticles}
-            userBookmarksCategoriesPage={userBookmarksCategoriesPage}
-            onDeleteClick={onDeleteClick}
-            setUserBookmarksArticles={setUserBookmarksArticles}
-            onCategorieSelected={onCategorieSelected}
-          />
-        </Route>
+          {/* Route pour utilisateur connecté pour accéder à la fonction Blog du site */}
+          <Route path="/blog" exact>
+            <Blog />
+          </Route>
 
-        {/* Route pour utilisateur connecté pour accéder à la fonction Blog du site */}
-        <Route path="/blog" exact>
-          <Blog />
-        </Route>
+          {/* Route pour utilisateur connecté pour accéder aux catégories du site */}
 
-        {/* Route pour utilisateur connecté pour accéder aux catégories du site */}
+          <Route path="/categories" exact>
+            { userLog.logged
+              ? (
+                <CategoriesMember
+                  list={cards}
+                  onCategorieSelected={onCategorieSelected}
+                  onBookmarkACategorie={onBookmarkACategorie}
+                  isLoading={isLoading}
+                  userBookmarksCategoriesPage={userBookmarksCategoriesPage}
+                  cards={cards}
+                  message={message}
+                />
+              )
+              : <Categories list={cards} onCategorieSelected={onCategorieSelected} />}
+          </Route>
 
-        <Route path="/categories" exact>
-          { userLog.logged
-            ? (
-              <CategoriesMember
-                list={cards}
-                onCategorieSelected={onCategorieSelected}
-                onBookmarkACategorie={onBookmarkACategorie}
-                isLoading={isLoading}
-                userBookmarksCategoriesPage={userBookmarksCategoriesPage}
-                cards={cards}
-                message={message}
-              />
-            )
-            : <Categories list={cards} onCategorieSelected={onCategorieSelected} />}
-        </Route>
+          {/* Enfin, dernière route représententant la page 404 (erreur) */}
+          <Route>
+            <Link
+              to="/"
+            >
+              <Segment vertical>
+                <h2>
+                  #Retour sur l'Accueil
+                </h2>
+              </Segment>
+            </Link>
+            <iframe src="https://giphy.com/embed/TLIj98vlSKpNXnkrBK" width="480" height="480" frameBorder="0" allowFullScreen />
+          </Route>
 
-        {/* Enfin, dernière route représententant la page 404 (erreur) */}
-        <Route>
-          <Link
-            to="/"
-          >
-            <Segment vertical>
-              <h2>
-                #Retour sur l'Accueil
-              </h2>
-            </Segment>
-          </Link>
-          <iframe src="https://giphy.com/embed/TLIj98vlSKpNXnkrBK" width="480" height="480" frameBorder="0" allowFullScreen />
-        </Route>
-
-        {/* Fin de routes */}
-      </Switch>
+          {/* Fin de routes */}
+        </Switch>
+      </AnimatePresence>
     </div>
   );
 };

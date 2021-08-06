@@ -3,6 +3,7 @@ import React from 'react';
 import {
   Container, Segment, Form, Divider, Message,
 } from 'semantic-ui-react';
+import { motion } from 'framer-motion';
 
 // == Import
 import './styles.scss';
@@ -12,6 +13,11 @@ const SignUpForm = ({ userSignUp, handleInputSubmit, handleInputChange }) =>
 // == Fonctions
 
   (
+    <motion.div
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
+  >
     <Container>
       <Segment vertical>
         <h1 className="title">
@@ -128,6 +134,7 @@ const SignUpForm = ({ userSignUp, handleInputSubmit, handleInputChange }) =>
         </div>
       </Segment>
     </Container>
+    </motion.div>
 
   )
 ;

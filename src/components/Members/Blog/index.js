@@ -6,6 +6,7 @@ import {
   Input,
   Select,
 } from 'semantic-ui-react';
+import { motion } from 'framer-motion';
 
 // == Import
 import { Editor } from '@tinymce/tinymce-react';
@@ -29,73 +30,79 @@ const Blog = () => {
   ];
 
   return (
-    <Container>
-      <Segment vertical>
-        <h1 className="title">
-          #Blog
-        </h1>
-      </Segment>
-
-      <Segment vertical color="teal">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
+      <Container>
         <Segment vertical>
-          <h3>La feature blog n'est pas encore disponible, désolé!</h3>
+          <h1 className="title">
+            #Blog
+          </h1>
         </Segment>
-        <Form className="form-container">
-          <Form.Group widths="equal">
+
+        <Segment vertical color="teal">
+          <Segment vertical>
+            <h3>La feature blog n'est pas encore disponible, désolé!</h3>
+          </Segment>
+          <Form className="form-container">
+            <Form.Group widths="equal">
+              <Form.Field
+                required
+                control={Input}
+                label="Titre de l'article"
+                placeholder="Titre de l'article"
+              />
+              <Form.Field
+                required
+                control={Input}
+                label="URL de l'image"
+                placeholder="URL d'une image d'illustration"
+              />
+              <Form.Field
+                required
+                control={Select}
+                label="Catégories"
+                options={options}
+                placeholder="Catégories"
+              />
+            </Form.Group>
             <Form.Field
               required
-              control={Input}
-              label="Titre de l'article"
-              placeholder="Titre de l'article"
-            />
-            <Form.Field
-              required
-              control={Input}
-              label="URL de l'image"
-              placeholder="URL d'une image d'illustration"
-            />
-            <Form.Field
-              required
-              control={Select}
-              label="Catégories"
-              options={options}
-              placeholder="Catégories"
-            />
-          </Form.Group>
-          <Form.Field
-            required
-          >
-            <label>Description</label>
-            <>
-              <Editor
-                onInit={(_evt, editor) => editorRef.current = editor}
-                apiKey="wj36z8itpdy4p2j1o6fy8iptv5up7rfb7ksn6uxuzp7jn0n9"
-                initialValue="<p>Vous pouvez dès maintenant créer votre propre article! Félicitations!</p>"
-                init={{
-                  height: 400,
-                  menubar: true,
-                  plugins: [
-                    'advlist autolink lists link image charmap print preview anchor',
-                    'searchreplace visualblocks code fullscreen',
-                    'insertdatetime media table paste code help wordcount',
-                  ],
-                  toolbar: 'undo redo | formatselect | '
+            >
+              <label>Description</label>
+              <>
+                <Editor
+                  onInit={(_evt, editor) => editorRef.current = editor}
+                  apiKey="wj36z8itpdy4p2j1o6fy8iptv5up7rfb7ksn6uxuzp7jn0n9"
+                  initialValue="<p>Vous pouvez dès maintenant créer votre propre article! Félicitations!</p>"
+                  init={{
+                    height: 400,
+                    menubar: true,
+                    plugins: [
+                      'advlist autolink lists link image charmap print preview anchor',
+                      'searchreplace visualblocks code fullscreen',
+                      'insertdatetime media table paste code help wordcount',
+                    ],
+                    toolbar: 'undo redo | formatselect | '
           + 'bold italic backcolor | alignleft aligncenter '
           + 'alignright alignjustify | bullist numlist outdent indent | '
           + 'removeformat | help',
-                  content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
-                }}
-              />
-            </>
-          </Form.Field>
-          <Form.Checkbox
-            label="Je certifie que mon article respect les conditions d'édition de toutSur.app"
-            required
-          />
-          <Button color="teal" disabled fluid onClick={log}>Envoyer</Button>
-        </Form>
-      </Segment>
-    </Container>
+                    content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+                  }}
+                />
+              </>
+            </Form.Field>
+            <Form.Checkbox
+              label="Je certifie que mon article respect les conditions d'édition de toutSur.app"
+              required
+            />
+            <Button color="teal" disabled fluid onClick={log}>Envoyer</Button>
+          </Form>
+        </Segment>
+      </Container>
+    </motion.div>
   );
 };
 

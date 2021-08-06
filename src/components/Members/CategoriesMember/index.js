@@ -3,7 +3,7 @@ import React from 'react';
 import {
   Card, Segment, Container, Grid,
 } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import Categorie from './Categorie';
 
 // == Import
@@ -13,6 +13,11 @@ import './styles.scss';
 const CategoriesMember = ({
   list, onCategorieSelected, onBookmarkACategorie, usedButton, userBookmarksCategoriesPage, cards, message, categorieSelected,
 }) => (
+  <motion.div
+  initial={{ opacity: 0 }}
+  animate={{ opacity: 1 }}
+  exit={{ opacity: 0 }}
+>
   <Container>
     <Segment vertical>
       <h1 className="title">
@@ -54,6 +59,7 @@ const CategoriesMember = ({
       </Card.Group>
     </Segment>
   </Container>
+  </motion.div>
 );
 
 // == Export

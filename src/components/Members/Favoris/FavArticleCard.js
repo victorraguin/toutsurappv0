@@ -1,10 +1,9 @@
 // == Import npm
 import React from 'react';
-import {
-  Card, Icon, Popup, Label, Button,
-} from 'semantic-ui-react';
+import { Card } from 'semantic-ui-react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 // == Import
 import './styles.scss';
@@ -37,7 +36,6 @@ const FavArticleCard = ({ article, setUserBookmarksArticles }) => {
     <Card
       color="orange"
     >
-
       <Card
         image={article.picture ? article.picture : 'https://cdn.pixabay.com/photo/2019/04/10/11/56/watercolour-4116932_960_720.png'}
         link="true"
@@ -56,9 +54,9 @@ const FavArticleCard = ({ article, setUserBookmarksArticles }) => {
         header={article.title}
         description={article.picture ? '' : 'Impossible de charger l\'image.'}
       />
-        <Card.Content className="card-article-button" as="a" onClick={deleteFavoriteArticle}>
-          <Link className="card-categorie" name={article.id}>Supprimer des favoris</Link>
-        </Card.Content>
+      <Card.Content className="card-article-button" as="a" onClick={deleteFavoriteArticle}>
+        <Link className="card-categorie" name={article.id}>Supprimer des favoris</Link>
+      </Card.Content>
       {/*     <Card.Content extra className="card-article-container">
       <a className="card-article-header">
       <Popup
