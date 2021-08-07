@@ -645,6 +645,8 @@ const ToutSurApp = () => {
                   isLoading={isLoading}
                   visible={visible}
                   scrollToTop={scrollToTop}
+                  messsage={message}
+                  setMessage={setMessage}
                 />
               )
               : (

@@ -12,7 +12,7 @@ import './styles.scss';
 
 // == Composant
 const ArticlesMember = ({
-  articles, setUserBookmarksArticles, isLoading, visible, scrollToTop,
+  articles, setUserBookmarksArticles, isLoading, visible, scrollToTop, message, setMessage,
 }) => (
   <motion.div
     initial={{ opacity: 0 }}
@@ -28,13 +28,13 @@ const ArticlesMember = ({
 
       <Segment vertical color="teal">
         <Segment vertical>
-          <h3>Bonne lecture sur toutSur.app !</h3>
+          {message ? 'Article ajouté à vos favoris' : <h3>Bonne lecture sur toutSur.app !</h3>}
         </Segment>
         <Card.Group className="card-group">
           { articles
             ? isLoading ? <Loader active size="big" inline="centered" />
               : articles.map((article) => (
-                <Article article={article} setUserBookmarksArticles={setUserBookmarksArticles} />
+                <Article article={article} setUserBookmarksArticles={setUserBookmarksArticles} message={message} setMessage={setMessage} />
               )) : (
                 <div className="flex">
                   <h4 className="h4center">Vous n'avez pas encore enregistré de catégories dans vos favoris.</h4>

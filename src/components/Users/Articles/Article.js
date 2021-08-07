@@ -21,6 +21,7 @@ const Article = ({ article }) => (
       align="left"
     />
   </a>
+  
 );
 
 // == Export

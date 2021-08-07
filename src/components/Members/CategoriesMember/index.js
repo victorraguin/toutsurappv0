@@ -11,28 +11,28 @@ import './styles.scss';
 
 // == Composant
 const CategoriesMember = ({
-  list, onCategorieSelected, onBookmarkACategorie, usedButton, userBookmarksCategoriesPage, cards, message, categorieSelected,
+  list, onCategorieSelected, onBookmarkACategorie, usedButton, userBookmarksCategoriesPage, cards, message,
 }) => (
   <motion.div
-  initial={{ opacity: 0 }}
-  animate={{ opacity: 1 }}
-  exit={{ opacity: 0 }}
->
-  <Container>
-    <Segment vertical>
-      <h1 className="title">
-        #Catégories
-      </h1>
-    </Segment>
-
-    <Segment vertical color="teal">
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
+  >
+    <Container>
       <Segment vertical>
-        {message ? 'Catégorie ajoutée à vos favoris !' : 'Personnalisez votre feed d\'accueil avec vos catégories préférées ou prenez simplement le temps de parcourir une catégorie.'}
-
+        <h1 className="title">
+          #Catégories
+        </h1>
       </Segment>
-      <Card.Group className="card-group">
-        <Grid columns={5} doubling relaxed>
-          {
+
+      <Segment vertical color="teal">
+        <Segment vertical>
+          {message ? 'Catégorie ajoutée à vos favoris !' : 'Personnalisez votre feed d\'accueil avec vos catégories préférées ou prenez simplement le temps de parcourir une catégorie.'}
+
+        </Segment>
+        <Card.Group className="card-group">
+          <Grid columns={5} doubling relaxed>
+            {
         list.map((card) => (
           <Grid.Column>
             <Categorie
@@ -55,10 +55,10 @@ const CategoriesMember = ({
           </Grid.Column>
         ))
           }
-        </Grid>
-      </Card.Group>
-    </Segment>
-  </Container>
+          </Grid>
+        </Card.Group>
+      </Segment>
+    </Container>
   </motion.div>
 );
 

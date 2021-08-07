@@ -1,7 +1,7 @@
 // == Import npm
 import React from 'react';
 import {
-  Card, Label, Image, Icon
+  Card, Label, Image, Popup, Icon,
 } from 'semantic-ui-react';
 import axios from 'axios';
 
@@ -9,7 +9,9 @@ import axios from 'axios';
 import './styles.scss';
 
 // == Composant
-const Article = ({ article, setUserBookmarksArticles }) => {
+const Article = ({
+  article, setUserBookmarksArticles, message, setMessage,
+}) => {
   const addFavoriteArticle = async () => {
     try {
       const FavoriteArticleAdded = await axios({
@@ -21,6 +23,8 @@ const Article = ({ article, setUserBookmarksArticles }) => {
           URL: article.url,
         },
       });
+      setMessage(true);
+      setTimeout(() => setMessage(false), 2000);
       console.log(FavoriteArticleAdded);
       if (FavoriteArticleAdded.data.length === 0) {
         setUserBookmarksArticles(null);
@@ -57,18 +61,20 @@ const Article = ({ article, setUserBookmarksArticles }) => {
         rel="noreferrer"
       >{article.site}
       </Label>
-      <Label
-        color="teal"
-        attached="top left"
-        as="a"
-        onClick={addFavoriteArticle}
-      ><Icon
-        name="favorite"
-        size="large"
-        as="a"
-        onClick={addFavoriteArticle}
+      <Popup
+        content="Lire plus tard"
+        link
+        trigger={(
+          <Label
+            color="teal"
+            corner="left"
+            as="a"
+            onClick={addFavoriteArticle}
+            link
+          ><Icon name="bookmark" link="true" />
+          </Label>
+    )}
       />
-      </Label>
       <Card.Content
         link="true"
         href={article.url}
