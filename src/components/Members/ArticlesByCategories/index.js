@@ -26,6 +26,7 @@ const ArticlesByCategories = ({
       </Segment>
 
       <Segment vertical color="teal">
+        Vous êtes dans la catégorie #{categorieClicked}. Bonne lecture!
         <Segment vertical />
         <Card.Group className="card-group">
           { isLoading ? <Loader active size="big" inline="centered" />

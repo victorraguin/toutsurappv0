@@ -54,7 +54,7 @@ const MenuComponent = ({ userLog, logOutUser, onClickBookMarkPage, setUserSignUp
           to="/"
           className="menu-title"
         >
-          <Header as="h2">toutSur.app</Header>
+          <Header as="h1">toutSur.app</Header>
         </NavLink>
 
         { userLog.logged ? (

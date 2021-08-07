@@ -10,7 +10,7 @@ import './styles.scss';
 
 // == Composant
 const FavCategorieCard = ({ categorie, onDeleteClick, onCategorieSelected }) => (
-  <Card  color={categorie.color} className="card-categorie">
+  <Card  color={categorie.color} className="card-categorie card-style">
     <Link
     to="/articles"
     onClick={onCategorieSelected}

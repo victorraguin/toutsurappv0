@@ -1,6 +1,6 @@
 // == Import npm
 import React from 'react';
-import { Card } from 'semantic-ui-react';
+import { Card, Image } from 'semantic-ui-react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -33,8 +33,9 @@ const FavArticleCard = ({ article, setUserBookmarksArticles }) => {
   };
 
   return (
-    <Card
+  /*     <Card
       color="orange"
+      className="card-style"
     >
       <Card
         image={article.picture ? article.picture : 'https://cdn.pixabay.com/photo/2019/04/10/11/56/watercolour-4116932_960_720.png'}
@@ -57,26 +58,33 @@ const FavArticleCard = ({ article, setUserBookmarksArticles }) => {
       <Card.Content className="card-article-button" as="a" onClick={deleteFavoriteArticle}>
         <Link className="card-categorie" name={article.id}>Supprimer des favoris</Link>
       </Card.Content>
-      {/*     <Card.Content extra className="card-article-container">
-      <a className="card-article-header">
-      <Popup
-      content="Upvoter l'article"
-      trigger={(
-        <Icon name="fire" size="large" color="orange" />
-        )}
-        position="bottom center"
-        />
-        </a>
-        <a className="card-article-header">
-        <Popup
-          content="Commenter l'article"
-          trigger={(
-            <Icon name="commenting" size="large" />
-      )}
-          position="bottom center"
-        />
-      </a>
-    </Card.Content> */}
+    </Card>
+ */
+    <Card
+      color="teal"
+      className="card-style"
+    >
+      <Image
+        src={article.picture ? article.picture : 'https://cdn.pixabay.com/photo/2019/04/10/11/56/watercolour-4116932_960_720.png'}
+        wrapped
+        ui={false}
+        as="a"
+        link="true"
+        href={article.URL}
+        target="_blank"
+        rel="noreferrer"
+      />
+      <Card.Content
+        textAlign="left"
+        href={article.URL}
+        target="_blank"
+        rel="noreferrer"
+        link="true"
+        header={article.title}
+      />
+      <Card.Content className="card-article-button" as="a" onClick={deleteFavoriteArticle}>
+        <Link className="card-categorie" name={article.id}>Supprimer des favoris</Link>
+      </Card.Content>
     </Card>
   );
 };
