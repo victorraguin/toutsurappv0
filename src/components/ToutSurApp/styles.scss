@@ -34,7 +34,7 @@
 
 //je selection tous les classes content dans le parent ui-card sauf les classes "extra"
 .ui.card>.content:not(.extra){
-  height: 10em;
+  height: 13em;
   background-color: rgb(201 201 201 / 10%);
 }
 
@@ -45,7 +45,7 @@
 
 @media (max-width: 400px) {
   .ui.card.card-categorie>.content {
-    height: 5em;
+    height: 3em;
   }
 }
 
