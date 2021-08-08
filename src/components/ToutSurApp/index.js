@@ -6,10 +6,12 @@ import {
 } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import axios from 'axios';
+import { useMediaQuery } from 'react-responsive';
 
 // == Import components & styles
 import './styles.scss';
 import Header from 'src/components/Header';
+import Mobile from 'src/components/Header/mobile';
 
 // == Import users components
 import Connection from 'src/components/Users/Connection';
@@ -618,18 +620,32 @@ const ToutSurApp = () => {
     onClickHomeMemberPage();
   }, [userLog.logged, userBookmarksCategories]);
 
+  const isTabletOrMobile = useMediaQuery({ query: '(max-width: 760px)' });
+
   // == Rendu de l'application
   return (
     <div className="toutSurApp">
       {/* Composant Header qui représente le menu sur toutes les pages */}
-      <Header
-        userLog={userLog}
-        logOutUser={logOutUser}
-        onClickBookMarkPage={onClickBookMarkPage}
-        setUserLog={setUserLog}
-        setUserSignUp={setUserSignUp}
-        userSignUp={userSignUp}
-      />
+      {isTabletOrMobile ? (
+        <Mobile
+          userLog={userLog}
+          logOutUser={logOutUser}
+          onClickBookMarkPage={onClickBookMarkPage}
+          setUserLog={setUserLog}
+          setUserSignUp={setUserSignUp}
+          userSignUp={userSignUp}
+        />
+      )
+        : (
+          <Header
+            userLog={userLog}
+            logOutUser={logOutUser}
+            onClickBookMarkPage={onClickBookMarkPage}
+            setUserLog={setUserLog}
+            setUserSignUp={setUserSignUp}
+            userSignUp={userSignUp}
+          />
+        )}
 
       {/* Début des routes */}
       {/* Composant Switch & Route qui permet de définir les routes pour nos composants */}
