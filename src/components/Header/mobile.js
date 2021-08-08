@@ -165,7 +165,7 @@ const MenuComponent = ({
                   position="right"
                   name="Connection"
                   href="/connection"
-                ><Icon name="angle double up" />
+                ><Icon name="user circle" />
                 </Menu.Item>
               </NavLink>
               <NavLink
