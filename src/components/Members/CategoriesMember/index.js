@@ -27,7 +27,7 @@ const CategoriesMember = ({
 
       <Segment vertical color="teal">
         <Segment vertical>
-          {message ? 'Catégorie ajoutée à vos favoris !' : 'Personnalisez votre feed d\'accueil avec vos catégories préférées ou prenez simplement le temps de parcourir une catégorie.'}
+          {message ? <h4>Catégorie ajoutée à vos favoris !</h4> : 'Personnalisez votre feed d\'accueil avec vos catégories préférées ou prenez simplement le temps de parcourir une catégorie.'}
 
         </Segment>
         <Card.Group className="card-group">
