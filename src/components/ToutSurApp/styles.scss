@@ -49,6 +49,12 @@
   }
 }
 
+@media (max-width: 740px) {
+  .card-article-button {
+    margin-bottom: 3em !important;
+  }
+}
+
 
 //j'utilise le !important malgres la mauvaise pratique vu le manque de temps avnat la presentation
 .card-article-button {
