@@ -71,6 +71,7 @@ const Article = ({
             as="a"
             onClick={addFavoriteArticle}
             link
+            className="label-link"
           ><Icon name="bookmark" link="true" />
           </Label>
     )}
