@@ -6,16 +6,16 @@ import {
 import { Redirect } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
-// == Import
+// == Import styles 
 import './styles.scss';
 
-// == Composant
+// == Connection Component
 const Connection = ({
   onInputLogUserChange, handleSubmitLogin, userLog, setUserLog,
 }) => {
   const handleInputChange = (evt) => {
-    // Je récupère le nom de l'input qui a changé
-    // et sa value (son contenu)
+    // I get the name of the input that changed
+    // and his value
     const { name, value } = evt.target;
     onInputLogUserChange(name, value);
     if (userLog.error) {
